@@ -1,18 +1,45 @@
 import java.util.*;
+import java.io.*;
 
-public class q5
-{
+public class q5{
     public static void main(String[] args)
     {
         Scanner sc = new Scanner(System.in);
+        ArrayList<q5Class> array = new ArrayList<q5Class>();
+        
+        array = csvRead("RandomNames7000(2).csv");
+
+        int[] array2 = new int[array.size()];
+
+        for(int i=0; i<array.size(); i++)
+        {
+            array2[i] = array.get(i).getNum();
+        }
+
+
+        Sorts.insertionSort(array2);
+
+        for(int j=0; j<array2.length; j++)
+        {
+            for(int k=0; k<array.size(); k++)
+            {
+                if(array2[j]==array.get(k).getNum())
+                {
+
+                }
+            }
+        }
+      
+
+        sc.close();
     }
 
-    public static ArrayList<> csvRead(String fileName)
+    public static ArrayList<q5Class> csvRead(String fileName)
     {
         FileInputStream fileStream = null;
         InputStreamReader isr;
         BufferedReader bufRdr;
-        ArrayList<CovidRecordClass> Records = new ArrayList<CovidRecordClass>();
+        ArrayList<q5Class> Records = new ArrayList<q5Class>();
         String line;
         try
         {
@@ -20,13 +47,13 @@ public class q5
             isr = new InputStreamReader(fileStream);
             bufRdr = new BufferedReader(isr);
         
-            bufRdr.readLine();
+            //bufRdr.readLine();
             line = bufRdr.readLine();
 
             while(line != null)
             {
                 String[] splitline;
-                splitline = line.split(",",-1);
+                splitline = line.split(",");
 
                 for(int i=0; i < splitline.length; i++)
                 {
@@ -35,9 +62,9 @@ public class q5
                         splitline[i] = "0";
                     }
                 }
-                CountryClass countryobj = new CountryClass(splitline[1], splitline[2], splitline[3], splitline[12], Double.parseDouble(splitline[4]), Double.parseDouble(splitline[5]));
-                CovidRecordClass recordObj = new CovidRecordClass(splitline[0], Integer.parseInt(splitline[6]), Integer.parseInt(splitline[7]), Integer.parseInt(splitline[8]), Integer.parseInt(splitline[9]), Integer.parseInt(splitline[10]), countryobj);
-                Records.add(recordObj);
+                
+                q5Class obj = new q5Class(Integer.valueOf(splitline[0]), splitline[1]); 
+                Records.add(obj);
                 line = bufRdr.readLine();
             }   
             fileStream.close();     
@@ -58,5 +85,30 @@ public class q5
             System.out.println("Error in fileProcessing: " + errorDetails.getMessage());
         }
         return Records;
+    }
+
+
+    public static void csvWrite(String pFilename, int[] input1, ArrayList<q5Class> input2)
+    {
+        FileOutputStream fileStrm = null;
+        PrintWriter pw;
+        
+
+        try
+        {
+            fileStrm = new FileOutputStream(pFilename);
+            pw = new PrintWriter(fileStrm);
+            for(int i=0; i<input1.length-1; i++)
+            {
+                pw.print(input1[i] + ",");
+            }
+            pw.print(input1[input1.length-1]);
+            
+            pw.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println("Error in writing to file: " + e.getMessage());
+        }
     }
 }
