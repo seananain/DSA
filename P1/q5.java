@@ -6,18 +6,38 @@ public class q5{
     {
         Scanner sc = new Scanner(System.in);
         ArrayList<q5Class> array = new ArrayList<q5Class>();
+        char sortType;
         
         array = csvRead("RandomNames7000(2).csv");
-
+        
         int[] array2 = new int[array.size()];
 
         for(int i=0; i<array.size(); i++)
         {
             array2[i] = array.get(i).getNum();
         }
+        
+        System.out.println("Enter sort type...");
+        sortType = sc.next().charAt(0);
+        switch (sortType)
+        {
+            case 'b' : Sorts.bubbleSort(array2); break;
+            case 's' : Sorts.selectionSort(array2); break;
+            case 'q' : Sorts.quickSort(array2); break;
+            case 'j' : Arrays.sort(array2); break;    // Java's QuickSort
+            case 'm' : Sorts.mergeSort(array2); break;
+            case 'i' : Sorts.insertionSort(array2); break;
+            //case 'h' : Sorts.heapSort(A); break;
+            default :
+                throw new IllegalArgumentException("Unsupported sort type " + sortType);
+        }
+
+        
+
+        
 
 
-        Sorts.insertionSort(array2);
+        //Sorts.insertionSort(array2);
 
         csvWrite("newFile.csv", array2);
 
@@ -92,7 +112,7 @@ public class q5{
             pw = new PrintWriter(fileStrm);
             for(int i=0; i<input1.length-1; i++)
             {
-                pw.println(input1[i] + ",");
+                pw.println(input1[i]);
             }
             //pw.print(input1[input1.length-1]);
             
