@@ -32,7 +32,7 @@ public class q5
     public static void moveDisk(int n1, int n, int src, int dest)
     {
         String indent = "             ";
-        //int disknum = n1 + 1 - n;
+        int disknum = n1 + 1 - n;
         int recur = n1 + 1 -n;
 
         

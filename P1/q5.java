@@ -19,16 +19,9 @@ public class q5{
 
         Sorts.insertionSort(array2);
 
-        for(int j=0; j<array2.length; j++)
-        {
-            for(int k=0; k<array.size(); k++)
-            {
-                if(array2[j]==array.get(k).getNum())
-                {
+        csvWrite("newFile.csv", array2);
 
-                }
-            }
-        }
+
       
 
         sc.close();
@@ -88,21 +81,20 @@ public class q5{
     }
 
 
-    public static void csvWrite(String pFilename, int[] input1, ArrayList<q5Class> input2)
+    public static void csvWrite(String pFilename, int[] input1)
     {
         FileOutputStream fileStrm = null;
         PrintWriter pw;
         
-
         try
         {
             fileStrm = new FileOutputStream(pFilename);
             pw = new PrintWriter(fileStrm);
             for(int i=0; i<input1.length-1; i++)
             {
-                pw.print(input1[i] + ",");
+                pw.println(input1[i] + ",");
             }
-            pw.print(input1[input1.length-1]);
+            //pw.print(input1[input1.length-1]);
             
             pw.close();
         }
@@ -111,4 +103,7 @@ public class q5{
             System.out.println("Error in writing to file: " + e.getMessage());
         }
     }
+
+
+
 }
