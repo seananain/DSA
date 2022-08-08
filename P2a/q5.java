@@ -31,13 +31,14 @@ public class q5
 
     public static void moveDisk(int n1, int n, int src, int dest)
     {
-        String indent = "             ";
-        int disknum = n1 + 1 - n;
-        int recur = n1 + 1 -n;
-
+        String indent = "        ";
+        int disknum = n;
+        int recur = n1 + 1 - n;
         
-        System.out.println(indent.repeat(n-1) + "Recursion level: " + recur);
-        System.out.println(indent.repeat(n-1) + "Moving Disk " + disknum + " from Source " + src + " to Destination " + dest);
-        System.out.println(indent.repeat(n-1) + "n=" + n + ", src=" + src + ", dest= " + dest);
+
+        System.out.println(indent.repeat(recur) +n1);
+        System.out.println(indent.repeat(recur) + "Recursion level: " + recur);
+        System.out.println(indent.repeat(recur) + "Moving Disk " + disknum + " from Source " + src + " to Destination " + dest);
+        System.out.println(indent.repeat(recur) + "n=" + n + ", src=" + src + ", dest= " + dest);
     }
 }
