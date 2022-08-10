@@ -18,7 +18,11 @@ public class q5{
         }
         
         System.out.println("Enter sort type...");
+        System.out.println("           b - bubblesort");
+        System.out.println("           i - insertion sort");
+        System.out.println("           s - selection sort");
         sortType = sc.next().charAt(0);
+        long startTime = System.nanoTime();
         switch (sortType)
         {
             case 'b' : Sorts.bubbleSort(array2); break;
@@ -31,13 +35,9 @@ public class q5{
             default :
                 throw new IllegalArgumentException("Unsupported sort type " + sortType);
         }
-
-        
-
-        
-
-
-        //Sorts.insertionSort(array2);
+        long endTime = System.nanoTime();
+        int runningTotal = (int)((double)(endTime - startTime) / 1000.0);
+        System.out.println("Time taken (ms): " + runningTotal);
 
         csvWrite("newFile.csv", array2);
 
