@@ -22,9 +22,9 @@ public class q5
         else
         {
             int tmp = 6 - src - dest;
-            towers(n, n-1, src, tmp);
+            towers(n1, n-1, src, tmp);
             moveDisk(n1, n, src, dest);
-            towers(n, n-1, tmp, dest);
+            towers(n1, n-1, tmp, dest);
             
         }
     }
@@ -36,7 +36,7 @@ public class q5
         int recur = n1 + 1 - n;
         
 
-        System.out.println(indent.repeat(recur) +n1);
+        
         System.out.println(indent.repeat(recur) + "Recursion level: " + recur);
         System.out.println(indent.repeat(recur) + "Moving Disk " + disknum + " from Source " + src + " to Destination " + dest);
         System.out.println(indent.repeat(recur) + "n=" + n + ", src=" + src + ", dest= " + dest);
