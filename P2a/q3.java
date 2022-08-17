@@ -9,7 +9,7 @@ public class q3
         System.out.println("Enter an integer...");
         int num = sc.nextInt();
 
-        System.out.println("Enter a base umber from 2 to 16...");
+        System.out.println("Enter a base number from 2 to 16...");
         int base = sc.nextInt();
 
         String output = "";
