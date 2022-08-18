@@ -23,24 +23,11 @@ public class q2
 
 public static int GCD(int x, int y) //geeksforgeeks.org/java-program-to-compute-gcd/
 {
-    int i;
-    if(x<y)
+    if(y==0)
     {
-        i = x;
+        return x;
     }
-    else
-    {
-        i=y;
-    }
-
-    for( i=i; i>1; i--)
-    {
-        if(x % i ==0 && y % i == 0)
-        {
-            return i;
-        }
-    }
-    return 1;
+    return GCD(y, x % y);
 }
 
 }

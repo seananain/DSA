@@ -9,16 +9,25 @@ public class q3
         System.out.println("Enter an integer...");
         int num = sc.nextInt();
 
-        System.out.println("Enter a base number from 2 to 16...");
-        int base = sc.nextInt();
 
-        String output = "";
-        output = Integer.toString(num, base);
+        int answer = toBinary(num);
 
-        System.out.println("Result: " + output);
+        System.out.println("Result: " + answer);
 
         sc.close();
 
+    }
+
+    public static int toBinary(int dec)
+    {
+        if(dec==0)
+        {
+            return 0;
+        }
+        else
+        {
+            return(dec % 2 + 10*toBinary(dec/2));
+        }
     }
 
 
