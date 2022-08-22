@@ -1,18 +1,28 @@
 public class DSAQueue 
 {
-    private double[] queue;
+    protected double[] queue;
     private int count;
-    private boolean empty, full;
+    protected boolean empty;
+    protected boolean full;
+    protected int DEFAULT_CAPACITY = 5;
 
-    public DSAQueue(double[] pqueue, int pcount)
+    /*public DSAQueue(double[] pqueue, int pcount)
     {
         queue = pqueue;
         count = pcount;
+    }*/
+
+    public DSAQueue()
+    {
+        queue = new double[DEFAULT_CAPACITY];
+        count = 0;
     }
 
-    public DSAQueue(DSAQueue pDSAQueue)
+    public DSAQueue(int maxCapacity)
     {
-
+        queue = new double[maxCapacity];
+        count = 0;
+        //for(int i=0; ) 
     }
 
     public int getCount()
@@ -79,4 +89,22 @@ public class DSAQueue
         }
         return topVal;
     }
+
+    public void status()
+    {
+        if(isEmpty())
+        {
+            System.out.println("empty queue");
+        }
+        else
+        {
+            System.out.println(getCount());
+            for(int i=0; i<DEFAULT_CAPACITY; i++)
+            {
+                System.out.print(queue[i] + " ");
+            }
+        }
+    }
+
+    
 }

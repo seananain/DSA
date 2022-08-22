@@ -1,4 +1,4 @@
-public class DSAShufflingQueue 
+public class DSAShufflingQueue extends DSAQueue
 {
     
 }
