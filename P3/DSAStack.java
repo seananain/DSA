@@ -4,7 +4,7 @@ public class DSAStack
 {
     private Object[] stack;
     private int count;
-    private int DEFAULT_CAPACITY = 5;
+    private int DEFAULT_CAPACITY = 100;
     private boolean empty = false, full = false;
     
 
@@ -43,13 +43,13 @@ public class DSAStack
     {
         if(count == 0)
         {
-            empty = true;
+            return true;
         }
         else
         {
-            empty = false;
+            return false;
         }
-        return empty;
+
     }
 
     public boolean isFull()
@@ -81,7 +81,7 @@ public class DSAStack
     public Object pop()
     {
         Object topVal = top();
-        count += 1;
+        count -= 1;
         return topVal;
     }
 
@@ -107,10 +107,18 @@ public class DSAStack
         }
         else
         {
-            System.out.println(getCount());
-            for(int i=0; i<stack.length; i++)
+            //System.out.println(getCount());
+            System.out.println();
+            for(int i=count; i>=0; i--)
             {
-                System.out.print(stack[i] + " ");
+                if(stack[i]==null)
+                {
+                    System.out.print("");
+                }
+                else
+                {
+                    System.out.println(stack[i] + " ");
+                }
             }
         }
     }

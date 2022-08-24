@@ -8,7 +8,10 @@ public class DSAStackTest extends DSAStack
         s.push(8.2);
         s.push(5.9);
         s.push(11.2);
-        System.out.println(s.pop());
+        
+        s.display();
+        s.pop();
+        s.pop();
         s.display();
     }
 

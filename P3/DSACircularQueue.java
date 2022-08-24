@@ -9,7 +9,6 @@ public class DSACircularQueue extends DSAQueue
     public DSACircularQueue()
     {
         queue = new Object[DEFAULT_CAPACITY];
-        //count = 0;
         front = -1;
         rear = -1;
     }
@@ -17,44 +16,49 @@ public class DSACircularQueue extends DSAQueue
     public DSACircularQueue(int maxCapacity)
     {
         queue = new Object[maxCapacity];
-        //count = 0;
+        
         front = -1;
         rear = -1;
-        //for(int i=0; ) 
     }
 
-    /*public int getCount()
+    public int getFront()
     {
-        return count;
-    }*/
+        return front;
+    }
 
+    public int getRear()
+    {
+        return rear;
+    }
+
+    @Override
     public boolean isEmpty()
     {
         if(front == 0 && rear == DEFAULT_CAPACITY - 1)
         {
-            empty = true;
+            return true;
         }
         else
         {
-            empty = false;
+            return false;
         }
-        return empty;
     }
 
+    @Override
     public boolean isFull()
     {
         if(front == -1)
         {
-            full = true;
+            return true;
         }
         else
         {
-            full = false;
+            return false;
         }
-        return full;
     }
 
-    public void enqueue(double value)
+    @Override
+    public void enqueue(Object value)
     {
         if(isFull())
         {
@@ -67,18 +71,19 @@ public class DSACircularQueue extends DSAQueue
                 front = 0;
                 rear = (rear + 1) % queue.length;
                 queue[rear] = value;
-                //count += 1;
+     
             }
         }
     }
 
+    @Override
     public Object dequeue()
     {
         Object topVal = peek();
-        //count += 1;
         return topVal;
     }
 
+    @Override
     public Object peek()
     {
         Object topVal;
@@ -102,5 +107,20 @@ public class DSACircularQueue extends DSAQueue
         return topVal;
     }
 
-
+    public void status()
+    {
+        super.status();
+        if(isEmpty())
+        {
+            System.out.println("empty queue");
+        }
+        else
+        {
+            System.out.println(getCount());
+            for(int i=0; i<DEFAULT_CAPACITY; i++)
+            {
+                System.out.print(queue[i] + " ");
+            }
+        }
+    }
 }

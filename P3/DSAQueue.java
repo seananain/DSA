@@ -4,7 +4,7 @@ public class DSAQueue
     private int count;
     protected boolean empty;
     protected boolean full;
-    protected int DEFAULT_CAPACITY = 5;
+    protected int DEFAULT_CAPACITY = 100;
 
     /*public DSAQueue(double[] pqueue, int pcount)
     {
@@ -72,7 +72,7 @@ public class DSAQueue
     public Object dequeue()
     {
         Object topVal = peek();
-        count += 1;
+        count -= 1;
         return topVal;
     }
 
