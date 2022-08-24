@@ -23,8 +23,13 @@ public class RecursiveStack
         {
             case 1:
                 Recursive.calcNFactorialRecursive(n, stack);
-                //stack.push("calcNFactorialRecursive");
+                
                 popper(n, stack);
+            break;
+
+            case 2:
+                Recursive.fibRecursive(n, stack);
+                popper(n,stack);
             break;
 
             
@@ -34,12 +39,9 @@ public class RecursiveStack
 
     public static void popper(int n, DSAStack stack)
     {
-        
-        
-        final int count = stack.getCount();
-        for(int i=0; i<count; i++)
+        for(int i=0; i<n+1; i++)
         {
-            System.out.println(stack.getCount());
+            System.out.println();
             System.out.print("popping");
             stack.pop();
             stack.display();

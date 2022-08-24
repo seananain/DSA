@@ -32,9 +32,13 @@ public class DSACircularQueue extends DSAQueue
     }
 
     @Override
-    public boolean isEmpty()
+    public boolean isFull()
     {
         if(front == 0 && rear == DEFAULT_CAPACITY - 1)
+        {
+            return true;
+        }
+        else if(front == rear + 1)
         {
             return true;
         }
@@ -45,7 +49,7 @@ public class DSACircularQueue extends DSAQueue
     }
 
     @Override
-    public boolean isFull()
+    public boolean isEmpty()
     {
         if(front == -1)
         {

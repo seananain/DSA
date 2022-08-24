@@ -2,7 +2,7 @@
 
 public class DSAStack
 {
-    private Object[] stack;
+    protected Object[] stack;
     private int count;
     private int DEFAULT_CAPACITY = 100;
     private boolean empty = false, full = false;
@@ -103,13 +103,13 @@ public class DSAStack
     {
         if(isEmpty())
         {
+            System.out.println();
             System.out.println("empty queue");
         }
         else
         {
-            //System.out.println(getCount());
             System.out.println();
-            for(int i=count; i>=0; i--)
+            for(int i=count-1; i>=0; i--)
             {
                 if(stack[i]==null)
                 {

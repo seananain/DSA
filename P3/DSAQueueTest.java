@@ -7,48 +7,74 @@ import org.junit.*;
 public class DSAQueueTest extends DSAQueue
 {
    DSAQueue q = new DSAQueue();
+   DSACircularQueue cQ = new DSACircularQueue();
    
     @Test
    public void testGetCount()
    {
-        assertEquals(0, q.getCount());
+     assertEquals(0, q.getCount());
    }
 
    @Test
    public void testIsFull()
    {
-        assertFalse(q.isFull());
+     assertFalse(q.isFull());
+     assertFalse(((DSACircularQueue)cQ).isFull());
    }
 
    @Test
    public void testIsEmpty()
    {
-        assertTrue(q.isEmpty());
+     assertTrue(q.isEmpty());
+     assertTrue(((DSACircularQueue)cQ).isEmpty());
    }
 
    @Test
    public void testEnqueue()
    {
-        q.enqueue(5.1);
-        assertEquals(5.1, q.queue[0]);
-        assertEquals(1, q.getCount());
+     q.enqueue(5.1);
+     assertEquals(5.1, q.queue[0]);
+     assertEquals(1, q.getCount());
+
+     cQ.enqueue(6.3);
+     assertEquals(6.3, cQ.queue[0]);
+     assertEquals(0, cQ.getFront());
+     assertEquals(0, cQ.getRear());
    }
 
    @Test
    public void testDequeue()
    {
-        q.enqueue(5.1);
-        assertEquals(5.1, q.dequeue());
-        assertEquals(0, q.getCount());
+     q.enqueue(5.1);
+     assertEquals(5.1, q.dequeue());
+     assertEquals(0, q.getCount());
+
+     cQ.enqueue(6.3);
+     assertEquals(6.3, cQ.dequeue());
+     assertEquals(-1, cQ.getFront());
    }
 
    @Test
    public void testPeek()
    {
-        q.enqueue(5.1);
-        assertEquals(5.1, q.peek());
+     q.enqueue(5.1);
+     assertEquals(5.1, q.peek());
+
+     cQ.enqueue(5.1);
+     assertEquals(5.1, cQ.peek());
    }
 
+   @Test
+   public void testGetFront()
+   {
+     assertEquals(-1, cQ.getFront());
+   }
+
+   @Test
+   public void testGetRear()
+   {
+     assertEquals(-1, cQ.getRear());
+   }
 
 }
 

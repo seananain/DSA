@@ -76,10 +76,10 @@ public class DSAShufflingQueue extends DSAQueue
     {
         super.dequeue();
         Object topVal = peek();
-        count += 1;
+        count -= 1;
         return topVal;
     }
-
+    
     public Object peek()
     {
         super.peek();

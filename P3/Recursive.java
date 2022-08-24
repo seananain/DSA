@@ -12,18 +12,15 @@ public class Recursive
         }
         else if(n==0)
         {
-            stack.push("Argument: " + n);
-            
-            //stack.pop();
+            stack.push("calcNFactorialRecursive: Argument: " + n);
             stack.display();
+            
             return 1;
         }
         else
         {
-            stack.push("Argument: " + n);
+            stack.push("calcNFactorialRecursive: Argument: " + n);
             stack.display();
-            //stack.pop();
-            System.out.println(stack.getCount());
             return n*calcNFactorialRecursive(n-1, stack);
         }
     }  
@@ -31,7 +28,8 @@ public class Recursive
     public static int fibRecursive(int n, DSAStack stack)
     {
         int fibVal = 0;
-
+        System.out.println();
+        System.out.print("pushing");
         if(n<0)
         {
             throw new IllegalArgumentException("Import_must_not_be_negative");
@@ -48,6 +46,8 @@ public class Recursive
         {
             fibVal = fibRecursive(n-1, stack) + fibRecursive(n-2, stack);
         }
+        stack.push("fibRecursive: Argument: " + fibVal);
+        stack.display();
         return fibVal;
     }
 
