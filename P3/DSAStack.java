@@ -2,7 +2,7 @@
 
 public class DSAStack
 {
-    private double[] stack;
+    private Object[] stack;
     private int count;
     private int DEFAULT_CAPACITY = 5;
     private boolean empty = false, full = false;
@@ -16,13 +16,13 @@ public class DSAStack
 
     public DSAStack()
     {
-        stack = new double[DEFAULT_CAPACITY];
+        stack = new Object[DEFAULT_CAPACITY];
         count = 0;
     }
 
     public DSAStack(int maxCapacity)
     {
-        stack = new double[maxCapacity];
+        stack = new Object[maxCapacity];
         count = 0;
         //for(int i=0; ) 
     }
@@ -65,7 +65,7 @@ public class DSAStack
         return full;
     }
 
-    public void push(double value)
+    public void push(Object value)
     {
         if(isFull())
         {
@@ -78,16 +78,16 @@ public class DSAStack
         }
     }
 
-    public double pop()
+    public Object pop()
     {
-        double topVal = top();
+        Object topVal = top();
         count += 1;
         return topVal;
     }
 
-    public double top()
+    public Object top()
     {
-        double topVal;
+        Object topVal;
         if(isEmpty())
         {
             throw new IllegalArgumentException();
@@ -99,7 +99,7 @@ public class DSAStack
         return topVal;
     }
 
-    public void status()
+    public void display()
     {
         if(isEmpty())
         {

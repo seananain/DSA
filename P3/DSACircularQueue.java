@@ -8,7 +8,7 @@ public class DSACircularQueue extends DSAQueue
 
     public DSACircularQueue()
     {
-        queue = new double[DEFAULT_CAPACITY];
+        queue = new Object[DEFAULT_CAPACITY];
         //count = 0;
         front = -1;
         rear = -1;
@@ -16,7 +16,7 @@ public class DSACircularQueue extends DSAQueue
 
     public DSACircularQueue(int maxCapacity)
     {
-        queue = new double[maxCapacity];
+        queue = new Object[maxCapacity];
         //count = 0;
         front = -1;
         rear = -1;
@@ -65,23 +65,23 @@ public class DSACircularQueue extends DSAQueue
             if(front == -1)
             {
                 front = 0;
-                rear = (rear + 1) % DEFAULT_CAPACITY;
+                rear = (rear + 1) % queue.length;
                 queue[rear] = value;
                 //count += 1;
             }
         }
     }
 
-    public double dequeue()
+    public Object dequeue()
     {
-        double topVal = peek();
+        Object topVal = peek();
         //count += 1;
         return topVal;
     }
 
-    public double peek()
+    public Object peek()
     {
-        double topVal;
+        Object topVal;
         if(isEmpty())
         {
             throw new IllegalArgumentException();
@@ -96,7 +96,7 @@ public class DSACircularQueue extends DSAQueue
             }
             else
             {
-                front = (front + 1) % DEFAULT_CAPACITY;
+                front = (front + 1) % queue.length;
             }
         }
         return topVal;

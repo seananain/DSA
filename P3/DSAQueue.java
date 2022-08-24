@@ -1,6 +1,6 @@
 public class DSAQueue 
 {
-    protected double[] queue;
+    protected Object[] queue;
     private int count;
     protected boolean empty;
     protected boolean full;
@@ -14,13 +14,13 @@ public class DSAQueue
 
     public DSAQueue()
     {
-        queue = new double[DEFAULT_CAPACITY];
+        queue = new Object[DEFAULT_CAPACITY];
         count = 0;
     }
 
     public DSAQueue(int maxCapacity)
     {
-        queue = new double[maxCapacity];
+        queue = new Object[maxCapacity];
         count = 0;
         //for(int i=0; ) 
     }
@@ -56,7 +56,7 @@ public class DSAQueue
         return full;
     } 
 
-    public void enqueue(double value)
+    public void enqueue(Object value)
     {
         if(isFull())
         {
@@ -69,16 +69,16 @@ public class DSAQueue
         }
     }
 
-    public double dequeue()
+    public Object dequeue()
     {
-        double topVal = peek();
+        Object topVal = peek();
         count += 1;
         return topVal;
     }
 
-    public double peek()
+    public Object peek()
     {
-        double topVal;
+        Object topVal;
         if(isEmpty())
         {
             throw new IllegalArgumentException();
