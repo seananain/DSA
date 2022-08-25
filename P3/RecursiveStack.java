@@ -18,21 +18,36 @@ public class RecursiveStack
 
         System.out.println("Enter integer");
         n = sc.nextInt();
-
-        switch(choice)
+        try
         {
-            case 1:
-                Recursive.calcNFactorialRecursive(n, stack);
+            switch(choice)
+            {
+                case 1:
+                    Recursive.calcNFactorialRecursive(n, stack);
+                    
+                    popper(n, stack);
+                break;
+
+                case 2:
+                    Recursive.fibRecursive(n, stack);
+                    popper(n,stack);
+                break;
+
+                case 3:
+                    //Recursive.GCD(x, y, stack)(n, stack);
+                    popper(n,stack);
+                break;
+
+                case 4:
+                    Recursive.toBinary(n, stack);
+                    popper(n,stack);
+                break;
+
                 
-                popper(n, stack);
-            break;
-
-            case 2:
-                Recursive.fibRecursive(n, stack);
-                popper(n,stack);
-            break;
-
-            
+            }
+        }catch (Exception e)
+        {
+            System.out.println("Invalid input");
         }
         sc.close();
     }

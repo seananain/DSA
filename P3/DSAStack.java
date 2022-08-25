@@ -104,7 +104,7 @@ public class DSAStack
         if(isEmpty())
         {
             System.out.println();
-            System.out.println("empty queue");
+            System.out.println("empty stack");
         }
         else
         {

@@ -53,6 +53,8 @@ public class Recursive
 
     public static int GCD(int x, int y, DSAStack stack) //geeksforgeeks.org/java-program-to-compute-gcd/
     {
+        System.out.println();
+        System.out.print("pushing");
         if(y==0)
         {
             return x;
@@ -62,12 +64,18 @@ public class Recursive
 
     public static int toBinary(int dec, DSAStack stack)
     {
+        System.out.println();
+        System.out.print("pushing");
         if(dec==0)
         {
+            stack.push("toBinary: Argument: " + dec);
+            stack.display();
             return 0;
         }
         else
         {
+            stack.push("toBinary: Argument: " + dec);
+            stack.display();
             return(dec % 2 + 10*toBinary(dec/2, stack));
         }
     }
