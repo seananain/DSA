@@ -2,6 +2,50 @@ import java.util.Iterator;
 
 public class DSALinkedList implements Iterable
 {
+    private class DSAListNode 
+    {
+        private Object value;
+        private DSAListNode next;
+        private DSAListNode prev;
+
+        public DSAListNode(Object inValue)
+        {
+            value = inValue;
+            next = null;
+            prev = null;
+        }
+
+        public Object getValue()
+        {
+            return value;
+        }
+
+        public void setValue(Object inValue)
+        {
+            value = inValue;
+        }
+
+        public DSAListNode getNext()
+        {
+            return next;
+        }
+
+        public DSAListNode getPrev()
+        {
+            return prev;
+        }
+
+        public void setNext(DSAListNode newNext)
+        {
+            next = newNext;
+        }
+
+        public void setPrev(DSAListNode newPrev)
+        {
+            prev = newPrev;
+        }
+    }
+    
     public Iterator iterator()
     {
         return new DSALinkedListIterator(this);
@@ -44,10 +88,12 @@ public class DSALinkedList implements Iterable
     
     
     DSAListNode head;
+    DSAListNode tail;
 
     public DSALinkedList()
     {
         head = null;
+        tail = null;
     }
 
     public void insertFirst(Object newValue)
@@ -55,12 +101,25 @@ public class DSALinkedList implements Iterable
         DSAListNode newNd = new DSAListNode(newValue);
         if(isEmpty())
         {
-            head = newNd;
+            tail = newNd;
         }
         else
         {
             newNd.setNext(head);
             head = newNd;
+        }
+    }
+
+    public void insertBefore(Object valueToFind)
+    {
+        DSAListNode newNd = new DSAListNode(valueToFind);
+        if(isEmpty())
+        {
+            throw new IllegalArgumentException("empty");
+        }
+        else
+        {
+
         }
     }
 
@@ -73,19 +132,22 @@ public class DSALinkedList implements Iterable
         }
         else
         {
-            DSAListNode currNd = head;
+            /*DSAListNode currNd = tail;
             while(currNd.getNext()!=null)
             {
                 currNd = currNd.getNext();
             }
-            currNd.setNext(newNd);
+            currNd.setNext(newNd);*/
+
+            tail.setNext(newNd);
+            tail = newNd;
         }
     }
 
     public boolean isEmpty()
     {
         //boolean empty = 
-        if(head==null)
+        if(head==null || tail==null)
         {
             return true;
         }
@@ -100,7 +162,7 @@ public class DSALinkedList implements Iterable
     {
         if(isEmpty())
         {
-            return null;
+            throw new IllegalArgumentException("empty");
         }
         else
         {
@@ -117,12 +179,7 @@ public class DSALinkedList implements Iterable
         }
         else
         {
-            DSAListNode currNd = head;
-            while(currNd.getNext()!=null)
-            {
-                currNd = currNd.getNext();
-            }
-            Object nodeValue = currNd.getValue();
+            Object nodeValue = tail.getValue();
             return nodeValue;
         }
     }
@@ -132,6 +189,12 @@ public class DSALinkedList implements Iterable
         if(isEmpty())
         {
             throw new IllegalArgumentException("empty");
+        }
+        else if(head.getNext() == null)
+        {
+            tail = null;
+            Object nodeValue = head.getValue();
+            return nodeValue;
         }
         else
         {
