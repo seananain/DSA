@@ -99,18 +99,21 @@ public class DSALinkedList implements Iterable
     public void insertFirst(Object newValue)
     {
         DSAListNode newNd = new DSAListNode(newValue);
+        newNd.setValue(newValue);
         if(isEmpty())
         {
             tail = newNd;
+            //tail.setValue(newValue);
         }
         else
         {
+            //newNd.setValue(newValue);
             newNd.setNext(head);
             head = newNd;
         }
     }
 
-    public void insertBefore(Object valueToFind)
+    /*public void insertBefore(Object valueToFind)
     {
         DSAListNode newNd = new DSAListNode(valueToFind);
         if(isEmpty())
@@ -121,24 +124,18 @@ public class DSALinkedList implements Iterable
         {
 
         }
-    }
+    }*/
 
     public void insertLast(Object newValue)
     {
         DSAListNode newNd = new DSAListNode(newValue);
+        newNd.setValue(newValue);
         if(isEmpty())
         {
             head = newNd;
         }
         else
         {
-            /*DSAListNode currNd = tail;
-            while(currNd.getNext()!=null)
-            {
-                currNd = currNd.getNext();
-            }
-            currNd.setNext(newNd);*/
-
             tail.setNext(newNd);
             tail = newNd;
         }
@@ -147,7 +144,7 @@ public class DSALinkedList implements Iterable
     public boolean isEmpty()
     {
         //boolean empty = 
-        if(head==null || tail==null)
+        if(head==null && tail==null)
         {
             return true;
         }
@@ -186,18 +183,18 @@ public class DSALinkedList implements Iterable
 
     public Object removeFirst()
     {
+        
+
         if(isEmpty())
         {
             throw new IllegalArgumentException("empty");
         }
-        else if(head.getNext() == null)
-        {
-            tail = null;
-            Object nodeValue = head.getValue();
-            return nodeValue;
-        }
         else
         {
+            if(head.getNext() == null)
+            {
+                tail = null;
+            }
             Object nodeValue = head.getValue();
             head = head.getNext();
             return nodeValue;
@@ -212,15 +209,8 @@ public class DSALinkedList implements Iterable
         }
         else
         {
-            DSAListNode prevNd = new DSAListNode(null);;
-            DSAListNode currNd = new DSAListNode(head);
-            while(currNd != null)
-            {
-                prevNd = currNd;
-                currNd = currNd.getNext();
-            }
-            prevNd.setNext(null);
-            Object nodeValue = currNd.getValue();
+            Object nodeValue = tail.getValue();
+            tail = tail.getPrev();
             return nodeValue;
         } 
     }

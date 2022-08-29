@@ -52,16 +52,17 @@ public class UnitTestLinkedList
             System.out.println("passed");
         } catch(Exception e) { System.out.println("FAILED"); }
 
-        // TEST 3 : PEEK LAST
+        // TEST 3 : PEEK FIRST
         try {
             iNumTests++;
-            System.out.print("Testing peekLast(): ");
-            sTestString = (String)ll.peekLast();
+            System.out.print("Testing peekFirst(): ");
+            sTestString = (String)ll.peekFirst();
             if (sTestString != "abc")
                 throw new IllegalArgumentException("FAILED.");
             iNumPassed++;
-            System.out.println("passed   ");
+            System.out.println("passed");
         } catch(Exception e) { System.out.println("FAILED"); }
+        
 
         // TEST 4 : REMOVE FIRST
         try {
@@ -107,12 +108,12 @@ public class UnitTestLinkedList
         // TEST 7 : PEEK LAST
         try {
             iNumTests++;
-            System.out.print("Testing peekFirst(): ");
-            sTestString = (String)ll.peekFirst();
+            System.out.print("Testing peekLast(): ");
+            sTestString = (String)ll.peekLast();
             if (sTestString != "abc")
                 throw new IllegalArgumentException("FAILED.");
             iNumPassed++;
-            System.out.println("passed");
+            System.out.println("passed   ");
         } catch(Exception e) { System.out.println("FAILED"); }
 
         // TEST 8 : REMOVE FIRST
