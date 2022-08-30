@@ -7,6 +7,7 @@ public class Q5
         Scanner sc = new Scanner(System.in);
         Boolean loop = true;
         int choice;
+        String in;
 
         DSALinkedList list = new DSALinkedList();
 
@@ -23,14 +24,41 @@ public class Q5
                 switch(choice)
                 {
                     case 0:
-
+                        System.out.println("Exiting...");
+                        loop = false;
                     break;
 
                     case 1:
-
+                        System.out.println("Insert First: Enter something...");
+                        in = sc.nextLine();
+                        list.insertFirst(in);
                     break;
 
                     case 2:
+                        System.out.println("Insert Last: Enter something...");
+                        in = sc.nextLine();
+                        list.insertLast(in);
+                    break;
+
+                    case 3:
+                        System.out.println("Removing first value: " + list.peekFirst());
+                        list.removeFirst();
+                    break;
+
+                    case 4:
+                        System.out.println("Removing last value: " + list.peekLast());
+                        list.removeLast();
+                    break;
+
+                    case 5:
+                        
+                    break;
+
+                    case 6:
+
+                    break;
+
+                    case 7:
 
                     break;
 
