@@ -1,8 +1,9 @@
 import java.util.Iterator;
+import java.io.*;
 
-public class DSALinkedList implements Iterable
+public class DSALinkedList implements Iterable, Serializable
 {
-    private class DSAListNode 
+    private class DSAListNode implements Serializable
     {
         private Object value;
         private DSAListNode next;
@@ -226,5 +227,17 @@ public class DSALinkedList implements Iterable
             return nodeValue;
         } 
     }
+
+    public void Display(DSALinkedList list)
+    {
+
+        Iterator iter =  list.iterator();
+        do
+        {
+            System.out.println(iter.next());
+        }while(iter.hasNext());
+    }
+
+    
 
 }
