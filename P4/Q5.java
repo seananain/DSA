@@ -9,7 +9,7 @@ public class Q5 //implements Serializable
         Boolean loop = true;
         int choice;
         String in;
-        String output = "out.txt";
+        String output = "out.ser";
 
         DSALinkedList list = new DSALinkedList();
 
@@ -60,6 +60,7 @@ public class Q5 //implements Serializable
 
                     case 6:
                         System.out.println("Reading file...");
+                        list = load(output);
                     break;
 
                     case 7:
@@ -137,11 +138,11 @@ public class Q5 //implements Serializable
         }
     }*/
 
-    /*private DSALinkedList load(String filename) throws IllegalArgumentException
+    public static DSALinkedList load(String filename) throws IllegalArgumentException
     {
         FileInputStream fileStrm;
         ObjectInputStream objStrm;
-        DSALinkedList inObj;
+        DSALinkedList inObj = new DSALinkedList();
         try 
         {
             fileStrm = new FileInputStream(filename);
@@ -158,6 +159,6 @@ public class Q5 //implements Serializable
             throw new IllegalArgumentException("Unable to load object from file");
         }
         return inObj;
-    }*/
+    }
 
 }
