@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.NoSuchElementException;
 
-public class DSABinarySearchTree
+public class DSABinarySearchTree implements Serializable
 {
-    private class DSATreeNode
+    private class DSATreeNode implements Serializable
     {
         private String m_key;
         private Object m_value;
@@ -59,6 +60,11 @@ public class DSABinarySearchTree
         m_root = null;
     }
 
+    public DSABinarySearchTree(String key, Object data)
+    {
+        m_root = new DSATreeNode(key, data);
+    }
+
     public Object find(String key)
     {
         return findRec(key, m_root);
@@ -100,6 +106,7 @@ public class DSABinarySearchTree
         {
             DSATreeNode newNode = new DSATreeNode(key, data);
             updateNode = newNode;
+            
         }
         else if (key.equals(currNode.getKey()))
         {
@@ -116,14 +123,79 @@ public class DSABinarySearchTree
         return updateNode;
     }
 
-    public void delete(String key)
+    public DSATreeNode delete(String key)
     {
+        return deleteRec(key, m_root);
+    }
 
+    public DSATreeNode deleteRec(String key, DSATreeNode currNode)
+    {
+        DSATreeNode updateNode = currNode;
+        if(currNode == null)
+        {
+            throw new IllegalArgumentException();
+        }
+        else if (key.equals(currNode.getKey()))
+        {
+            updateNode = deleteNode(key, currNode);
+        }
+        else if (key.compareTo(currNode.getKey()) < 0)
+        {
+            currNode.setLeft(deleteRec(key, currNode.getLeft()));
+        }
+        else
+        {
+            currNode.setRight(deleteRec(key, currNode.getRight()));
+        }
+        return updateNode;
+
+    }
+
+    public DSATreeNode deleteNode(String key, DSATreeNode delNode)
+    {
+        DSATreeNode updateNode = null;
+
+        if((delNode.getLeft() == null)&&(delNode.getRight()==null))
+        {
+            updateNode = null;
+        }
+        else if((delNode.getLeft() != null)&&(delNode.getRight()==null))
+        {
+            updateNode = delNode.getLeft();
+        }
+        else if((delNode.getLeft() == null)&&(delNode.getRight()!=null))
+        {
+            updateNode = delNode.getRight();
+        }
+        else
+        {
+            updateNode = promoteSuccessor(delNode.getRight());
+            if(updateNode!=delNode.getRight())
+            {
+                updateNode.setRight(delNode.getRight());
+            }
+            updateNode.setLeft(delNode.getLeft());
+        }
+        return updateNode;
     }
 
     public DSATreeNode promoteSuccessor(DSATreeNode currNode)
     {
-        DSATreeNode successor = new DSATreeNode(inKey, inVal);
+        DSATreeNode successor = currNode;
+
+        if(currNode.getLeft() == null)
+        {
+            successor = currNode;
+        }
+        else if(currNode.getLeft() != null)
+        {
+            successor = promoteSuccessor(currNode.getLeft());
+            if(successor == currNode.getLeft())
+            {
+                currNode.setLeft(successor.getRight());
+            }
+        }
+        return successor;
         //currNode = 
     }
 
@@ -135,6 +207,11 @@ public class DSABinarySearchTree
     public int height()
     {
         return heightRec(m_root);
+    }
+
+    public int heightAlt(DSATreeNode node)
+    {
+        return heightRec(node);
     }
 
     public int heightRec(DSATreeNode currNode)
@@ -162,9 +239,9 @@ public class DSABinarySearchTree
         return htSoFar;
     }
 
-    public int min(DSATreeNode currNode)
+    public int min()
     {
-        return minRec(currNode);
+        return minRec(m_root);
     }
 
     public int minRec(DSATreeNode currNode)
@@ -181,9 +258,9 @@ public class DSABinarySearchTree
         return minKey;
     }
 
-    public int max(DSATreeNode currNode)
+    public int max()
     {
-        return maxRec(currNode);
+        return maxRec(m_root);
     }
 
     public int maxRec(DSATreeNode currNode)
@@ -202,18 +279,81 @@ public class DSABinarySearchTree
 
     public Double balance()
     {
+        DSATreeNode currNode = m_root;
+        int Ltotal, Rtotal;
+        Double balance;
+        DSATreeNode left = currNode.getLeft();
+        DSATreeNode right = currNode.getRight();
 
+
+        Ltotal = heightAlt(left);
+        Rtotal = heightAlt(right);
+
+        if(Ltotal > Rtotal)
+        {
+            balance = 100*(Double.valueOf(Rtotal)/Double.valueOf(Ltotal));
+        }
+        else
+        {
+            balance = 100*(Double.valueOf(Ltotal)/Double.valueOf(Rtotal));
+        }
+        return balance;
+    }
+
+    public void inOrder()
+    {
+        inOrderRec(m_root);
     }
 
     public void inOrderRec(DSATreeNode currNode)
     {
         if(currNode == null)
         {
-            throw new IllegalArgumentException();
+            return;
         }
         else
         {
-            
+            inOrderRec(currNode.getLeft());
+            System.out.println(currNode.getKey());
+            inOrderRec(currNode.getRight());
+        }
+    }
+    
+    public void preOrder()
+    {
+        preOrderRec(m_root);
+    }
+
+    public void preOrderRec(DSATreeNode currNode)
+    {
+        if(currNode == null)
+        {
+            return;
+        }
+        else
+        {
+            System.out.println(currNode.getKey());
+            preOrderRec(currNode.getLeft());
+            preOrderRec(currNode.getRight());
+        }
+    }
+
+    public void postOrder()
+    {
+        postOrderRec(m_root);
+    }
+
+    public void postOrderRec(DSATreeNode currNode)
+    {
+        if(currNode == null)
+        {
+            return;
+        }
+        else
+        {
+            postOrderRec(currNode.getLeft());
+            postOrderRec(currNode.getRight());
+            System.out.println(currNode.getKey());
         }
     }
 }
