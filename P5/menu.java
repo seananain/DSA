@@ -173,4 +173,77 @@ public class menu
         }
         return inObj;
     }
+
+
+
+
+    public static DSABinarySearchTree readFile(String pFileName){
+        FileInputStream fileStream = null;
+        InputStreamReader rdr;
+        BufferedReader bufRdr;
+        int lineNum = 0;
+        String line;
+        DSABinarySearchTree bst1 = new DSABinarySearchTree();
+
+        try{
+        
+
+            fileStream = new FileInputStream(pFileName); //all this is renewed again to start fresh to cycle through file from the top
+            rdr = new InputStreamReader(fileStream);
+            bufRdr = new BufferedReader(rdr);
+            //line = bufRdr.readLine(); //i do an extra read line here before starting the actual loop to "THROW AWAY" the first line of the text file which was just the headers
+            while(processLine(line) != null)
+            {  //keep within length that was found just prior
+                line = bufRdr.readLine(); //where the actual data starts (the second line)
+                if(line != null)
+                {
+
+                    String [] stringArray = processLine(line);
+                    bst1.insert(key, value);
+                   
+
+
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            fileStream.close();
+        } catch(IOException errorDetails){
+            if(fileStream != null){
+                try{
+                    fileStream.close();
+                }catch(IOException ex2){
+
+                }
+            }
+            System.out.println("An error! " + errorDetails.getMessage());
+        }
+        
+        return covidRecordArray;
+    }
+    
+
+    public static String[] processLine(String csvRow){  //reading one row of a csv file at a time, separated by string.split method
+        String[] splitLine;
+        splitLine = csvRow.split(","); //the -1 keeps empty cells in the line rather than remove them. the empty cells are then dealt with in the readFile method, as explained above
+        return splitLine;
+        }
+
+    
+
+    public static void writeOneRow(String pFileName, String pInputString){
+        FileOutputStream fileStrm = null;
+        PrintWriter pw;
+        try {
+            fileStrm = new FileOutputStream(pFileName);
+            pw = new PrintWriter(fileStrm);
+            pw.println(pInputString);
+            pw.close();
+        } catch (IOException e) {
+            System.out.println("Error in writing to file" + e.getMessage());
+        }
+    }
 }
