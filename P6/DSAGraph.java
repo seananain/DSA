@@ -33,22 +33,38 @@ public class DSAGraph
 
         public void addEdge(DSAGraphVertex vertex)
         {
-
+            
         }
 
         public void setVisited()
         {
-
+            visited.insertFirst(label);
         }
 
         public void clearVisited()
         {
+            Iterator iter = visited.iterator();
+            do
+            {
+                visited.removeFirst();
+            }while(iter.hasNext());
 
         }
 
         public Boolean getVisited()
         {
-            return true;
+            Iterator iter = visited.iterator();
+            do
+            {
+                if(iter.next()==label)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }while(iter.hasNext());
         }
     }
 
@@ -198,8 +214,21 @@ public class DSAGraph
 
     public void displayAsMatrix()
     {
+        
+    }
+
+    public void depthFirstSearch(DSAGraph graph)
+    {
+        DSALinkedList T = new DSALinkedList();
+        graph.getVertex(label)
 
     }
+
+    public void breadthFirstSearch()
+    {
+
+    }
+
 
     
 
