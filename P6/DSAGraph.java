@@ -220,7 +220,7 @@ public class DSAGraph
     public void depthFirstSearch(DSAGraph graph)
     {
         DSALinkedList T = new DSALinkedList();
-        graph.getVertex(label)
+        //graph.getVertex(label)
 
     }
 

@@ -97,18 +97,17 @@ public class menu
 
                                 case 1:
                                     System.out.println("Pre-Order Traversal");
-                                    bst.preOrder();
-                                    save(objToSave, filename);
+                                    writePre(csvfile2, bst);
                                 break;
 
                                 case 2:
                                     System.out.println("In-Order Traversal");
-                                    bst.inOrder();
+                                    writeIn(csvfile2, bst);
                                 break;
 
                                 case 3:
                                     System.out.println("Post-Order Traversal");
-                                    bst.postOrder();
+                                    writePost(csvfile2, bst);
                                 break;
                             }
                         }while(loop2 == true);
@@ -131,12 +130,6 @@ public class menu
         {
             throw new InputMismatchException("invalid input");
         }
-
-
-
-
-
-
         sc.close();
     }
 
@@ -202,9 +195,6 @@ public class menu
         return inObj;
     }
 
-
-
-
     public static DSABinarySearchTree readFile(String pFileName)
     {
         DSABinarySearchTree bst = new DSABinarySearchTree("2", 2);
@@ -247,7 +237,6 @@ public class menu
         return bst;
     }
     
-
     private static void processLine(String csvRow, DSABinarySearchTree bst)
     {
         String[] splitLine;
@@ -255,47 +244,93 @@ public class menu
         int lineLength = splitLine.length;
         String temp1 = splitLine[1];
         Object o = temp1;
-        /*for(int i = 0; i < lineLength; i++)
-        {
-            System.out.print(splitLine[i] + " ");
-            String temp = splitLine[1];
-            String temp1 = splitLine[0];
-            Object o = temp;
-            bst.insert(splitLine[0], temp);
-            
-        }*/
         bst.insert(splitLine[0], temp1);
         System.out.println("");
     }
 
-    
-
-    public static void writeOneRow(String pFileName)
+    public static void writePre(String pFileName, DSABinarySearchTree bst)
     {
+        String output;
         FileOutputStream fileStrm = null;
         PrintWriter pw;
+        try
+        {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream ps = new PrintStream(baos);
+            PrintStream old = System.out;
+            System.setOut(ps);
 
-      
+            bst.preOrder();
 
+            System.out.flush();
+            System.setOut(old);
         
-        try {
+            output = baos.toString();
+    
             fileStrm = new FileOutputStream(pFileName);
             pw = new PrintWriter(fileStrm);
-            pw.print(input);
+            pw.print(output);
             pw.close();
         } catch (IOException e) {
             System.out.println("Error in writing to file" + e.getMessage());
         }
-        System.setOut(null);
-        System.setErr(null);
-
-
     }
 
-    public static void preOrderSave(String fileName, DSABinarySearchTree bst)
+    public static void writeIn(String pFileName, DSABinarySearchTree bst)
     {
+        String output;
         FileOutputStream fileStrm = null;
         PrintWriter pw;
+        try
+        {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream ps = new PrintStream(baos);
+            PrintStream old = System.out;
+            System.setOut(ps);
 
+            bst.inOrder();
+
+            System.out.flush();
+            System.setOut(old);
+        
+            output = baos.toString();
+    
+            fileStrm = new FileOutputStream(pFileName);
+            pw = new PrintWriter(fileStrm);
+            pw.print(output);
+            pw.close();
+        } catch (IOException e) {
+            System.out.println("Error in writing to file" + e.getMessage());
+        }
+    }
+
+    public static void writePost(String pFileName, DSABinarySearchTree bst)
+    {
+        String output;
+        FileOutputStream fileStrm = null;
+        PrintWriter pw;
+        try
+        {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream ps = new PrintStream(baos);
+            PrintStream old = System.out;
+            System.setOut(ps);
+
+            bst.postOrder();
+
+            System.out.flush();
+            System.setOut(old);
+        
+            output = baos.toString();
+    
+            fileStrm = new FileOutputStream(pFileName);
+            pw = new PrintWriter(fileStrm);
+            pw.print(output);
+            pw.close();
+        } catch (IOException e) {
+            System.out.println("Error in writing to file" + e.getMessage());
+        }
     }
 }
+
+
