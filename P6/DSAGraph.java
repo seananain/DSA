@@ -4,6 +4,7 @@ public class DSAGraph
 {
     DSALinkedList vertices;
     DSALinkedList edges;
+    private int matrix[][];
 
     private class DSAGraphVertex
     {
@@ -13,6 +14,10 @@ public class DSAGraph
 
         public DSAGraphVertex(Object inLabel, Object inValue)
         {
+            links = new DSALinkedList();
+            visited = new DSALinkedList();
+            label = inLabel;
+            value = inLabel;
 
         }
 
@@ -33,7 +38,7 @@ public class DSAGraph
 
         public void addEdge(DSAGraphVertex vertex)
         {
-            
+            links.insertLast(vertex);
         }
 
         public void setVisited()
@@ -75,7 +80,10 @@ public class DSAGraph
 
         public DSAGraphEdge(DSAGraphVertex fromVertex, DSAGraphVertex toVertex, Object inLabel, Object inValue)
         {
-
+            from = fromVertex;
+            to = toVertex;
+            label = inLabel;
+            value = inValue;
         }
 
         public Object getLabel()
@@ -117,13 +125,18 @@ public class DSAGraph
 
     public DSAGraph()
     {
-
+        vertices = new DSALinkedList();
+        edges = new DSALinkedList();
     }
 
     public void addVertex(Object label, Object value)
     {
-        DSAGraphVertex vertex = new DSAGraphVertex(label, value);
-        vertices.insertLast(vertex);
+        if(!hasVertex(label))
+        {
+            DSAGraphVertex vertex = new DSAGraphVertex(label, value);
+        
+            vertices.insertLast(vertex);
+        }
     }
 
     public void addEdge(Object label1, Object label2)
@@ -166,17 +179,19 @@ public class DSAGraph
     {
         Iterator iter = vertices.iterator();
         DSAGraphVertex vertex = null;
-        while(iter.hasNext())
+        do
         {
             DSAGraphVertex vert = (DSAGraphVertex)iter.next();
             
-            if(vert.getLabel().equals(label))
+            if(vert==null)
+            {}
+            else if(vert.getLabel().equals(label))
             {
                 return vert;
             }
         
 
-        }
+        }while(iter.hasNext());
         return vertex;
 
     }
@@ -185,8 +200,8 @@ public class DSAGraph
     {
         Iterator iter = vertices.iterator();
         DSAGraphVertex vertex = getVertex(label);
-        return vertex.getAdjacent();
 
+        return vertex.getAdjacent();
     }
 
     public Boolean isAdjacent(Object label1, Object label2)
@@ -200,7 +215,7 @@ public class DSAGraph
             DSAGraphEdge edge = (DSAGraphEdge)iter.next();
 
             if((edge.getFrom()==vert1 && edge.getTo()==vert2) || (edge.getTo()==vert1 && edge.getFrom()==vert2))
-            {
+            { 
                 return true;
             }
         }
@@ -209,12 +224,67 @@ public class DSAGraph
 
     public void displayAsList()
     {
-
+        Iterator iter = vertices.iterator();
+        DSAGraphVertex vertex = null;
+        do
+        {
+            DSAGraphVertex vert = (DSAGraphVertex)iter.next();
+            System.out.println("Vertex: " + vert.getLabel());
+            System.out.println("Adjacent vertices:");
+            DSAGraphVertex adj = null;
+            Iterator iter2 = vert.links.iterator();
+            do
+            {
+                DSAGraphVertex vert2 = (DSAGraphVertex)iter2.next();
+                System.out.println(vert2.getLabel());
+            }while(iter2.hasNext());
+        }while(iter.hasNext());
     }
 
     public void displayAsMatrix()
     {
+        int num = 0;
+        matrix = new int[getVertexCount()][getVertexCount()];
         
+        Object[] array1 = new Object[getVertexCount()];
+        //Object[] array2 = new Object[getVertexCount()];
+
+        Iterator iter = vertices.iterator();
+        DSAGraphVertex vertex = null;
+        System.out.println("Lookup");
+        do
+        {
+            DSAGraphVertex vert = (DSAGraphVertex)iter.next();
+            System.out.println(num+" " + vert.getLabel());
+            array1[num] = vert.getLabel();
+            num++;
+        
+        }while(iter.hasNext());
+        System.out.println("\n");
+        for(int i=0; i<getVertexCount(); i++)
+        {
+            for(int j=0; j<getVertexCount(); j++)
+            {
+                if(isAdjacent(array1[i], array1[j])==true)
+                {
+                    matrix[i][j] = 1;
+                }
+                else
+                {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        for(int j=0;j<getVertexCount();j++)
+        {
+            for(int k=0;k<getVertexCount();k++)
+            {
+                System.out.print(matrix[j][k] + " ");
+            }
+            System.out.println("\n");
+        }
+
     }
 
     public void depthFirstSearch(DSAGraph graph)

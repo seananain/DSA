@@ -16,7 +16,7 @@ public class q3
         int choice;
         System.out.println("Choose which file to read into graph...");
         System.out.println("1. prac6_1.al");
-        System.out.println("2, prac6_2.al");
+        System.out.println("2. prac6_2.al");
         choice = sc.nextInt();
 
 
@@ -26,10 +26,12 @@ public class q3
             {
                 case 1:
                     graph = readFile(file1);
+                    graph.displayAsList();
                 break;
 
                 case 2:
-                    graph = readFile(file1);
+                    graph = readFile(file2);
+                    graph.displayAsMatrix();
                 break;
 
 
@@ -71,8 +73,8 @@ public class q3
             while(line != null)
             {
                 lineNum++;
-                System.out.println(line);
-                processLine(line, bst);
+                //System.out.println(line);
+                processLine(line, graph);
                 
                 line = bufRdr.readLine();
             }
@@ -91,26 +93,26 @@ public class q3
         }
         System.out.println("Error in fileProcessing: " + errorDetails.getMessage());
         }
-        return bst;
+        return graph;
     }
 
     private static void processLine(String csvRow, DSAGraph graph)
     {
+        Object vertex1, vertex2;
+        String v1, v2;
         String[] splitLine;
-        splitLine = csvRow.split(",");
+        splitLine = csvRow.split(" ");
         int lineLength = splitLine.length;
-        String temp1 = splitLine[1];
-        Object o = temp1;
-        /*for(int i = 0; i < lineLength; i++)
-        {
-            System.out.print(splitLine[i] + " ");
-            String temp = splitLine[1];
-            String temp1 = splitLine[0];
-            Object o = temp;
-            bst.insert(splitLine[0], temp);
-            
-        }*/
-        bst.insert(splitLine[0], temp1);
-        System.out.println("");
+        v1 = splitLine[0];
+        v2 = splitLine[1];
+        //System.out.println(splitLine[0] + splitLine[1]);
+
+        vertex1 = v1;
+        vertex2 = v2;
+        graph.addVertex(vertex1, vertex1);
+        graph.addVertex(vertex2, vertex2);
+        graph.addEdge(vertex1, vertex2);
+       
+        
     }
 }
