@@ -289,14 +289,16 @@ public class DSAGraph
 
     public void depthFirstSearch(DSAGraph graph)
     {
-        DSALinkedList T = new DSALinkedList();
-        //graph.getVertex(label)
+        DSAQueue T = new DSAQueue();
+        DSAStack S = new DSAStack();
+       
 
     }
 
     public void breadthFirstSearch()
     {
-
+        DSAQueue T = new DSAQueue();
+        DSAQueue Q = new DSAQueue();
     }
 
 
