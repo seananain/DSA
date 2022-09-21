@@ -3,7 +3,7 @@ import java.io.*;
 
 public class DSALinkedList implements Iterable, Serializable
 {
-    private class DSAListNode implements Serializable
+    public class DSAListNode implements Serializable
     {
         private Object value;
         private DSAListNode next;
@@ -88,13 +88,18 @@ public class DSALinkedList implements Iterable, Serializable
     }
     
     
-    DSAListNode head;
+    public DSAListNode head;
     DSAListNode tail;
 
     public DSALinkedList()
     {
         head = null;
         tail = null;
+    }
+
+    public Object getHead()
+    {
+        return head;
     }
 
     public void insertFirst(Object newValue)

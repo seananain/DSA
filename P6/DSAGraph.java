@@ -6,16 +6,16 @@ public class DSAGraph
     DSALinkedList edges;
     private int matrix[][];
 
-    private class DSAGraphVertex
+    class DSAGraphVertex
     {
         private Object label, value;
         private DSALinkedList links;
-        private DSALinkedList visited;
+        private Boolean visited;
 
         public DSAGraphVertex(Object inLabel, Object inValue)
         {
             links = new DSALinkedList();
-            visited = new DSALinkedList();
+            visited = false;
             label = inLabel;
             value = inLabel;
 
@@ -43,37 +43,22 @@ public class DSAGraph
 
         public void setVisited()
         {
-            visited.insertFirst(label);
+            visited = true;
         }
 
         public void clearVisited()
         {
-            Iterator iter = visited.iterator();
-            do
-            {
-                visited.removeFirst();
-            }while(iter.hasNext());
+            visited = true;
 
         }
 
         public Boolean getVisited()
         {
-            Iterator iter = visited.iterator();
-            do
-            {
-                if(iter.next()==label)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }while(iter.hasNext());
+            return visited;
         }
     }
 
-    private class DSAGraphEdge
+    class DSAGraphEdge
     {
         private DSAGraphVertex from, to;
         private Object label, value;
@@ -196,12 +181,14 @@ public class DSAGraph
 
     }
 
+
+
     public DSALinkedList getAdjacent(Object label)
     {
         Iterator iter = vertices.iterator();
         DSAGraphVertex vertex = getVertex(label);
 
-        return vertex.getAdjacent();
+        return vertex.links;
     }
 
     public Boolean isAdjacent(Object label1, Object label2)
@@ -292,6 +279,38 @@ public class DSAGraph
         DSAQueue T = new DSAQueue();
         DSAStack S = new DSAStack();
        
+        Iterator iter = vertices.iterator();
+        do
+        {
+            DSAGraphVertex vert2 = (DSAGraphVertex)iter.next();
+            vert2.clearVisited();
+        }while(iter.hasNext());
+
+        DSAGraphVertex v = (DSAGraphVertex)vertices.head.getValue();
+       
+        S.push(v);
+        v.setVisited();
+        
+
+        do
+        {
+            Iterator iter2 = v.links.iterator();
+            do
+            {
+                DSAGraphVertex w = (DSAGraphVertex)iter2.next();
+                if(!w.getVisited())
+                {
+                    T.enqueue(v);
+                    T.enqueue(w);
+                    w.setVisited();
+                    S.push(w);
+                    v=w;
+                }
+
+            }while(iter2.hasNext());
+            v = (DSAGraph.DSAGraphVertex) S.pop();
+
+        }while(!S.isEmpty());
 
     }
 
@@ -299,6 +318,37 @@ public class DSAGraph
     {
         DSAQueue T = new DSAQueue();
         DSAQueue Q = new DSAQueue();
+
+        Iterator iter = vertices.iterator();
+        do
+        {
+            DSAGraphVertex vert2 = (DSAGraphVertex)iter.next();
+            vert2.clearVisited();
+
+        }while(iter.hasNext());
+
+        
+        DSAGraphVertex v = (DSAGraphVertex)vertices.head.getValue();
+       
+        Q.enqueue(v);
+        do
+        {
+            Iterator iter2 = v.links.iterator();
+            v = (DSAGraph.DSAGraphVertex) Q.dequeue();
+            do
+            {
+                DSAGraphVertex w = (DSAGraphVertex)iter2.next();
+                if(!w.getVisited())
+                {
+                    T.enqueue(v);
+                    T.enqueue(w);
+                    w.setVisited();
+                    Q.enqueue(w);
+                }
+            }while(iter2.hasNext());
+
+        }while(!Q.isEmpty());
+
     }
 
 
