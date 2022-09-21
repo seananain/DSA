@@ -59,7 +59,7 @@ public class keyMeUp
     {
         Scanner sc = new Scanner(System.in);
         Boolean loop = true;
-        String file, inputString;
+        String file, inputString, fileAlt = "basicNum.al";
         String output = "output.al";
         int choice;
         do
@@ -73,7 +73,7 @@ public class keyMeUp
                     System.out.println("Enter file name");
                     sc.nextLine();
                     file = sc.nextLine();
-                    readFile(file, KB);
+                    readFile(fileAlt, KB);
                 break;
 
                 case 2: //Node operations (find, insert, delete, update)
@@ -103,7 +103,7 @@ public class keyMeUp
                 break;
 
                 case 7: //Generate paths
-
+                    genPaths(KB, "inputString");
                 break;
 
                 case 8://Display path(s) (ranked, option to save)
@@ -224,11 +224,124 @@ public class keyMeUp
     public static void genPaths(DSAGraph KB, String inputString)
     {
         char[] input = inputString.toCharArray();
+        DSAQueue path1 = new DSAQueue();
+        DSAQueue path2 = new DSAQueue();
 
-        for(int i=0; i<input.length; i++)
+        /*for(int i=0; i<input.length-1; i++)
         {
-            //input[i];
-        }
+            KB.breadthFirstSearchAlt(KB, input[i], input[i+1]);
+        }*/
+
+        path1 = breadthFirstSearchAlt(KB, "1", "9");
+        path2 = depthFirstSearchAlt(KB, "1", "9");
+
+        Iterator iter = path2.iterator();
+        System.out.println("Breadth first");
+        do
+        {
+            DSAGraph.DSAGraphVertex vertex = (DSAGraph.DSAGraphVertex)iter.next();
+            System.out.print(vertex.getLabel() + " <- ");
+        }while(iter.hasNext());
+        System.out.println();
+        System.out.println();
+        /*Iterator iter2 = path2.iterator();
+        System.out.println("Depth first");
+        
+        do
+        {
+            DSAGraph.DSAGraphVertex vertex1 = (DSAGraph.DSAGraphVertex)iter2.next();
+            System.out.print(vertex1.getLabel() + " <- ");
+        }while(iter.hasNext());
+        System.out.println();*/
+
+    }
+
+    public static DSAQueue breadthFirstSearchAlt(DSAGraph graph, Object vertex1, Object vertex2)
+    {
+        DSAQueue T = new DSAQueue();
+        DSAQueue Q = new DSAQueue();
+        Boolean loop = true;
+
+        Iterator iter = graph.vertices.iterator();
+        do
+        {
+            DSAGraph.DSAGraphVertex vert2 = (DSAGraph.DSAGraphVertex)iter.next();
+            vert2.clearVisited();
+
+        }while(iter.hasNext());
+
+        DSAGraph.DSAGraphVertex v = graph.getVertex(vertex1);
+    
+        Q.enqueue(v);
+        v.setVisited();
+        do
+        {
+            Iterator iter2 = v.getAdjacent().iterator();
+            v = (DSAGraph.DSAGraphVertex) Q.dequeue();
+            do
+            {
+                DSAGraph.DSAGraphVertex w = (DSAGraph.DSAGraphVertex)iter2.next();
+                
+                if(w.getVisited()==false)
+                {
+                    T.enqueue(v);
+                    T.enqueue(w);
+                    w.setVisited();
+                    Q.enqueue(w);
+                    if(w.getLabel().equals(vertex2))
+                    {
+                        loop = false;
+                    }
+                }
+                
+            }while(iter2.hasNext() && loop == true);
+
+        }while(!Q.isEmpty() &&loop == true );
+        return T;
+    }
+
+    public static DSAQueue depthFirstSearchAlt(DSAGraph graph, Object vertex1, Object vertex2)
+    {
+        DSAQueue T = new DSAQueue();
+        DSAStack S = new DSAStack();
+        Boolean loop = true;
+        Iterator iter = graph.vertices.iterator();
+        do
+        {
+            DSAGraph.DSAGraphVertex vert2 = (DSAGraph.DSAGraphVertex)iter.next();
+            vert2.clearVisited();
+        }while(iter.hasNext());
+
+        DSAGraph.DSAGraphVertex v = (DSAGraph.DSAGraphVertex)graph.getVertex(vertex1);
+       
+        S.push(v);
+        v.setVisited();
+        
+
+        do
+        {
+            Iterator iter2 = v.getAdjacent().iterator();
+            do
+            {
+                DSAGraph.DSAGraphVertex w = (DSAGraph.DSAGraphVertex)iter2.next();
+                if(!w.getVisited())
+                {
+                    T.enqueue(v);
+                    T.enqueue(w);
+                    w.setVisited();
+                    S.push(w);
+                    if(w.getLabel().equals(vertex2))
+                    {
+                        loop = false;
+                    }
+                    v=w;
+                }
+
+            }while(iter2.hasNext() && loop == true);
+            v = (DSAGraph.DSAGraphVertex) S.pop();
+
+        }while(!S.isEmpty()&&loop == true);
+        return T;
 
     }
 

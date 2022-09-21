@@ -29,21 +29,14 @@ public class DSAQueue implements Iterable
         return list.isEmpty();
     }
 
-    public boolean isFull()
-    {
-        return !list.isEmpty();
-    } 
+  
 
     public void enqueue(Object value)
     {
-        if(isFull())
-        {
-            throw new IllegalArgumentException();
-        }
-        else
-        {
-            list.insertFirst(value);
-        }
+        
+        
+        list.insertFirst(value);
+        
     }
 
     public Object dequeue()

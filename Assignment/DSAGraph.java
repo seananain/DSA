@@ -48,7 +48,7 @@ public class DSAGraph
 
         public void clearVisited()
         {
-            visited = true;
+            visited = false;
 
         }
 
@@ -174,7 +174,7 @@ public class DSAGraph
             {}
             else if(vert.getLabel().equals(label))
             {
-                return vert;
+                vertex = vert;
             }
         
 
@@ -350,6 +350,49 @@ public class DSAGraph
         }while(!Q.isEmpty());
 
     }
+
+    /*public DSAQueue breadthFirstSearchAlt(DSAGraph graph, Object vertex1, Object vertex2)
+    {
+        DSAQueue T = new DSAQueue();
+        DSAQueue Q = new DSAQueue();
+        Boolean loop = true;
+
+        Iterator iter = graph.vertices.iterator();
+        do
+        {
+            DSAGraphVertex vert2 = (DSAGraphVertex)iter.next();
+            vert2.clearVisited();
+
+        }while(iter.hasNext());
+
+        
+        DSAGraphVertex v = graph.getVertex(vertex1);
+       
+        Q.enqueue(v);
+        do
+        {
+            Iterator iter2 = v.links.iterator();
+            v = (DSAGraph.DSAGraphVertex) Q.dequeue();
+            do
+            {
+                DSAGraphVertex w = (DSAGraphVertex)iter2.next();
+                
+                if(!w.getVisited())
+                {
+                    T.enqueue(v);
+                    T.enqueue(w);
+                    w.setVisited();
+                    Q.enqueue(w);
+                }
+                if(w.equals(vertex2))
+                {
+                    loop = false;
+                }
+            }while(iter2.hasNext() && loop == true);
+
+        }while(!Q.isEmpty());
+        return T;
+    }*/
 
 
     
