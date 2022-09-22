@@ -70,9 +70,9 @@ public class keyMeUp
             switch(choice)
             {
                 case 1: //Load keyboard file
-                    System.out.println("Enter file name");
+                    /*System.out.println("Enter file name");
                     sc.nextLine();
-                    file = sc.nextLine();
+                    file = sc.nextLine();*/
                     readFile(fileAlt, KB);
                 break;
 
@@ -224,35 +224,38 @@ public class keyMeUp
     public static void genPaths(DSAGraph KB, String inputString)
     {
         char[] input = inputString.toCharArray();
-        DSAQueue path1 = new DSAQueue();
-        DSAQueue path2 = new DSAQueue();
+        DSALinkedList path1 = new DSALinkedList();
+        DSALinkedList path2 = new DSALinkedList();
+        DSAQueue path12 = new DSAQueue();
+      
 
-        /*for(int i=0; i<input.length-1; i++)
-        {
-            KB.breadthFirstSearchAlt(KB, input[i], input[i+1]);
-        }*/
+        path1 = breadth(KB, "1", "9");
+        path12 = breadthFirstSearchAlt(KB, "1", "9");
 
-        path1 = breadthFirstSearchAlt(KB, "1", "9");
-        path2 = depthFirstSearchAlt(KB, "1", "9");
-
-        Iterator iter = path2.iterator();
+        Iterator iter = path1.iterator();
         System.out.println("Breadth first");
         do
         {
             DSAGraph.DSAGraphVertex vertex = (DSAGraph.DSAGraphVertex)iter.next();
-            System.out.print(vertex.getLabel() + " <- ");
+            System.out.print(vertex.getLabel() + " -> ");
         }while(iter.hasNext());
         System.out.println();
         System.out.println();
-        /*Iterator iter2 = path2.iterator();
+        
+
+
+        path2 = depth(KB, "1", "9");
+        Iterator iter2 = path2.iterator();
         System.out.println("Depth first");
         
         do
         {
             DSAGraph.DSAGraphVertex vertex1 = (DSAGraph.DSAGraphVertex)iter2.next();
-            System.out.print(vertex1.getLabel() + " <- ");
-        }while(iter.hasNext());
-        System.out.println();*/
+            System.out.print(vertex1.getLabel() + " -> ");
+        }while(iter2.hasNext());
+        System.out.println();
+
+
 
     }
 
@@ -300,6 +303,40 @@ public class keyMeUp
         return T;
     }
 
+    public static DSALinkedList breadth(DSAGraph KB, Object vertex1, Object vertex2)
+    {
+        DSAQueue T = breadthFirstSearchAlt(KB, vertex1, vertex2);
+        
+        DSALinkedList Q = new DSALinkedList();
+        Boolean loop = true;
+
+        DSAGraph.DSAGraphVertex v = KB.getVertex(vertex2);
+
+        Q.insertFirst(v);
+
+
+        Iterator iter = T.iterator();
+        do
+        {
+            DSAGraph.DSAGraphVertex w = (DSAGraph.DSAGraphVertex)iter.next();
+            if(KB.isAdjacent(w.getLabel(), v.getLabel()))
+            {
+                Q.insertFirst(w);
+                if(w.getLabel().equals(vertex1))
+                {
+                    loop = false;
+                }
+                v = w;
+
+            }
+            
+
+        }while(iter.hasNext()&&loop == true);
+
+       
+        return Q;
+    }
+
     public static DSAQueue depthFirstSearchAlt(DSAGraph graph, Object vertex1, Object vertex2)
     {
         DSAQueue T = new DSAQueue();
@@ -345,5 +382,38 @@ public class keyMeUp
 
     }
 
+    public static DSALinkedList depth(DSAGraph KB, Object vertex1, Object vertex2)
+    {
+        DSAQueue T = depthFirstSearchAlt(KB, vertex1, vertex2);
+        DSALinkedList Q = new DSALinkedList();
+        Boolean loop = true;
+        DSAGraph.DSAGraphVertex v = KB.getVertex(vertex2);
+        Q.insertFirst(v);
+        Iterator iter = T.iterator();
+        do
+        {
+            DSAGraph.DSAGraphVertex w = (DSAGraph.DSAGraphVertex)iter.next();
+            if(KB.isAdjacent(w.getLabel(), v.getLabel()))
+            {
+                Q.insertFirst(w);
+                if(w.getLabel().equals(vertex1))
+                {
+                    loop = false;
+                }
+                v = w;
+            }
+        }while(iter.hasNext()&&loop == true);
+        return Q;
+    }
+
+    public static DSALinkedList dfsRecWrapper(DSAGraph KB, Object vertex1, Object vertex2)
+    {
+        DSALinkedList L = new DSALinkedList();
+    }
     
+    public static void dfsRec(DSAGraph KB, Object starting, Object vertex2, DSALinkedList L)
+    {
+
+    }
+
 }

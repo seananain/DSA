@@ -130,7 +130,7 @@ public class DSAGraph
         DSAGraphVertex vert1 = getVertex(label1);
         DSAGraphVertex vert2 = getVertex(label2);
         vert1.addEdge(vert2);
-        vert2.addEdge(vert1);
+        //vert2.addEdge(vert1);
         edges.insertLast(edge);
     }
 
