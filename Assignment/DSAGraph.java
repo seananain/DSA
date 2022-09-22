@@ -201,7 +201,7 @@ public class DSAGraph
         {
             DSAGraphEdge edge = (DSAGraphEdge)iter.next();
 
-            if((edge.getFrom()==vert1 && edge.getTo()==vert2) || (edge.getTo()==vert1 && edge.getFrom()==vert2))
+            if((edge.getFrom()==vert1 && edge.getTo()==vert2))
             { 
                 return true;
             }
