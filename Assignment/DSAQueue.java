@@ -35,7 +35,7 @@ public class DSAQueue implements Iterable
     {
         
         
-        list.insertFirst(value);
+        list.insertLast(value);
         
     }
 

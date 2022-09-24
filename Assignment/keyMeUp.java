@@ -290,12 +290,13 @@ public class keyMeUp
         
         for(int i=0; i<input.length-1;i++)
         {
+            System.out.println(input[i] + " + " + input[i+1]);
             path = breadth(KB, input[i], input[i+1]);
             Iterator iter = path.iterator();
             do
             {
                 DSAGraph.DSAGraphVertex vertex = (DSAGraph.DSAGraphVertex)iter.next();
-                totalPath.insertLast(vertex);
+                totalPath.insertFirst(vertex);
             }while(iter.hasNext());
         }
         return totalPath;
@@ -341,8 +342,10 @@ public class keyMeUp
         v.setVisited();
         do
         {
-            Iterator iter2 = v.getAdjacent().iterator();
+            
             v = (DSAGraph.DSAGraphVertex) Q.dequeue();
+            Iterator iter2 = v.getAdjacent().iterator();
+
             do
             {
                 DSAGraph.DSAGraphVertex w = (DSAGraph.DSAGraphVertex)iter2.next();
@@ -380,34 +383,51 @@ public class keyMeUp
 
         }while(iter2.hasNext());
 
-        if(KB.getVertex(vertex2)==null)
-        {
-            System.out.println("Its null bro");
-            System.out.println(vertex2);
-        }
+        
         DSAGraph.DSAGraphVertex v = KB.getVertex(vertex2);
 
         Q.insertFirst(v);
 
 
-        Iterator iter = T.iterator();
+        
         do
         {
-            DSAGraph.DSAGraphVertex w = (DSAGraph.DSAGraphVertex)iter.next();
-            if(w.getVisited() == false && KB.isAdjacent(v.getLabel(), w.getLabel()))
+            
+            
+            
+            Iterator iter = T.iterator();
+            do
             {
-                Q.insertFirst(w);
-                w.setVisited();
-                if(w.getLabel().equals(vertex1))
+                DSAGraph.DSAGraphVertex w = (DSAGraph.DSAGraphVertex)iter.next();
+                if(/*w.getVisited() == false &&*/ KB.isAdjacent(w.getLabel(), v.getLabel()))
                 {
-                    loop = false;
-                }
-                v = w;
+                    Q.insertFirst(w);
+                    //w.setVisited();
+                    if(w.getLabel().equals(vertex1))
+                    {
+                        loop = false;
+                    }
+                    v = w;
 
-            }
+                }
+            }while(iter.hasNext() && loop == true);
+            
             
 
-        }while(iter.hasNext() == true &&loop == true);
+        }while(loop == true);
+
+        do
+        {
+
+
+            if(w.getLabel().equals(vertex1))
+            {
+                loop = false;
+            }
+        }while(loop == true)
+
+
+        
 
        
         return Q;
