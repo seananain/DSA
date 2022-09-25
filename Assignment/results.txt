@@ -1,0 +1,13 @@
+Breadth First Search
+
+s  m  g  a  b  c  d  e  
+e  d  c  b  a  
+a  b  h  n  
+Total moves: 14
+
+Depth First Search
+
+s  y  5  SPACE  BACKSPACE  CLEAR  9  3  4  x  r  q  k  e  
+e  d  c  b  a  
+a  b  h  n  
+Total moves: 20
