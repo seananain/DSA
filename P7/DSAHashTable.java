@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.DoubleAdder;
 
 public class DSAHashTable
 {
-    private class DSAHashEntry
+    public class DSAHashEntry
     {
         String key;
         Object value;
@@ -23,14 +23,30 @@ public class DSAHashTable
             value = inValue;
             state = 1;
         }
+
+        public String getKey()
+        {
+            return key;
+        }
+
+        public Object getValue()
+        {
+            return value;
+        }
+
+        public int getState()
+        {
+            return state;
+        }
     }
     
-    private DSAHashEntry[] hashArray;
+    public DSAHashEntry[] hashArray;
     private int count;
     
-    public DSAHashTable(int tableSize)
+    public DSAHashTable()
     {
-        int actualSize = NextPrime(tableSize);
+        
+        int actualSize = NextPrime(100);
 
         hashArray = new DSAHashEntry[actualSize];
         for(int i=0; i<actualSize; i++)
@@ -153,6 +169,7 @@ public class DSAHashTable
             }
         }
         hashArray[hashIdx]  = new DSAHashEntry(inKey, inValue);
+        resize();
     }
 
     public Object remove(String inKey)
@@ -186,7 +203,7 @@ public class DSAHashTable
         value = hashArray[hashIdx].value;
         hashArray[hashIdx] = new DSAHashEntry();
         hashArray[hashIdx].state = 2;
-        
+        resize();
 
         return value;
     }
@@ -211,22 +228,55 @@ public class DSAHashTable
         int LF = getLoadFactor();
         if(LF<40)
         {
-
+            sizeUp();
         }
         else if (LF>60)
         {
-
+            sizeDown();
         }
     }
 
     private void sizeUp()
     {
+        int tempSize = hashArray.length * 2;
+        int size = NextPrime(tempSize);
+        DSAHashEntry[] tempArray = hashArray;
+
+        hashArray = new DSAHashEntry[size];
+        for(int i=0; i<size; i++)
+        {
+            hashArray[i] = new DSAHashEntry();
+        }
+        //hashArray = new DSAHashEntry[size];
+
+        for(int i=0; i<tempArray.length; i++)
+        {
+            if(tempArray[i].getState()==1)
+            {
+                put(tempArray[i].getKey(), tempArray[i].getValue());
+            }
+            
+        }
 
     }
 
     private void sizeDown()
     {
-
+        int tempSize = hashArray.length / 2;
+        int size = NextPrime(tempSize);
+        DSAHashEntry[] tempArray = hashArray;
+        hashArray = new DSAHashEntry[size];
+        for(int i=0; i<size; i++)
+        {
+            hashArray[i] = new DSAHashEntry();
+        }
+        for(int i=0; i<tempArray.length; i++)
+        {
+            if(tempArray[i].getState()==1)
+            {
+                put(tempArray[i].getKey(), tempArray[i].getValue());
+            }
+        }
     }
 
 }
