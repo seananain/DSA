@@ -162,6 +162,21 @@ public class DSAGraph
         return count;
     }
 
+    public int getEdgeCount()
+    {
+        int count = 0;
+
+        Iterator iter = edges.iterator();
+
+        while(iter.hasNext())
+        {
+            count++;
+            iter.next();
+        }
+
+        return count;
+    }
+
     public DSAGraphVertex getVertex(Object label)
     {
         Iterator iter = vertices.iterator();

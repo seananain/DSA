@@ -22,7 +22,14 @@ public class keyMeUp
             break;
 
             case "-s":
-                silentMode(KB, args[1], args[2], args[3]);
+                if(args.length==4)
+                {
+                    silentMode(KB, args[1], args[2], args[3]);
+                }
+                else
+                {
+                    System.out.println("Invalid number of command line arguments");
+                }
             break;
 
             default:
@@ -110,6 +117,7 @@ public class keyMeUp
                 case 5: //Display graph information
                     System.out.println("Graph Information");
                     System.out.println("Number of vertices: " + KB.getVertexCount());
+                    System.out.println("Number of edges: " + KB.getEdgeCount());
                 break;
 
                 case 6: //Enter string for finding path
@@ -332,12 +340,13 @@ public class keyMeUp
             pw = new PrintWriter(fileStrm);
             
 
-            int bNum=0, dNum=0;
-            String input;
+            int bNum=0, dNum=0, stringNum2 =-1, stringNum = -1;
+            //String input;
             Iterator bIter = breadthPath.iterator();
             Iterator dIter = depthPath.iterator();
             DSAGraph.DSAGraphVertex Bprev = (DSAGraph.DSAGraphVertex)breadthPath.peekFirst();
             DSAGraph.DSAGraphVertex Dprev = (DSAGraph.DSAGraphVertex)depthPath.peekFirst();
+            String[] input = inputStringAltering(inputString, KB);
             pw.println("Breadth First Search");
             do
             {
@@ -345,14 +354,24 @@ public class keyMeUp
                 if(vertex.equals(Bprev))
                 {
                     pw.println();
+                    stringNum++;
                 }
-                pw.print(vertex.getLabel() + "  ");
+                if(input[stringNum].equals("SHIFT"))
+                {
+                    pw.print(vertex.getLabel().toString().toUpperCase() + "  ");
+                    
+                }
+                else
+                {
+                    pw.print(vertex.getLabel() + "  ");
+                }
+                
                 Bprev = vertex;
                 
                 bNum++;
             }while(bIter.hasNext());
             pw.println();
-            pw.println("Total moves: " + (bNum-inputString.length()+1));
+            pw.println("Total moves: " + (bNum-input.length+1));
             pw.println();
 
             pw.println("Depth First Search");
@@ -362,13 +381,22 @@ public class keyMeUp
                 if(vertex.equals(Dprev))
                 {
                     pw.println();
+                    stringNum2++;
                 }
-                pw.print(vertex.getLabel() + "  ");
+                if(input[stringNum2].equals("SHIFT"))
+                {
+                    pw.print(vertex.getLabel().toString().toUpperCase() + "  ");
+                    
+                }
+                else
+                {
+                    pw.print(vertex.getLabel() + "  ");
+                }
                 Dprev = vertex;
                 dNum++;
             }while(dIter.hasNext());
             pw.println();
-            pw.println("Total moves: " + (dNum-inputString.length()+1));
+            pw.println("Total moves: " + (dNum-input.length+1));
 
 
 
@@ -399,7 +427,7 @@ public class keyMeUp
         //input = inputString.split("");
         for(int i=0; i<input.length;i++)
         {
-            if(input[i] != " ")
+            if(!(input[i].equals(" ")))
             {
                 if(KB.hasVertex(input[i].toLowerCase())==false)
                 {
@@ -428,7 +456,7 @@ public class keyMeUp
             {
                 
                 
-                if(input[i] ==  " ")
+                if(input[i].equals(" "))
                 {
                     newString.insertLast("SPACE");
                 }
@@ -475,12 +503,13 @@ public class keyMeUp
    
     public static void displayPaths(DSAGraph KB ,DSALinkedList breadthPath, DSALinkedList depthPath, String inputString)
     {
-        int bNum=0, dNum=0;
-        String input;
+        int bNum=0, dNum=0, stringNum2 =-1, stringNum = -1;
+        //String input;
         Iterator bIter = breadthPath.iterator();
         Iterator dIter = depthPath.iterator();
         DSAGraph.DSAGraphVertex Bprev = (DSAGraph.DSAGraphVertex)breadthPath.peekFirst();
         DSAGraph.DSAGraphVertex Dprev = (DSAGraph.DSAGraphVertex)depthPath.peekFirst();
+        String[] input = inputStringAltering(inputString, KB);
         System.out.println("Breadth First Search");
         do
         {
@@ -488,14 +517,25 @@ public class keyMeUp
             if(vertex.equals(Bprev))
             {
                 System.out.println();
+                stringNum++;
             }
-            System.out.print(vertex.getLabel() + "  ");
+            if(input[stringNum].equals("SHIFT"))
+            {
+                System.out.print(vertex.getLabel().toString().toUpperCase() + "  ");
+                
+            }
+            else
+            {
+                System.out.print(vertex.getLabel() + "  ");
+            }
+            
+            
             Bprev = vertex;
             
             bNum++;
         }while(bIter.hasNext());
         System.out.println();
-        System.out.println("Total moves: " + (bNum-inputString.length()+1));
+        System.out.println("Total moves: " + (bNum-input.length+1));
         System.out.println();
 
         System.out.println("Depth First Search");
@@ -505,13 +545,22 @@ public class keyMeUp
             if(vertex.equals(Dprev))
             {
                 System.out.println();
+                stringNum2++;
             }
-            System.out.print(vertex.getLabel() + "  ");
+            if(input[stringNum2].equals("SHIFT"))
+            {
+                System.out.print(vertex.getLabel().toString().toUpperCase() + "  ");
+                
+            }
+            else
+            {
+                System.out.print(vertex.getLabel() + "  ");
+            }
             Dprev = vertex;
             dNum++;
         }while(dIter.hasNext());
         System.out.println();
-        System.out.println("Total moves: " + (dNum-inputString.length()+1));
+        System.out.println("Total moves: " + (dNum-input.length+1));
 
 
 
