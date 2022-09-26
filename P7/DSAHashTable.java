@@ -46,7 +46,7 @@ public class DSAHashTable
     public DSAHashTable()
     {
         
-        int actualSize = NextPrime(100);
+        int actualSize = NextPrime(10);
 
         hashArray = new DSAHashEntry[actualSize];
         for(int i=0; i<actualSize; i++)
@@ -66,13 +66,14 @@ public class DSAHashTable
         {
             hashIdx = (31* hashIdx) + key.charAt(i);
         }
-        return hashIdx % hashArray.length;
+        return Double.valueOf(Math.sqrt((hashIdx % hashArray.length)^2)).intValue();
+        //return hashIdx % hashArray.length;
     }
 
     private int stepHash(String key)
     {
         int hashStep = 0, keyValue = 0;
-        int max_step = NextPrime(5);
+        int max_step = 7;
 
         for(int i=0; i<key.length(); i++)
         {
@@ -153,10 +154,11 @@ public class DSAHashTable
 
     public void put(String inKey, Object inValue)
     {
+        
         int hashIdx = hash(inKey);
         int origiIdx = hashIdx;
 
-        while(hashArray[hashIdx].state == 0 || hashArray[hashIdx].state == 2)
+        while(hashArray[hashIdx].state == 1)
         {
             hashIdx += stepHash(inKey);
             if(hashIdx == origiIdx)
@@ -208,7 +210,7 @@ public class DSAHashTable
         return value;
     }
 
-    public int getLoadFactor()
+    public Double getLoadFactor()
     {
         int numItems = 0;
         Double LF = 0.0;
@@ -218,22 +220,41 @@ public class DSAHashTable
             {
                 numItems++;
             }
+
         }
-        LF = 100*Double.valueOf(numItems)/Double.valueOf(hashArray.length);
-        return LF.intValue();
+        LF = Double.valueOf(numItems)/Double.valueOf(hashArray.length);
+        return LF;
     }
 
     public void resize()
     {
-        int LF = getLoadFactor();
-        if(LF<40)
+        Double LF = getLoadFactor();
+        //System.out.println(LF);
+        int numItems = 0;
+        for(int i=0; i<hashArray.length;i++)
         {
-            sizeUp();
+            if(hashArray[i].state == 1)
+            {
+                numItems++;
+            }
         }
-        else if (LF>60)
+        if(numItems>0)
         {
-            sizeDown();
+            if(LF<0.2)
+            {
+                //System.out.println("Sizing up");
+                //sizeUp();
+                sizeDown();
+
+            }
+            else if (LF>0.8)
+            {
+                //System.out.println("Sizing down");
+                //sizeDown();
+                sizeUp();
+            }
         }
+    
     }
 
     private void sizeUp()
@@ -251,9 +272,9 @@ public class DSAHashTable
 
         for(int i=0; i<tempArray.length; i++)
         {
-            if(tempArray[i].getState()==1)
+            if(tempArray[i].state==1)
             {
-                put(tempArray[i].getKey(), tempArray[i].getValue());
+                put((String)tempArray[i].getKey(), (Object)tempArray[i].getValue());
             }
             
         }

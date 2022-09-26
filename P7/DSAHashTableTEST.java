@@ -1,3 +1,9 @@
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import java.util.*;
+
+import java.util.InputMismatchException;
+
 import org.junit.*;
 
 public class DSAHashTableTEST 
@@ -8,7 +14,32 @@ public class DSAHashTableTEST
     public void testPut()
     {
         T.put("10", (Object)10);
+
         
     }
+
+    @Test
+    public void testGet()
+    {
+        T.put("10", (Object)10);
+        assertEquals(10, T.get("10"));
+    }
+
+    @Test
+    public void testRemove()
+    {
+        T.put("10", (Object)10);
+        T.remove("10");
+        //assertThrows(InputMismatchException(), T.get("10");
+        
+    }
+
+    @Test
+    public void testGetLoadFactor()
+    {
+        T.put("10", (Object)10);
+        //assertEquals(0.1, T.getLoadFactor());
+    }
+
 
 }

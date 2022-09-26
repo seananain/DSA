@@ -6,7 +6,7 @@ public class Q4
     public static void main(String[] args)
     {
         Scanner sc = new Scanner(System.in);
-        String inputFile = "RandomNames7000.csv";
+        String inputFile = "RandomNames7000 copy.csv";
         String outputFile = "output.csv";
         char choice1, choice2;
         DSAHashTable table = new DSAHashTable();
@@ -73,13 +73,15 @@ public class Q4
 
     private static void processLine(String csvRow, DSAHashTable table)
     {
-        Object vertex1, vertex2;
-        String v1, v2;
+        Object value;
+        String key;
         String[] splitLine;
         splitLine = csvRow.split(",");
         int lineLength = splitLine.length;
+        key = splitLine[0];
+        value = splitLine[1];
       
-        table.put(splitLine[0], splitLine[1]);
+        table.put(key, value);
          
         
         
