@@ -72,7 +72,7 @@ public class keyMeUp
     {
         Scanner sc = new Scanner(System.in);
         Boolean loop = true, valid = false;
-        String file, inputString = null, fileAlt = "bbc.al", resultsFile = "results.txt";
+        String file, inputString = null, fileAlt = "iview.al", resultsFile = "results.txt";
         String output = "output.al", input;
         char save;
         int choice;
