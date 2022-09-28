@@ -58,16 +58,25 @@ public class DSAHashTable
     
     
     
-    private int hash(String key)
+    private long hash(String key)
     {
-        int hashIdx = 0;
+        //int hashIdx = 0;
+        long hashIdx = 0;
+        int finalIdx;
 
         for(int i=0; i<key.length(); i++)
         {
             hashIdx = (31* hashIdx) + key.charAt(i);
         }
-        return Double.valueOf(Math.sqrt((hashIdx % hashArray.length)^2)).intValue();
-        //return hashIdx % hashArray.length;
+
+        //finalIdx = (int)(hashIdx % hashArray.length);
+        //return Double.valueOf(Math.sqrt((hashIdx % hashArray.length)^2)).intValue();
+        if(hashIdx<0)
+        {
+            hashIdx = hashIdx * -1;
+        }
+        return hashIdx % hashArray.length;
+        //return finalIdx;
     }
 
     private int stepHash(String key)
@@ -77,7 +86,7 @@ public class DSAHashTable
 
         for(int i=0; i<key.length(); i++)
         {
-            keyValue = (31* hashStep) + key.charAt(i);
+            keyValue = (33* hashStep) + key.charAt(i);
         }
         return max_step - (keyValue % max_step);
     }
@@ -120,7 +129,7 @@ public class DSAHashTable
 
     public Object get(String inKey)
     {
-        int hashIdx = hash(inKey);
+        int hashIdx = (int)hash(inKey);
         int origiIdx = hashIdx;
         Object retValue;
         Boolean found = false;
@@ -152,31 +161,41 @@ public class DSAHashTable
         return retValue = hashArray[hashIdx].value;
     }
 
-    public void put(String inKey, Object inValue)
+    private void put(String inKey, Object inValue)
     {
         
-        int hashIdx = hash(inKey);
+        int hashIdx = (int)hash(inKey);
         int origiIdx = hashIdx;
 
         while(hashArray[hashIdx].state == 1)
         {
+            System.out.println("Before:" + hashIdx);
             hashIdx += stepHash(inKey);
+            System.out.println("After:" + hashIdx);
             if(hashIdx == origiIdx)
             {
                 throw new InputMismatchException("hashIdx == origiIdx");
             }
-            else
+            else if(hashIdx >= hashArray.length)
             {
-                
-            }
+                hashIdx = 0;
+            }   
         }
         hashArray[hashIdx]  = new DSAHashEntry(inKey, inValue);
-        resize();
+        //resize();
     }
 
-    public Object remove(String inKey)
+    public void PutNew(String inKey, Object inValue)
     {
-        int hashIdx = hash(inKey);
+        
+        put(inKey, inValue);
+        resize();
+        
+    }
+
+    private Object remove(String inKey)
+    {
+        int hashIdx = (int)hash(inKey);
         int origiIdx = hashIdx;
         Object value;
         Boolean found = false;
@@ -205,9 +224,16 @@ public class DSAHashTable
         value = hashArray[hashIdx].value;
         hashArray[hashIdx] = new DSAHashEntry();
         hashArray[hashIdx].state = 2;
-        resize();
+        //resize();
 
         return value;
+    }
+
+    public Object removeNew(String inKey)
+    {
+        Object toRemove = remove(inKey);
+        resize();
+        return toRemove;
     }
 
     public Double getLoadFactor()
@@ -240,18 +266,20 @@ public class DSAHashTable
         }
         if(numItems>0)
         {
-            if(LF<0.2)
+            if(LF<0.3)
             {
-                //System.out.println("Sizing up");
+                System.out.println("Sizing down");
                 //sizeUp();
                 sizeDown();
+                System.out.println("New len: " + hashArray.length );
 
             }
-            else if (LF>0.8)
+            else if (LF>0.7)
             {
-                //System.out.println("Sizing down");
+                System.out.println("Sizing up");
                 //sizeDown();
                 sizeUp();
+                System.out.println("New len: " + hashArray.length );
             }
         }
     

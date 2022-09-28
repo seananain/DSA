@@ -6,7 +6,7 @@ public class Q4
     public static void main(String[] args)
     {
         Scanner sc = new Scanner(System.in);
-        String inputFile = "RandomNames7000 copy.csv";
+        String inputFile = "RandomNames7000.csv";
         String outputFile = "output.csv";
         char choice1, choice2;
         DSAHashTable table = new DSAHashTable();
@@ -81,7 +81,7 @@ public class Q4
         key = splitLine[0];
         value = splitLine[1];
       
-        table.put(key, value);
+        table.PutNew(key, value);
          
         
         

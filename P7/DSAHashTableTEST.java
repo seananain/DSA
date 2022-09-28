@@ -13,7 +13,7 @@ public class DSAHashTableTEST
     @Test
     public void testPut()
     {
-        T.put("10", (Object)10);
+        T.PutNew("10", (Object)10);
 
         
     }
@@ -21,15 +21,15 @@ public class DSAHashTableTEST
     @Test
     public void testGet()
     {
-        T.put("10", (Object)10);
+        T.PutNew("10", (Object)10);
         assertEquals(10, T.get("10"));
     }
 
     @Test
     public void testRemove()
     {
-        T.put("10", (Object)10);
-        T.remove("10");
+        T.PutNew("10", (Object)10);
+        T.removeNew("10");
         //assertThrows(InputMismatchException(), T.get("10");
         
     }
@@ -37,7 +37,7 @@ public class DSAHashTableTEST
     @Test
     public void testGetLoadFactor()
     {
-        T.put("10", (Object)10);
+        T.PutNew("10", (Object)10);
         //assertEquals(0.1, T.getLoadFactor());
     }
 
