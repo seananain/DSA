@@ -1,17 +1,19 @@
 Breadth First Search
 
-SHIFT  D  J  P  
-p  o  i  
-i  h  n  t  z  
-z  y  z  
-z  6  SPACE  &?!  a  
-Total moves: 15
+h  i  
+i  c  &?!  SPACE  
+SPACE  5  y  s  
+s  m  g  a  f  e  
+e  f  a  
+a  b  h  n  
+Total moves: 17
 
 Depth First Search
 
-SHIFT  D  J  P  
-p  o  i  
-i  h  n  t  z  
-z  y  z  
-z  6  SPACE  &?!  a  
-Total moves: 15
+h  i  
+i  h  n  t  z  6  SPACE  
+SPACE  CLEAR  9  3  4  x  s  
+s  y  4  0  CLEAR  SPACE  &?!  a  f  e  
+e  f  a  
+a  b  c  i  o  n  
+Total moves: 29

@@ -21,6 +21,11 @@ public class DSAGraph
 
         }
 
+        public void newLabel(Object newLabel)
+        {
+            label = newLabel;
+        }
+
         public Object getLabel()
         {
             return label;
@@ -124,6 +129,48 @@ public class DSAGraph
         }
     }
 
+    public void removeVertex(Object label)
+    {
+        if(!hasVertex(label))
+        {
+            DSAGraphVertex vertex = (DSAGraphVertex)getVertex(label);
+            
+        
+            Iterator iter = vertices.iterator();
+            do
+            {
+                DSAGraphVertex vert = (DSAGraphVertex)iter.next();
+                if(vert.equals(vertex))
+                {
+                    vert = null;
+                }
+                
+            }while(iter.hasNext());
+            vertex = null;
+        }
+    }
+
+    public void editVertex(Object label, Object newLabel)
+    {
+        if(!hasVertex(label))
+        {
+            DSAGraphVertex vertex = (DSAGraphVertex)getVertex(label);
+            
+        
+            Iterator iter = vertices.iterator();
+            do
+            {
+                DSAGraphVertex vert = (DSAGraphVertex)iter.next();
+                if(vert.equals(vertex))
+                {
+                    vert.newLabel(newLabel);
+                }
+                
+            }while(iter.hasNext());
+            vertex.newLabel(newLabel);
+        }
+    }
+
     public void addEdge(Object label1, Object label2)
     {
         DSAGraphEdge edge = new DSAGraphEdge(getVertex(label1), getVertex(label2), label1, label2);
@@ -132,6 +179,13 @@ public class DSAGraph
         vert1.addEdge(vert2);
         //vert2.addEdge(vert1);
         edges.insertLast(edge);
+    }
+
+    public void removeEdge(Object label1, Object label2)
+    {
+        //DSAGraphEdge edge = new DSAGraphEdge(getVertex(label1), getVertex(label2), label1, label2);
+        DSAGraphVertex vert1 = getVertex(label1);
+        DSAGraphVertex vert2 = getVertex(label2);
     }
 
     public Boolean hasVertex(Object label)

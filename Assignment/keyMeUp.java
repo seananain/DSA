@@ -72,7 +72,7 @@ public class keyMeUp
     {
         Scanner sc = new Scanner(System.in);
         Boolean loop = true, valid = false;
-        String file, inputString = null, fileAlt = "iview.al", resultsFile = "results.txt";
+        String file, inputString = null, fileAlt = "numPad.al", resultsFile = "results.txt";
         String output = "output.al", input;
         char save;
         int choice;
@@ -218,7 +218,7 @@ public class keyMeUp
     
     }
 
-    private static void processLine(String csvRow, DSAGraph graph)
+    public static void processLine(String csvRow, DSAGraph graph)
     {
         Object vertex1, vertex2;
         String v1, v2;
@@ -450,12 +450,12 @@ public class keyMeUp
 
         DSALinkedList newString = new DSALinkedList();
 
-        if(KB.getVertex("SHIFT") != null)
+        if(KB.getVertex("SHIFT") != null && KB.getVertex("SPACE") !=null)
         {
             for(int i=0; i<input.length; i++)
             {
                 
-                
+                System.out.println(input[i]);
                 if(input[i].equals(" "))
                 {
                     newString.insertLast("SPACE");
@@ -475,6 +475,29 @@ public class keyMeUp
                 }
                 //newString.insertLast(" ");
                 
+            }
+        }
+        else if(KB.getVertex("SHIFT") == null && KB.getVertex("SPACE") !=null)
+        {
+            for(int i=0; i<input.length; i++)
+            {
+                
+                System.out.println(input[i]);
+                if(input[i].equals(" "))
+                {
+                    newString.insertLast("SPACE");
+                }
+                else
+                {
+                    newString.insertLast(input[i]);
+                }
+            }
+        }
+        else
+        {
+            for(int i=0; i<input.length; i++)
+            {
+                newString.insertLast(input[i]);
             }
         }
         Iterator iter = newString.iterator();
@@ -569,6 +592,7 @@ public class keyMeUp
     public static DSALinkedList genBreadth(DSAGraph KB, String inputString)
     {
         String[] input = inputStringAltering(inputString, KB);
+        //System.out.println(input[0] );
         DSALinkedList path = new DSALinkedList();
         DSALinkedList totalPath = new DSALinkedList();
         //input = inputString.split(" ");

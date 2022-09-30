@@ -1,8 +1,11 @@
 import org.junit.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.*;
+import java.util.*;
 
 public class keyMeUpTEST extends keyMeUp
 {
@@ -32,7 +35,7 @@ public class keyMeUpTEST extends keyMeUp
     @Test
     public void testSilentMode()
     {
-
+        
     }
 
     @Test
@@ -44,66 +47,101 @@ public class keyMeUpTEST extends keyMeUp
     @Test
     public void testReadFile()
     {
-
+        readFile("numPad.al", KB);
     }
 
     @Test
     public void testProcessLine()
     {
-
+        processLine("1, 2, 3", KB);
     }
 
     @Test
     public void testReadFile2()
     {
-
+        assertEquals("hi sean", readFile2("inputString.txt"));
     }
 
     @Test
     public void testWriteFile()
     {
-
+        readFile("numPad.al", KB);
+        writeFile("output.al", KB);
     }
 
     @Test
     public void testWriteResults()
     {
-
+        DSALinkedList breadthPath = new DSALinkedList();
+        DSALinkedList depthPath = new DSALinkedList();
+        String inputString = "sean";
+        readFile("iview", KB);
+        breadthPath = genBreadth(KB, inputString);
+        depthPath = genDepth(KB, inputString);
+        writeResults("results.txt", KB, breadthPath, depthPath, inputString);
     }
 
     @Test
     public void testInputStringValidation()
     {
-
+        readFile("numPad.al", KB);
+        assertFalse(inputStringValidation("sean", KB));
+        assertTrue(inputStringValidation("1", KB));
     }
 
     @Test
     public void testInputStringAltering()
     {
-
+        readFile("iview.al", KB);
+        String[] test = {"","s", "e", "a", "n"};
+        assertEquals(test, inputStringAltering("sean", KB));
     }
 
     @Test
     public void testDisplayPaths()
     {
-
+        DSAGraph KB = new DSAGraph();
+        DSALinkedList breadthPath = new DSALinkedList();
+        DSALinkedList depthPath = new DSALinkedList();
+        String inputString = "sean";
+        readFile("iview", KB);
+        breadthPath = genBreadth(KB, inputString);
+        depthPath = genDepth(KB, inputString);
+        displayPaths(KB, breadthPath, depthPath, inputString);
+        
     }
 
     @Test
     public void testGenBreadth()
     {
+        DSALinkedList test = new DSALinkedList();
+        test.insertLast("1");
+        test.insertLast("2");
+        test.insertLast("3");
 
+        readFile("numPad.al", KB);
+        
+        assertEquals(test, genBreadth(KB, "123"));
     }
 
     @Test
     public void testGenDepth()
     {
+        DSALinkedList test = new DSALinkedList();
+        test.insertLast("1");
+        test.insertLast("2");
+        test.insertLast("3");
 
+        readFile("numPad.al", KB);
+        
+        assertEquals(test, genDepth(KB, "123"));
     }
 
     @Test
     public void testBreadthFirstSearchAlt()
     {
+        
+
 
     }
 
