@@ -804,7 +804,7 @@ public class keyMeUp
 
     public static void nodeOperations(DSAGraph KB)
     {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc2 = new Scanner(System.in);
         Object label, value;
         String find;
         int input;
@@ -812,30 +812,33 @@ public class keyMeUp
         do
         {
             nodeOpMenu();
-            input = sc.nextInt();
+            input = sc2.nextInt();
+            sc2.nextLine();
             switch(input)
             {
                 case 0:
                     loop = false;
                     
                 case 1://Find
+                    //sc2.nextLine();
                     System.out.println("Enter a label");
-                    find = sc.nextLine();
+                    find = sc2.nextLine();
                     if(KB.getVertex(find)!=null)
                     {
                         System.out.println("Vertex found");
                     }
                     else
                     {
-                        System.out.println("Vertex does not exit");
+                        System.out.println("Vertex does not exist");
                     }
                 break;
 
                 case 2://Insert
+                    //sc2.nextLine();
                     System.out.println("Enter a label");
-                    label = sc.nextLine();
+                    label = sc2.nextLine();
                     System.out.println("Enter a value");
-                    value = sc.nextLine();
+                    value = sc2.nextLine();
                     System.out.println("Creating vertex...");
                     if(KB.getVertex(label)==null)
                     {
@@ -844,11 +847,38 @@ public class keyMeUp
                 break;
 
                 case 3://Delete
-
+                    //sc2.nextLine();
+                    System.out.println("Enter a label");
+                    find = sc2.nextLine();
+                    if(KB.getVertex(find)!=null)
+                    {
+                        System.out.println("Vertex found");
+                        DSAGraph.DSAGraphVertex vert = KB.getVertex(find);
+                        KB.removeVertex(find);
+                        System.out.println("Vertex deleted.");
+                    }
+                    else
+                    {
+                        System.out.println("Vertex does not exit");
+                    }
+                    
                 break;
 
                 case 4://Update
-
+                    System.out.println("Enter a label");
+                    find = sc2.nextLine();
+                    if(KB.getVertex(find)!=null)
+                    {
+                        System.out.println("Vertex found");
+                        //DSAGraph.DSAGraphVertex vert = KB.getVertex(find);
+                        System.out.println("Enter new label");
+                        label = sc2.nextLine();
+                        KB.editVertex(find, label);
+                    }
+                    else
+                    {
+                        System.out.println("Vertex does not exist");
+                    }
                 break;
 
                 default:
@@ -856,7 +886,7 @@ public class keyMeUp
                 break;
             }
         }while(loop);
-        sc.close();
+        //sc2.close();
     }
 
     public static void nodeOpMenu()
@@ -888,6 +918,7 @@ public class keyMeUp
                     loop = false;
                     
                 case 1://Find
+                    sc.nextLine();
                     System.out.println("Enter a label for vertex 1");
                     vert1 = sc.nextLine();
                     System.out.println("Enter a label for vertex 2");

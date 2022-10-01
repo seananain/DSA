@@ -1,19 +1,9 @@
 Breadth First Search
 
-h  i  
-i  c  &?!  SPACE  
-SPACE  5  y  s  
-s  m  g  a  f  e  
-e  f  a  
-a  b  h  n  
-Total moves: 17
+1  2  5  6  
+Total moves: 3
 
 Depth First Search
 
-h  i  
-i  h  n  t  z  6  SPACE  
-SPACE  CLEAR  9  3  4  x  s  
-s  y  4  0  CLEAR  SPACE  &?!  a  f  e  
-e  f  a  
-a  b  c  i  o  n  
-Total moves: 29
+1  2  5  6  
+Total moves: 3
