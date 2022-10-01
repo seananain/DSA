@@ -31,10 +31,7 @@ public class DSAStack implements Iterable
         return stack.isEmpty();
     }
 
-    public boolean isFull()
-    {
-        return !stack.isEmpty();
-    }
+
 
     public void push(Object value)
     {
