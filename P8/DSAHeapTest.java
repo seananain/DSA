@@ -10,6 +10,7 @@ public class DSAHeapTest
         heap.add(3, "Andrew");
         heap.add(6, "Michael");
         heap.add(9, "Top G");
+        heap.add(4, "Sean");
 
         heap.display();
 
