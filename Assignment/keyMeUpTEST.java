@@ -9,7 +9,7 @@ import java.util.*;
 
 public class keyMeUpTEST extends keyMeUp
 {
-    public DSAGraph KB = new DSAGraph();
+    /*public DSAGraph KB = new DSAGraph();
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
@@ -24,7 +24,7 @@ public class keyMeUpTEST extends keyMeUp
         System.setOut(null);
         System.setErr(null);
     }
-
+     
     @Test
     public void testMenu()
     {
@@ -186,5 +186,5 @@ public class keyMeUpTEST extends keyMeUp
     public void testEdgeOpMenu()
     {
 
-    }
+    }*/
 }

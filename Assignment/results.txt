@@ -1,9 +1,22 @@
 Breadth First Search
 
-1  2  5  6  
-Total moves: 3
+s  m  g  a  SPACE  BACKSPACE  d  e  
+e  BACKSPACE  SPACE  a  
+a  b  h  n  
+n  t  z  6  
+6  7  8  9  
+Total moves: 19
 
 Depth First Search
 
-1  2  5  6  
-Total moves: 3
+s  t  z  1  2  3  4  x  r  q  k  e  
+e  BACKSPACE  SPACE  a  
+a  b  h  n  
+n  t  z  6  
+6  7  8  9  
+Total moves: 23
+
+Ranking
+===============
+1. Breadth First Search: 19 moves.
+2. Depth First Search: 23 moves.

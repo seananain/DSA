@@ -8,9 +8,10 @@ public class keyMeUp
 {
     public static void main(String[] args)
     {
-        if(args.length == 0 || args.length > 5)
+        if(args.length == 0)
         {
-            throw new Error("invalid number of command line arguments");
+            System.out.println("Enter either -i OR -s keyFile strFile pathFile ");
+            throw new Error("Invalid number of command line arguments");
         }
         Scanner sc = new Scanner(System.in);
         String mode = args[0];
@@ -61,10 +62,10 @@ public class keyMeUp
     {
         DSALinkedList breadthPath = new DSALinkedList();
         DSALinkedList depthPath = new DSALinkedList();        
-        readFile(keyFile, KB);
+        loadKB(keyFile, KB);
         String inputString = readFile2(strFile);
-        breadthPath = genBreadth(KB, inputString);
-        depthPath = genDepth(KB, inputString);
+        breadthPath = genBreadthPath(KB, inputString);
+        depthPath = genDepthPath(KB, inputString);
         writeResults(pathFile, KB, breadthPath, depthPath, inputString);
     }
 
@@ -72,8 +73,8 @@ public class keyMeUp
     {
         Scanner sc = new Scanner(System.in);
         Boolean loop = true, valid = false;
-        String file, inputString = null, fileAlt = "numPad.al", resultsFile = "results.txt";
-        String output = "output.al", input;
+        String file=null, inputString = null, resultsFile = "results.txt";
+        String output = "output.al";
         char save;
         int choice;
         DSALinkedList breadthPath = new DSALinkedList();
@@ -91,10 +92,11 @@ public class keyMeUp
                 break;
                 
                 case 1: //Load keyboard file
-                    /*System.out.println("Enter file name");
+                    KB = new DSAGraph();
+                    System.out.println("Enter file name");
                     sc.nextLine();
-                    file = sc.nextLine();*/
-                    readFile(fileAlt, KB);
+                    file = sc.nextLine();
+                    loadKB(file, KB);
                 break;
 
                 case 2: //Node operations (find, insert, delete, update)
@@ -121,15 +123,21 @@ public class keyMeUp
                 break;
 
                 case 6: //Enter string for finding path
-                    sc.nextLine();
-                    do
+                    if(file != null)
                     {
-                        System.out.println("Enter a string");
-                        
-                        inputString = sc.nextLine();
-                        valid = inputStringValidation(inputString, KB);
-                    }while(!valid);
-                    //inputString = inputStringAltering(inputString, KB);
+                        sc.nextLine();
+                        do
+                        {
+                            System.out.println("Enter a string");
+                            
+                            inputString = sc.nextLine();
+                            valid = inputStringValidation(inputString, KB);
+                        }while(!valid);
+                    }
+                    else
+                    {
+                        System.out.println("Load a graph first.");
+                    }
                 break;
 
                 case 7: //Generate paths
@@ -139,8 +147,8 @@ public class keyMeUp
                     }
                     else
                     {
-                        breadthPath = genBreadth(KB, inputString);
-                        depthPath = genDepth(KB, inputString);
+                        breadthPath = genBreadthPath(KB, inputString);
+                        depthPath = genDepthPath(KB, inputString);
                     }
                     
                 break;
@@ -165,7 +173,7 @@ public class keyMeUp
 
                 case 9: //Save keyboard
                     System.out.println("Saving keyboard...");
-                    writeFile(output, KB);
+                    exportKB(output, KB);
                 break;
 
                 default:
@@ -176,10 +184,8 @@ public class keyMeUp
         sc.close();
     }
 
-    public static void readFile(String pFileName, DSAGraph KB)
+    public static void loadKB(String pFileName, DSAGraph KB)
     {
-        
-        
         FileInputStream fileStream = null;
         InputStreamReader isr;
         BufferedReader bufRdr;
@@ -299,7 +305,7 @@ public class keyMeUp
     }
 
     
-    public static void writeFile(String pFileName, DSAGraph KB)
+    public static void exportKB(String pFileName, DSAGraph KB)
     {
         String output;
         FileOutputStream fileStrm = null;
@@ -340,7 +346,8 @@ public class keyMeUp
             pw = new PrintWriter(fileStrm);
             
 
-            int bNum=0, dNum=0, stringNum2 =-1, stringNum = -1;
+            int bNum=0, dNum=0, stringNum2 =-1, stringNum = -1, nMovesBreadth, nMovesDepth;
+            Boolean altKB1 = false, altKB2 = false;
             //String input;
             Iterator bIter = breadthPath.iterator();
             Iterator dIter = depthPath.iterator();
@@ -355,11 +362,148 @@ public class keyMeUp
                 {
                     pw.println();
                     stringNum++;
+                    if(input[stringNum].equals("#+="))
+                    {
+                        altKB1 = !altKB1;
+                    }
                 }
                 if(input[stringNum].equals("SHIFT"))
                 {
                     pw.print(vertex.getLabel().toString().toUpperCase() + "  ");
                     
+                }
+                else if(altKB1==true)
+                {
+                    if(vertex.getLabel().equals("q"))
+                    {
+                        pw.print("!" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("e"))
+                    {
+                        pw.print("#" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("r"))
+                    {
+                        pw.print("$" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("t"))
+                    {
+                        pw.print("%" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("y"))
+                    {
+                        pw.print("^" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("u"))
+                    {
+                        pw.print("&" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("i"))
+                    {
+                        pw.print("*" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("o"))
+                    {
+                        pw.print("(" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("p"))
+                    {
+                        pw.print(")" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("a"))
+                    {
+                        pw.print("~" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("s"))
+                    {
+                        pw.print("`" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("d"))
+                    {
+                        pw.print("=" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("f"))
+                    {
+                        pw.print("\\" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("h"))
+                    {
+                        pw.print("{" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("j"))
+                    {
+                        pw.print("}" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("k"))
+                    {
+                        pw.print("|" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("l"))
+                    {
+                        pw.print("[" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("_"))
+                    {
+                        pw.print("]" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("z"))
+                    {
+                        pw.print("<" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("x"))
+                    {
+                        pw.print(">" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("c"))
+                    {
+                        pw.print(";" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("b"))
+                    {
+                        pw.print("\"" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("n"))
+                    {
+                        pw.print("'" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("."))
+                    {
+                        pw.print("?" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("@"))
+                    {
+                        pw.print("-" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("+"))
+                    {
+                        pw.print("_" + "  ");
+                    }
+                    else if(vertex.getLabel().equals(":"))
+                    {
+                        pw.print(" " + "  ");
+                    }
+                    else if(vertex.getLabel().equals("-"))
+                    {
+                        pw.print("?" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("/"))
+                    {
+                        pw.print(" " + "  ");
+                    }
+                    else if(vertex.getLabel().equals(","))
+                    {
+                        pw.print("." + "  ");
+                    }
+                    else if(vertex.getLabel().equals("g"))
+                    {
+                        pw.print("+" + "  ");
+                    }
+                    else
+                    {
+                        pw.print(vertex.getLabel() + "  ");
+                    }
+                    
+
                 }
                 else
                 {
@@ -370,8 +514,9 @@ public class keyMeUp
                 
                 bNum++;
             }while(bIter.hasNext());
+            nMovesBreadth = bNum-input.length+1;
             pw.println();
-            pw.println("Total moves: " + (bNum-input.length+1));
+            pw.println("Total moves: " + nMovesBreadth);
             pw.println();
 
             pw.println("Depth First Search");
@@ -382,11 +527,148 @@ public class keyMeUp
                 {
                     pw.println();
                     stringNum2++;
+                    if(input[stringNum].equals("#+="))
+                    {
+                        altKB2 = !altKB2;
+                    }
                 }
                 if(input[stringNum2].equals("SHIFT"))
                 {
                     pw.print(vertex.getLabel().toString().toUpperCase() + "  ");
                     
+                }
+                else if(altKB1==true)
+                {
+                    if(vertex.getLabel().equals("q"))
+                    {
+                        pw.print("!" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("e"))
+                    {
+                        pw.print("#" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("r"))
+                    {
+                        pw.print("$" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("t"))
+                    {
+                        pw.print("%" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("y"))
+                    {
+                        pw.print("^" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("u"))
+                    {
+                        pw.print("&" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("i"))
+                    {
+                        pw.print("*" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("o"))
+                    {
+                        pw.print("(" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("p"))
+                    {
+                        pw.print(")" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("a"))
+                    {
+                        pw.print("~" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("s"))
+                    {
+                        pw.print("`" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("d"))
+                    {
+                        pw.print("=" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("f"))
+                    {
+                        pw.print("\\" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("h"))
+                    {
+                        pw.print("{" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("j"))
+                    {
+                        pw.print("}" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("k"))
+                    {
+                        pw.print("|" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("l"))
+                    {
+                        pw.print("[" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("_"))
+                    {
+                        pw.print("]" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("z"))
+                    {
+                        pw.print("<" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("x"))
+                    {
+                        pw.print(">" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("c"))
+                    {
+                        pw.print(";" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("b"))
+                    {
+                        pw.print("\"" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("n"))
+                    {
+                        pw.print("'" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("."))
+                    {
+                        pw.print("?" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("@"))
+                    {
+                        pw.print("-" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("+"))
+                    {
+                        pw.print("_" + "  ");
+                    }
+                    else if(vertex.getLabel().equals(":"))
+                    {
+                        pw.print(" " + "  ");
+                    }
+                    else if(vertex.getLabel().equals("-"))
+                    {
+                        pw.print("?" + "  ");
+                    }
+                    else if(vertex.getLabel().equals("/"))
+                    {
+                        pw.print(" " + "  ");
+                    }
+                    else if(vertex.getLabel().equals(","))
+                    {
+                        pw.print("." + "  ");
+                    }
+                    else if(vertex.getLabel().equals("g"))
+                    {
+                        pw.print("+" + "  ");
+                    }
+                    else
+                    {
+                        pw.print(vertex.getLabel() + "  ");
+                    }
+                    
+
                 }
                 else
                 {
@@ -395,16 +677,28 @@ public class keyMeUp
                 Dprev = vertex;
                 dNum++;
             }while(dIter.hasNext());
+            nMovesDepth = dNum-input.length+1;
             pw.println();
-            pw.println("Total moves: " + (dNum-input.length+1));
-
-
-
-
-
-
-
-
+            pw.println("Total moves: " + nMovesDepth);
+            pw.println();
+            pw.println("Ranking");
+            pw.println("===============");
+            if(nMovesBreadth>nMovesDepth)
+            {
+                pw.println("1. Depth First Search: " + nMovesDepth + " moves.");
+                pw.println("2. Breadth First Search: " + nMovesBreadth + " moves.");
+            }
+            else if(nMovesBreadth==nMovesDepth)
+            {
+                pw.println("Tie");
+                pw.println("Depth First Search: " + nMovesDepth + " moves.");
+                pw.println("Breadth First Search: " + nMovesBreadth + " moves.");
+            }
+            else
+            {
+                pw.println("1. Breadth First Search: " + nMovesBreadth + " moves.");
+                pw.println("2. Depth First Search: " + nMovesDepth + " moves.");
+            }
 
 
             pw.close();
@@ -450,12 +744,182 @@ public class keyMeUp
 
         DSALinkedList newString = new DSALinkedList();
 
-        if(KB.getVertex("SHIFT") != null && KB.getVertex("SPACE") !=null)
+    
+        if(KB.getVertex("SHIFT") != null && KB.getVertex("SPACE") !=null && KB.getVertex("#+=") != null)
         {
             for(int i=0; i<input.length; i++)
             {
+                //System.out.println(input[i]);
+                if(input[i].equals(" "))
+                {
+                    newString.insertLast("SPACE");
+                }
+                else
+                {
+                    if(input[i].equals("!")||input[i].equals("#")||input[i].equals("$")||input[i].equals("%")
+                    ||input[i].equals("^")||input[i].equals("&")||input[i].equals("*")||input[i].equals("(")
+                    ||input[i].equals(")")||input[i].equals("~")||input[i].equals("`")||input[i].equals("=")
+                    ||input[i].equals("\\")||input[i].equals("{")||input[i].equals("}")||input[i].equals("|")
+                    ||input[i].equals("[")||input[i].equals("]")||input[i].equals("<")||input[i].equals(">")
+                    ||input[i].equals(";")||input[i].equals("\"")||input[i].equals("'")||input[i].equals("?"))
+                    {
+                        newString.insertLast("#+=");
+                        /*if(i>1)
+                        {
+                            if(input[i-1].equals("!")||input[i-1].equals("#")||input[i-1].equals("$")||input[i-1].equals("%")
+                            ||input[i-1].equals("^")||input[i-1].equals("&")||input[i-1].equals("*")||input[i-1].equals("(")
+                            ||input[i-1].equals(")")||input[i-1].equals("~")||input[i-1].equals("`")||input[i-1].equals("=")
+                            ||input[i-1].equals("\\")||input[i-1].equals("{")||input[i-1].equals("}")||input[i-1].equals("|")
+                            ||input[i-1].equals("[")||input[i-1].equals("]")||input[i-1].equals("<")||input[i-1].equals(">")
+                            ||input[i-1].equals(";")||input[i-1].equals("\"")||input[i-1].equals("'")||input[i-1].equals("?"))
+                            {
+                                
+                            }
+                            else
+                            {
+                                newString.insertLast("#+=");
+                            }
+                        }*/
+                        if(input[i].equals("!"))
+                        {
+                            newString.insertLast("q");
+                        }
+                        else if(input[i].equals("#"))
+                        {
+                            newString.insertLast("e");
+                        }
+                        else if(input[i].equals("$"))
+                        {
+                            newString.insertLast("r");
+                        }
+                        else if(input[i].equals("%"))
+                        {
+                            newString.insertLast("t");
+                        }
+                        else if(input[i].equals("^"))
+                        {
+                            newString.insertLast("y");
+                        }
+                        else if(input[i].equals("&"))
+                        {
+                            newString.insertLast("u");
+                        }
+                        else if(input[i].equals("*"))
+                        {
+                            newString.insertLast("i");
+                        }
+                        else if(input[i].equals("("))
+                        {
+                            newString.insertLast("o");
+                        }
+                        else if(input[i].equals(")"))
+                        {
+                            newString.insertLast("p");
+                        }
+                        else if(input[i].equals("~"))
+                        {
+                            newString.insertLast("a");
+                        }
+                        else if(input[i].equals("`"))
+                        {
+                            newString.insertLast("s");
+                        }
+                        else if(input[i].equals("="))
+                        {
+                            newString.insertLast("d");
+                        }
+                        else if(input[i].equals("\\"))
+                        {
+                            newString.insertLast("f");
+                        }
+                        else if(input[i].equals("{"))
+                        {
+                            newString.insertLast("h");
+                        }
+                        else if(input[i].equals("}"))
+                        {
+                            newString.insertLast("j");
+                        }
+                        else if(input[i].equals("|"))
+                        {
+                            newString.insertLast("k");
+                        }
+                        else if(input[i].equals("["))
+                        {
+                            newString.insertLast("l");
+                        }
+                        else if(input[i].equals("]"))
+                        {
+                            newString.insertLast("_");
+                        }
+                        else if(input[i].equals("<"))
+                        {
+                            newString.insertLast("z");
+                        }
+                        else if(input[i].equals(">"))
+                        {
+                            newString.insertLast("x");
+                        }
+                        else if(input[i].equals(";"))
+                        {
+                            newString.insertLast("c");
+                        }
+                        else if(input[i].equals("\""))
+                        {
+                            newString.insertLast("b");
+                        }
+                        else if(input[i].equals("'"))
+                        {
+                            newString.insertLast("n");
+                        }
+                        else if(input[i].equals("?"))
+                        {
+                            newString.insertLast(".");
+                        }
+
+                        /*if(i!=input.length)
+                        {
+                            if(input[i+1].equals("!")||input[i+1].equals("#")||input[i+1].equals("$")||input[i+1].equals("%")
+                            ||input[i+1].equals("^")||input[i+1].equals("&")||input[i+1].equals("*")||input[i+1].equals("(")
+                            ||input[i+1].equals(")")||input[i+1].equals("~")||input[i+1].equals("`")||input[i+1].equals("=")
+                            ||input[i+1].equals("\\")||input[i+1].equals("{")||input[i+1].equals("}")||input[i+1].equals("|")
+                            ||input[i+1].equals("[")||input[i+1].equals("]")||input[i+1].equals("<")||input[i+1].equals(">")
+                            ||input[i+1].equals(";")||input[i+1].equals("\"")||input[i+1].equals("'")||input[i+1].equals("?"))
+                            {
+                                
+                            }
+                            else
+                            {
+                                newString.insertLast("#+=");
+                            }
+                        }
+                        else
+                        {
+                            newString.insertLast("#+=");
+                        }*/
+                        newString.insertLast("#+=");
+                    }  
+                    else if(Character.isUpperCase(input[i].charAt(0)))
+                    {
+                        newString.insertLast("SHIFT");
+                        newString.insertLast(input[i].toLowerCase());
+                    }
+                    else
+                    {
+                        newString.insertLast(input[i]);
+                    }
+                }
                 
-                System.out.println(input[i]);
+                //newString.insertLast(" ");
+                
+            }
+        }
+    
+        else if(KB.getVertex("SHIFT") != null && KB.getVertex("SPACE") !=null && KB.getVertex("#+=") == null)
+        {
+            for(int i=0; i<input.length; i++)
+            {
+                //System.out.println(input[i]);
                 if(input[i].equals(" "))
                 {
                     newString.insertLast("SPACE");
@@ -489,7 +953,14 @@ public class keyMeUp
                 }
                 else
                 {
-                    newString.insertLast(input[i]);
+                    if(Character.isUpperCase(input[i].charAt(0)))
+                    {
+                        newString.insertLast(input[i].toLowerCase());
+                    }
+                    else
+                    {
+                        newString.insertLast(input[i]);
+                    }
                 }
             }
         }
@@ -526,7 +997,8 @@ public class keyMeUp
    
     public static void displayPaths(DSAGraph KB ,DSALinkedList breadthPath, DSALinkedList depthPath, String inputString)
     {
-        int bNum=0, dNum=0, stringNum2 =-1, stringNum = -1;
+        int bNum=0, dNum=0, stringNum2 =-1, stringNum = -1, nMovesBreadth, nMovesDepth;
+        Boolean altKB1 = false, altKB2 = false;
         //String input;
         Iterator bIter = breadthPath.iterator();
         Iterator dIter = depthPath.iterator();
@@ -541,11 +1013,148 @@ public class keyMeUp
             {
                 System.out.println();
                 stringNum++;
+                if(input[stringNum].equals("#+="))
+                {
+                    altKB1 = !altKB1;
+                }
             }
             if(input[stringNum].equals("SHIFT"))
             {
                 System.out.print(vertex.getLabel().toString().toUpperCase() + "  ");
                 
+            } 
+            else if(altKB1==true)
+            {
+                if(vertex.getLabel().equals("q"))
+                {
+                    System.out.print("!" + "  ");
+                }
+                else if(vertex.getLabel().equals("e"))
+                {
+                    System.out.print("#" + "  ");
+                }
+                else if(vertex.getLabel().equals("r"))
+                {
+                    System.out.print("$" + "  ");
+                }
+                else if(vertex.getLabel().equals("t"))
+                {
+                    System.out.print("%" + "  ");
+                }
+                else if(vertex.getLabel().equals("y"))
+                {
+                    System.out.print("^" + "  ");
+                }
+                else if(vertex.getLabel().equals("u"))
+                {
+                    System.out.print("&" + "  ");
+                }
+                else if(vertex.getLabel().equals("i"))
+                {
+                    System.out.print("*" + "  ");
+                }
+                else if(vertex.getLabel().equals("o"))
+                {
+                    System.out.print("(" + "  ");
+                }
+                else if(vertex.getLabel().equals("p"))
+                {
+                    System.out.print(")" + "  ");
+                }
+                else if(vertex.getLabel().equals("a"))
+                {
+                    System.out.print("~" + "  ");
+                }
+                else if(vertex.getLabel().equals("s"))
+                {
+                    System.out.print("`" + "  ");
+                }
+                else if(vertex.getLabel().equals("d"))
+                {
+                    System.out.print("=" + "  ");
+                }
+                else if(vertex.getLabel().equals("f"))
+                {
+                    System.out.print("\\" + "  ");
+                }
+                else if(vertex.getLabel().equals("h"))
+                {
+                    System.out.print("{" + "  ");
+                }
+                else if(vertex.getLabel().equals("j"))
+                {
+                    System.out.print("}" + "  ");
+                }
+                else if(vertex.getLabel().equals("k"))
+                {
+                    System.out.print("|" + "  ");
+                }
+                else if(vertex.getLabel().equals("l"))
+                {
+                    System.out.print("[" + "  ");
+                }
+                else if(vertex.getLabel().equals("_"))
+                {
+                    System.out.print("]" + "  ");
+                }
+                else if(vertex.getLabel().equals("z"))
+                {
+                    System.out.print("<" + "  ");
+                }
+                else if(vertex.getLabel().equals("x"))
+                {
+                    System.out.print(">" + "  ");
+                }
+                else if(vertex.getLabel().equals("c"))
+                {
+                    System.out.print(";" + "  ");
+                }
+                else if(vertex.getLabel().equals("b"))
+                {
+                    System.out.print("\"" + "  ");
+                }
+                else if(vertex.getLabel().equals("n"))
+                {
+                    System.out.print("'" + "  ");
+                }
+                else if(vertex.getLabel().equals("."))
+                {
+                    System.out.print("?" + "  ");
+                }
+                else if(vertex.getLabel().equals("@"))
+                {
+                    System.out.print("-" + "  ");
+                }
+                else if(vertex.getLabel().equals("+"))
+                {
+                    System.out.print("_" + "  ");
+                }
+                else if(vertex.getLabel().equals(":"))
+                {
+                    System.out.print(" " + "  ");
+                }
+                else if(vertex.getLabel().equals("-"))
+                {
+                    System.out.print("?" + "  ");
+                }
+                else if(vertex.getLabel().equals("/"))
+                {
+                    System.out.print(" " + "  ");
+                }
+                else if(vertex.getLabel().equals(","))
+                {
+                    System.out.print("." + "  ");
+                }
+                else if(vertex.getLabel().equals("g"))
+                {
+                    System.out.print("+" + "  ");
+                }
+                else
+                {
+                    System.out.print(vertex.getLabel() + "  ");
+                }
+                
+
             }
             else
             {
@@ -557,8 +1166,9 @@ public class keyMeUp
             
             bNum++;
         }while(bIter.hasNext());
+        nMovesBreadth = bNum-input.length+1;
         System.out.println();
-        System.out.println("Total moves: " + (bNum-input.length+1));
+        System.out.println("Total moves: " + nMovesBreadth);
         System.out.println();
 
         System.out.println("Depth First Search");
@@ -569,11 +1179,148 @@ public class keyMeUp
             {
                 System.out.println();
                 stringNum2++;
+                if(input[stringNum].equals("#+="))
+                {
+                    altKB2 = !altKB2;
+                }
             }
             if(input[stringNum2].equals("SHIFT"))
             {
                 System.out.print(vertex.getLabel().toString().toUpperCase() + "  ");
                 
+            }
+            else if(altKB1==true)
+            {
+                if(vertex.getLabel().equals("q"))
+                {
+                    System.out.print("!" + "  ");
+                }
+                else if(vertex.getLabel().equals("e"))
+                {
+                    System.out.print("#" + "  ");
+                }
+                else if(vertex.getLabel().equals("r"))
+                {
+                    System.out.print("$" + "  ");
+                }
+                else if(vertex.getLabel().equals("t"))
+                {
+                    System.out.print("%" + "  ");
+                }
+                else if(vertex.getLabel().equals("y"))
+                {
+                    System.out.print("^" + "  ");
+                }
+                else if(vertex.getLabel().equals("u"))
+                {
+                    System.out.print("&" + "  ");
+                }
+                else if(vertex.getLabel().equals("i"))
+                {
+                    System.out.print("*" + "  ");
+                }
+                else if(vertex.getLabel().equals("o"))
+                {
+                    System.out.print("(" + "  ");
+                }
+                else if(vertex.getLabel().equals("p"))
+                {
+                    System.out.print(")" + "  ");
+                }
+                else if(vertex.getLabel().equals("a"))
+                {
+                    System.out.print("~" + "  ");
+                }
+                else if(vertex.getLabel().equals("s"))
+                {
+                    System.out.print("`" + "  ");
+                }
+                else if(vertex.getLabel().equals("d"))
+                {
+                    System.out.print("=" + "  ");
+                }
+                else if(vertex.getLabel().equals("f"))
+                {
+                    System.out.print("\\" + "  ");
+                }
+                else if(vertex.getLabel().equals("h"))
+                {
+                    System.out.print("{" + "  ");
+                }
+                else if(vertex.getLabel().equals("j"))
+                {
+                    System.out.print("}" + "  ");
+                }
+                else if(vertex.getLabel().equals("k"))
+                {
+                    System.out.print("|" + "  ");
+                }
+                else if(vertex.getLabel().equals("l"))
+                {
+                    System.out.print("[" + "  ");
+                }
+                else if(vertex.getLabel().equals("_"))
+                {
+                    System.out.print("]" + "  ");
+                }
+                else if(vertex.getLabel().equals("z"))
+                {
+                    System.out.print("<" + "  ");
+                }
+                else if(vertex.getLabel().equals("x"))
+                {
+                    System.out.print(">" + "  ");
+                }
+                else if(vertex.getLabel().equals("c"))
+                {
+                    System.out.print(";" + "  ");
+                }
+                else if(vertex.getLabel().equals("b"))
+                {
+                    System.out.print("\"" + "  ");
+                }
+                else if(vertex.getLabel().equals("n"))
+                {
+                    System.out.print("'" + "  ");
+                }
+                else if(vertex.getLabel().equals("."))
+                {
+                    System.out.print("?" + "  ");
+                }
+                else if(vertex.getLabel().equals("@"))
+                {
+                    System.out.print("-" + "  ");
+                }
+                else if(vertex.getLabel().equals("+"))
+                {
+                    System.out.print("_" + "  ");
+                }
+                else if(vertex.getLabel().equals(":"))
+                {
+                    System.out.print(" " + "  ");
+                }
+                else if(vertex.getLabel().equals("-"))
+                {
+                    System.out.print("?" + "  ");
+                }
+                else if(vertex.getLabel().equals("/"))
+                {
+                    System.out.print(" " + "  ");
+                }
+                else if(vertex.getLabel().equals(","))
+                {
+                    System.out.print("." + "  ");
+                }
+                else if(vertex.getLabel().equals("g"))
+                {
+                    System.out.print("+" + "  ");
+                }
+                else
+                {
+                    System.out.print(vertex.getLabel() + "  ");
+                }
+                
+
             }
             else
             {
@@ -582,14 +1329,32 @@ public class keyMeUp
             Dprev = vertex;
             dNum++;
         }while(dIter.hasNext());
+        nMovesDepth = dNum-input.length+1;
         System.out.println();
-        System.out.println("Total moves: " + (dNum-input.length+1));
-
-
+        System.out.println("Total moves: " + nMovesDepth);
+        System.out.println();
+        System.out.println("Ranking");
+        System.out.println("===============");
+        if(nMovesBreadth>nMovesDepth)
+        {
+            System.out.println("1. Depth First Search: " + nMovesDepth + " moves.");
+            System.out.println("2. Breadth First Search: " + nMovesBreadth + " moves.");
+        }
+        else if(nMovesBreadth==nMovesDepth)
+        {
+            System.out.println("Tie");
+            System.out.println("Depth First Search: " + nMovesDepth + " moves.");
+            System.out.println("Breadth First Search: " + nMovesBreadth + " moves.");
+        }
+        else
+        {
+            System.out.println("1. Breadth First Search: " + nMovesBreadth + " moves.");
+            System.out.println("2. Depth First Search: " + nMovesDepth + " moves.");
+        }
 
     }
 
-    public static DSALinkedList genBreadth(DSAGraph KB, String inputString)
+    public static DSALinkedList genBreadthPath(DSAGraph KB, String inputString)
     {
         String[] input = inputStringAltering(inputString, KB);
         //System.out.println(input[0] );
@@ -600,7 +1365,7 @@ public class keyMeUp
         for(int i=0; i<input.length-1;i++)
         {
            
-            path = breadth(KB, input[i], input[i+1]);
+            path = breadthOptimised(KB, input[i], input[i+1]);
             Iterator iter = path.iterator();
             do
             {
@@ -611,7 +1376,7 @@ public class keyMeUp
         return totalPath;
     }
 
-    public static DSALinkedList genDepth(DSAGraph KB, String inputString)
+    public static DSALinkedList genDepthPath(DSAGraph KB, String inputString)
     {
         String[] input = inputStringAltering(inputString, KB);
         DSALinkedList path = new DSALinkedList();
@@ -620,7 +1385,7 @@ public class keyMeUp
         
         for(int i=0; i<input.length-1;i++)
         {
-            path = depth(KB, input[i], input[i+1]);
+            path = depthOptimised(KB, input[i], input[i+1]);
             Iterator iter = path.iterator();
             do
             {
@@ -631,7 +1396,7 @@ public class keyMeUp
         return totalPath;
     }
 
-    public static DSAQueue breadthFirstSearchAlt(DSAGraph graph, Object vertex1, Object vertex2)
+    public static DSAQueue breadthFirstSearch(DSAGraph graph, Object vertex1, Object vertex2)
     {
         DSAQueue T = new DSAQueue();
         DSAQueue Q = new DSAQueue();
@@ -678,16 +1443,13 @@ public class keyMeUp
         return T;
     }
 
-    public static DSALinkedList breadth(DSAGraph KB, Object vertex1, Object vertex2)
+    public static DSALinkedList breadthOptimised(DSAGraph KB, Object vertex1, Object vertex2)
     {
-        DSAQueue T = breadthFirstSearchAlt(KB, vertex1, vertex2);
+        DSAQueue T = breadthFirstSearch(KB, vertex1, vertex2);
         
         DSALinkedList Q = new DSALinkedList();
         Boolean loop = true, loop2 = true;
 
-  
-
-        
         DSAGraph.DSAGraphVertex v = KB.getVertex(vertex2);
 
         Q.insertFirst(v);
@@ -722,7 +1484,7 @@ public class keyMeUp
         return Q;
     }
 
-    public static DSAQueue depthFirstSearchAlt(DSAGraph graph, Object vertex1, Object vertex2)
+    public static DSAQueue depthFirstSearch(DSAGraph graph, Object vertex1, Object vertex2)
     {
         DSAQueue T = new DSAQueue();
         DSAStack S = new DSAStack();
@@ -733,13 +1495,9 @@ public class keyMeUp
             DSAGraph.DSAGraphVertex vert2 = (DSAGraph.DSAGraphVertex)iter.next();
             vert2.clearVisited();
         }while(iter.hasNext());
-
         DSAGraph.DSAGraphVertex v = (DSAGraph.DSAGraphVertex)graph.getVertex(vertex1);
-       
         S.push(v);
         v.setVisited();
-        
-
         do
         {
             Iterator iter2 = v.getAdjacent().iterator();
@@ -758,28 +1516,20 @@ public class keyMeUp
                     }
                     v=w;
                 }
-
             }while(iter2.hasNext() && loop == true);
             v = (DSAGraph.DSAGraphVertex) S.pop();
-
         }while(!S.isEmpty()&&loop == true);
         return T;
 
     }
 
-    
-
-    public static DSALinkedList depth(DSAGraph KB, Object vertex1, Object vertex2)
+    public static DSALinkedList depthOptimised(DSAGraph KB, Object vertex1, Object vertex2)
     {
-        DSAQueue T = depthFirstSearchAlt(KB, vertex1, vertex2);
+        DSAQueue T = depthFirstSearch(KB, vertex1, vertex2);
         DSALinkedList Q = new DSALinkedList();
         Boolean loop = true, loop2 = true;
         DSAGraph.DSAGraphVertex v = KB.getVertex(vertex2);
         Q.insertFirst(v);
-      
-    
-        
-
         do
         {
             loop = true;
@@ -900,7 +1650,6 @@ public class keyMeUp
         System.out.println("4. Update");
     }
 
-
     public static void edgeOperations(DSAGraph KB)
     {
         Scanner sc = new Scanner(System.in);
@@ -976,6 +1725,7 @@ public class keyMeUp
         System.out.println("3. Remove");
         System.out.println("4. Update");
     }
+
     
 
 
