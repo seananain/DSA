@@ -1,16 +1,17 @@
 import org.junit.*;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertTrue;
 
 import java.io.*;
 import java.util.*;
 
+
 public class keyMeUpTEST extends keyMeUp
 {
-    /*public DSAGraph KB = new DSAGraph();
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    public DSAGraph testKB = new DSAGraph();
+    /*private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
     @Before
@@ -19,95 +20,88 @@ public class keyMeUpTEST extends keyMeUp
         System.setErr(new PrintStream(errContent));
     }
 
+   
     @After
     public void cleanUpStreams() {
         System.setOut(null);
         System.setErr(null);
-    }
+    }*/
      
-    @Test
-    public void testMenu()
-    {
-        menu();
-        assertEquals("Main Menu\r\n==============\r\n1. Load keyboard file\r\n2. Node operations (find, insert, delete, update)\r\n3. Edge operations (find, add, remove, update)\r\n4. Display graph\r\n5. Display graph information\r\n6. Enter string for finding path\r\n7. Generate paths\r\n8. Display path(s) (ranked, option to save)\r\n9. Save keyboard\r\n",outContent.toString());
-    }
+
 
     @Test
-    public void testSilentMode()
+    public void testLoadKB()
     {
-        
-    }
-
-    @Test
-    public void testInteractiveMode()
-    {
-
-    }
-
-    @Test
-    public void testReadFile()
-    {
-        readFile("numPad.al", KB);
+        //testKB = new DSAGraph();
+        loadKB("TESTkb.al", testKB);
+        int test = testKB.getVertexCount();
+        assertEquals(3, test);
     }
 
     @Test
     public void testProcessLine()
     {
-        processLine("1, 2, 3", KB);
+        processLine("1 2 3", testKB);
+        assertEquals(3, testKB.getVertexCount());
     }
 
     @Test
-    public void testReadFile2()
+    public void testReadStringFile()
     {
-        assertEquals("hi sean", readFile2("inputString.txt"));
+        assertEquals("hi valerie", readStringFile("inputStringTEST.txt"));
     }
 
     @Test
-    public void testWriteFile()
+    public void testExportKB()
     {
-        readFile("numPad.al", KB);
-        writeFile("output.al", KB);
+        loadKB("TESTkb.al", testKB);
+        exportKB("TESTexport.al", testKB);
+        //assertTrue(FileUtils);
     }
 
     @Test
     public void testWriteResults()
     {
+        loadKB("switch.al", testKB);
         DSALinkedList breadthPath = new DSALinkedList();
         DSALinkedList depthPath = new DSALinkedList();
         String inputString = "sean";
-        readFile("iview", KB);
-        breadthPath = genBreadth(KB, inputString);
-        depthPath = genDepth(KB, inputString);
-        writeResults("results.txt", KB, breadthPath, depthPath, inputString);
+        //readFile("iview", testKB);
+        breadthPath = genBreadthPath(testKB, inputString);
+        depthPath = genDepthPath(testKB, inputString);
+        writeResults("results.txt", testKB, breadthPath, depthPath, inputString);
     }
 
     @Test
     public void testInputStringValidation()
     {
-        readFile("numPad.al", KB);
-        assertFalse(inputStringValidation("sean", KB));
-        assertTrue(inputStringValidation("1", KB));
+        //readFile("numPad.al", testKB);
+        processLine("1 2 3", testKB);
+        assertFalse(inputStringValidation("sean", testKB));
+        assertTrue(inputStringValidation("1", testKB));
     }
 
     @Test
     public void testInputStringAltering()
     {
-        readFile("iview.al", KB);
-        String[] test = {"","s", "e", "a", "n"};
-        assertEquals(test, inputStringAltering("sean", KB));
+        //readFile("iview.al", testKB);
+        String[] expected = {"s", "e", "a", "n"};
+        String[] test = inputStringAltering("sean", testKB);
+        //assertEquals(expected, test);
+        assertArrayEquals(expected, test);
     }
 
-    @Test
+    //@Test
     public void testDisplayPaths()
     {
-        DSAGraph KB = new DSAGraph();
+        DSAGraph testKB = new DSAGraph();
         DSALinkedList breadthPath = new DSALinkedList();
         DSALinkedList depthPath = new DSALinkedList();
         String inputString = "sean";
-        readFile("iview", KB);
-        breadthPath = genBreadth(KB, inputString);
-        depthPath = genDepth(KB, inputString);
-        displayPaths(KB, breadthPath, depthPath, inputString);
+        //readFile("iview", testKB);
+        //breadthPath = genBreadth(testKB, inputString);
+        //depthPath = genDepth(testKB, inputString);
+        //displayPaths(testKB, breadthPath, depthPath, inputString);
         
     }
 
@@ -119,9 +113,9 @@ public class keyMeUpTEST extends keyMeUp
         test.insertLast("2");
         test.insertLast("3");
 
-        readFile("numPad.al", KB);
+        //readFile("numPad.al", testKB);
         
-        assertEquals(test, genBreadth(KB, "123"));
+        //assertEquals(test, genBreadth(testKB, "123"));
     }
 
     @Test
@@ -132,13 +126,13 @@ public class keyMeUpTEST extends keyMeUp
         test.insertLast("2");
         test.insertLast("3");
 
-        readFile("numPad.al", KB);
+        //readFile("numPad.al", testKB);
         
-        assertEquals(test, genDepth(KB, "123"));
+        //assertEquals(test, genDepth(testKB, "123"));
     }
 
     @Test
-    public void testBreadthFirstSearchAlt()
+    public void testBreadthFirstSearch()
     {
         
 
@@ -146,45 +140,25 @@ public class keyMeUpTEST extends keyMeUp
     }
 
     @Test
-    public void testDepthFirstSearchAlt()
+    public void testDepthFirstSearch()
     {
 
     }
 
 
     @Test
-    public void testBreadth()
+    public void testBreadthOptimised()
     {
 
     }
 
     @Test
-    public void testDepth()
+    public void testDepthOptimised()
     {
 
     }
 
-    @Test
-    public void testNodeOperations()
-    {
 
-    }
 
-    @Test
-    public void testNodeOpMenu()
-    {
-
-    }
-
-    @Test
-    public void testEdgeOperations()
-    {
-
-    }
-
-    @Test
-    public void testEdgeOpMenu()
-    {
-
-    }*/
+  
 }

@@ -439,7 +439,7 @@ public class DSAGraph
 
     }
 
-    public void depthFirstSearch(DSAGraph graph)
+    public void depthFirstSearchOriginal(DSAGraph graph)
     {
         DSAQueue T = new DSAQueue();
         DSAStack S = new DSAStack();
@@ -479,7 +479,7 @@ public class DSAGraph
 
     }
 
-    public void breadthFirstSearch()
+    public void breadthFirstSearchOriginal()
     {
         DSAQueue T = new DSAQueue();
         DSAQueue Q = new DSAQueue();
