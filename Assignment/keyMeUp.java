@@ -30,12 +30,13 @@ public class keyMeUp
                 else
                 {
                     System.out.println("Invalid number of command line arguments");
+                    System.out.println("Enter -s keyFile strFile pathFile ");
                 }
             break;
 
             default:
                 System.out.println("Invalid command line argument");
-                System.out.println("Enter either -i OR –s keyFile strFile pathFile ");
+                System.out.println("Enter either -i OR -s keyFile strFile pathFile ");
             break;
         }
         sc.close();
@@ -355,6 +356,8 @@ public class keyMeUp
             DSAGraph.DSAGraphVertex Bprev = (DSAGraph.DSAGraphVertex)breadthPath.peekFirst();
             DSAGraph.DSAGraphVertex Dprev = (DSAGraph.DSAGraphVertex)depthPath.peekFirst();
             String[] input = inputStringAltering(inputString, KB);
+            pw.println("Input string: " + inputString);
+            pw.println();
             pw.println("Breadth First Search");
             do
             {
@@ -1006,6 +1009,8 @@ public class keyMeUp
         DSAGraph.DSAGraphVertex Bprev = (DSAGraph.DSAGraphVertex)breadthPath.peekFirst();
         DSAGraph.DSAGraphVertex Dprev = (DSAGraph.DSAGraphVertex)depthPath.peekFirst();
         String[] input = inputStringAltering(inputString, KB);
+        System.out.println("Input string: " + inputString);
+        System.out.println();
         System.out.println("Breadth First Search");
         do
         {

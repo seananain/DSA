@@ -1,18 +1,34 @@
+Input string: {S3@n}
+
 Breadth First Search
 
-s  m  g  a  SPACE  BACKSPACE  d  e  
-e  BACKSPACE  SPACE  a  
-a  b  h  n  
-Total moves: 13
+#+=  ;  =  \  +  {  
+{  '  SPACE  #+=  
+#+=  SHIFT  
+SHIFT  X  S  
+s  w  2  3  
+3  2  1  BACKSPACE  @  
+@  SPACE  v  b  n  
+n  SPACE  #+=  
+#+=  ;  =  \  +  {  }  
+}  m  SPACE  #+=  
+Total moves: 33
 
 Depth First Search
 
-s  t  z  1  2  3  4  x  r  q  k  e  
-e  BACKSPACE  SPACE  a  
-a  b  h  n  
-Total moves: 17
+#+=  SPACE  4  $  \  +  {  
+{  '  SPACE  #+=  
+#+=  SHIFT  
+SHIFT  X  S  
+`  =  ;  #+=  3  
+3  4  SPACE  OK  RETURN  BACKSPACE  -  
+-  SPACE  4  5  %  +  {  '  
+'  SPACE  #+=  
+#+=  SPACE  4  $  \  +  {  }  
+}  m  SPACE  #+=  
+Total moves: 41
 
 Ranking
 ===============
-1. Breadth First Search: 13 moves.
-2. Depth First Search: 17 moves.
+1. Breadth First Search: 33 moves.
+2. Depth First Search: 41 moves.
