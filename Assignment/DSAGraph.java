@@ -138,21 +138,25 @@ public class DSAGraph
 
                 DSAGraphVertex vert = (DSAGraphVertex)iter.next();
                 DSALinkedList newLinks = new DSALinkedList();
-                Iterator iter1 = vert.links.iterator();
-                do
+                if(vert.links != null)
                 {
-                    DSAGraphVertex vert1 = (DSAGraphVertex)iter1.next();
-                    if(!vert1.equals(vertex))
+                    Iterator iter1 = vert.links.iterator();
+                    do
                     {
-                        newLinks.insertLast(vert1);
-                    }
-                }while(iter1.hasNext());
-                vert.links = newLinks;
-
+                        DSAGraphVertex vert1 = (DSAGraphVertex)iter1.next();
+                        if(!vert1.equals(vertex))
+                        {
+                            newLinks.insertLast(vert1);
+                        }
+                    }while(iter1.hasNext());
+                    vert.links = newLinks;
+                }
                 if(!vert.equals(vertex))
                 {
                     newVertices.insertLast(vert);
                 }
+
+
 
                 
                 Iterator iter3 = edges.iterator();
@@ -212,7 +216,26 @@ public class DSAGraph
     {
         //DSAGraphEdge edge = new DSAGraphEdge(getVertex(label1), getVertex(label2), label1, label2);
         DSAGraphVertex vert1 = getVertex(label1);
-        DSAGraphVertex vert2 = getVertex(label2);
+
+        Iterator iter1 = vert1.links.iterator();
+
+        DSALinkedList newLinks1 = new DSALinkedList();
+    
+        if(isAdjacent(label1, label2))
+        {
+            do
+            {
+                DSAGraphVertex vert1 = (DSAGraphVertex)iter1.next();
+                if(!vert1.equals(getVertex(label2)))
+                {
+                    newLinks1.insertLast(vert1);
+                }
+
+            }while(iter1.hasNext());
+            vert1.links = newLinks1;
+            
+        }
+            
     }
 
     public Boolean hasVertex(Object label)
@@ -315,12 +338,19 @@ public class DSAGraph
             System.out.println("Vertex: " + vert.getLabel());
             System.out.println("Adjacent vertices:");
             DSAGraphVertex adj = null;
-            Iterator iter2 = vert.links.iterator();
-            do
+            if(vert.links != null)
             {
-                DSAGraphVertex vert2 = (DSAGraphVertex)iter2.next();
-                System.out.println(vert2.getLabel());
-            }while(iter2.hasNext());
+                Iterator iter2 = vert.links.iterator();
+                do
+                {
+                    DSAGraphVertex vert2 = (DSAGraphVertex)iter2.next();
+                    if(vert2 != null)
+                    {
+                        System.out.println(vert2.getLabel());
+                    }
+                }while(iter2.hasNext());
+            }
+            
         }while(iter.hasNext());
     }
 

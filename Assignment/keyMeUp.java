@@ -63,7 +63,7 @@ public class keyMeUp
         DSALinkedList breadthPath = new DSALinkedList();
         DSALinkedList depthPath = new DSALinkedList();        
         loadKB(keyFile, KB);
-        String inputString = readFile2(strFile);
+        String inputString = readStringFile(strFile);
         breadthPath = genBreadthPath(KB, inputString);
         depthPath = genDepthPath(KB, inputString);
         writeResults(pathFile, KB, breadthPath, depthPath, inputString);
@@ -260,7 +260,7 @@ public class keyMeUp
         
     }
 
-    public static String readFile2(String pFileName)
+    public static String readStringFile(String pFileName)
     {
         
         
@@ -1559,6 +1559,7 @@ public class keyMeUp
         String find;
         int input;
         Boolean loop = true;
+        
         do
         {
             nodeOpMenu();
@@ -1568,6 +1569,7 @@ public class keyMeUp
             {
                 case 0:
                     loop = false;
+                break;
                     
                 case 1://Find
                     //sc2.nextLine();
@@ -1593,6 +1595,10 @@ public class keyMeUp
                     if(KB.getVertex(label)==null)
                     {
                         KB.addVertex(label, value);
+                    }
+                    else
+                    {
+                        System.out.println("Vertex already exists");
                     }
                 break;
 
@@ -1665,7 +1671,8 @@ public class keyMeUp
             {
                 case 0:
                     loop = false;
-                    
+                break;                
+
                 case 1://Find
                     sc.nextLine();
                     System.out.println("Enter a label for vertex 1");
@@ -1683,6 +1690,7 @@ public class keyMeUp
                 break;
 
                 case 2://Insert
+                    sc.nextLine();
                     System.out.println("Enter a label for vertex 1");
                     vert1 = sc.nextLine();
                     System.out.println("Enter a label for vertex 2");
@@ -1712,7 +1720,7 @@ public class keyMeUp
                 break;
             }
         }while(loop);
-        sc.close();
+        //sc.close();
     }
 
     public static void edgeOpMenu()
