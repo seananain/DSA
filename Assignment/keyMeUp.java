@@ -531,7 +531,7 @@ public class keyMeUp
                 {
                     pw.println();
                     stringNum2++;
-                    if(input[stringNum].equals("#+="))
+                    if(input[stringNum2].equals("#+="))
                     {
                         altKB2 = !altKB2;
                     }
@@ -541,7 +541,7 @@ public class keyMeUp
                     pw.print(vertex.getLabel().toString().toUpperCase() + "  ");
                     
                 }
-                else if(altKB1==true)
+                else if(altKB2==true)
                 {
                     if(vertex.getLabel().equals("q"))
                     {
@@ -1185,7 +1185,7 @@ public class keyMeUp
             {
                 System.out.println();
                 stringNum2++;
-                if(input[stringNum].equals("#+="))
+                if(input[stringNum2].equals("#+="))
                 {
                     altKB2 = !altKB2;
                 }
@@ -1195,7 +1195,7 @@ public class keyMeUp
                 System.out.print(vertex.getLabel().toString().toUpperCase() + "  ");
                 
             }
-            else if(altKB1==true)
+            else if(altKB2==true)
             {
                 if(vertex.getLabel().equals("q"))
                 {

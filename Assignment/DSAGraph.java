@@ -144,9 +144,12 @@ public class DSAGraph
                     do
                     {
                         DSAGraphVertex vert1 = (DSAGraphVertex)iter1.next();
-                        if(!vert1.equals(vertex))
+                        if(vert1 != null)
                         {
-                            newLinks.insertLast(vert1);
+                            if(!vert1.equals(vertex))
+                            {
+                                newLinks.insertLast(vert1);
+                            }
                         }
                     }while(iter1.hasNext());
                     vert.links = newLinks;

@@ -97,9 +97,14 @@ public class DSALinkedList implements Iterable, Serializable
         tail = null;
     }
 
-    public Object getHead()
+    public DSAListNode getHead()
     {
         return head;
+    }
+
+    public DSAListNode getTail()
+    {
+        return tail;
     }
 
     public void insertFirst(Object newValue)
