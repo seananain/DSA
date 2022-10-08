@@ -47,6 +47,7 @@ public class keyMeUp
     {
         System.out.println("Main Menu");
         System.out.println("==============");
+        System.out.println("0. Exit");
         System.out.println("1. Load keyboard file");
         System.out.println("2. Node operations (find, insert, delete, update)");
         System.out.println("3. Edge operations (find, add, remove, update)");
@@ -1464,6 +1465,7 @@ public class keyMeUp
             {
                 //System.out.println("Looping again");
                 DSAGraph.DSAGraphVertex w = (DSAGraph.DSAGraphVertex)iter.next();
+                
                 if(KB.isAdjacent(w.getLabel(), v.getLabel()))
                 {
                     Q.insertFirst(w);
@@ -1474,6 +1476,7 @@ public class keyMeUp
                     v = w;
                     loop = false;
                 }
+                
             }while(iter.hasNext() && loop == true);
         }while(loop2 == true);
        
@@ -1660,12 +1663,12 @@ public class keyMeUp
     {
         Scanner sc = new Scanner(System.in);
         Object label, value;
-        Object vert1, vert2;
+        Object vert1, vert2, vert3;
         int input;
         Boolean loop = true;
         do
         {
-            nodeOpMenu();
+            edgeOpMenu();
             input = sc.nextInt();
             switch(input)
             {
@@ -1685,7 +1688,7 @@ public class keyMeUp
                     }
                     else
                     {
-                        System.out.println("Vertex does not exit");
+                        System.out.println("Edge does not exist");
                     }
                 break;
 
@@ -1708,11 +1711,40 @@ public class keyMeUp
                 break;
 
                 case 3://Delete
-
+                    sc.nextLine();
+                    System.out.println("Enter a label for vertex 1");
+                    vert1 = sc.nextLine();
+                    System.out.println("Enter a label for vertex 2");
+                    vert2 = sc.nextLine();
+                    if(KB.getVertex(vert1) != null && KB.getVertex(vert2) != null && KB.isAdjacent(vert1, vert2) == true)
+                    {
+                        System.out.println("Removing edge from " + vert1 + " to " + vert2);
+                        KB.removeEdge(vert1, vert2);
+                    }
+                    else
+                    {
+                        System.out.println("Cannot remove edge");
+                    }
                 break;
 
                 case 4://Update
-
+                    sc.nextLine();
+                    System.out.println("Enter the label for vertex 1");
+                    vert1 = sc.nextLine();
+                    System.out.println("Enter the label for vertex 2");
+                    vert2 = sc.nextLine();
+                    System.out.println("Enter the label for new destination of edge");
+                    vert3 = sc.nextLine();
+                    if(KB.getVertex(vert1) != null && KB.getVertex(vert2) != null && KB.isAdjacent(vert1, vert2) == true && KB.getVertex(vert3) != null)
+                    {
+                        System.out.println("Removing edge from " + vert1 + " to " + vert2);
+                        System.out.println("Adding edge from " + vert1 + " to" + vert3);
+                        KB.editEdge(vert1, vert2, vert3);
+                    }
+                    else
+                    {
+                        System.out.println("Cannot edit edge");
+                    }
                 break;
 
                 default:

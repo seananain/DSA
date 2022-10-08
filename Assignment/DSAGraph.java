@@ -190,14 +190,24 @@ public class DSAGraph
                 do
                 {
                     DSAGraphVertex link = (DSAGraphVertex)iter2.next();
-                    if(link.equals(oldVertex))
+                    if(link!=null)
                     {
-                        addEdge(vert, newVertex);
-                        //vert.addEdge(newVertex);
+                        if(link.equals(oldVertex))
+                        {
+                        
+                            addEdge(vert.getLabel(), newVertex.getLabel());
+                            //vert.addEdge(newVertex);
+                        }
                     }
                     //Add links from old vertext to other vertices to the new Vertex
                 }while(iter2.hasNext());
             }while(iter.hasNext());
+            Iterator iter1 = oldVertex.links.iterator();
+            do
+            {
+                DSAGraphVertex vert1 = (DSAGraphVertex)iter1.next();
+                addEdge(newVertex.getLabel(), vert1.getLabel());
+            }while(iter1.hasNext());
             removeVertex(label);
         }
     }
@@ -215,27 +225,56 @@ public class DSAGraph
     public void removeEdge(Object label1, Object label2)
     {
         //DSAGraphEdge edge = new DSAGraphEdge(getVertex(label1), getVertex(label2), label1, label2);
-        DSAGraphVertex vert1 = getVertex(label1);
-
-        Iterator iter1 = vert1.links.iterator();
-
-        DSALinkedList newLinks1 = new DSALinkedList();
-    
-        if(isAdjacent(label1, label2))
+        if(hasVertex(label1)&&hasVertex(label2)&&isAdjacent(label1, label2))
         {
+            DSAGraphVertex vert1 = getVertex(label1);
+            DSAGraphVertex vert2 = getVertex(label2);
+            Iterator iter1 = vert1.links.iterator();
+
+            DSALinkedList newLinks1 = new DSALinkedList();
+        
             do
             {
-                DSAGraphVertex vert1 = (DSAGraphVertex)iter1.next();
-                if(!vert1.equals(getVertex(label2)))
+                DSAGraphVertex vertex = (DSAGraphVertex)iter1.next();
+                if(!vertex.equals(getVertex(label2)))
                 {
-                    newLinks1.insertLast(vert1);
+                    newLinks1.insertLast(vertex);
                 }
 
             }while(iter1.hasNext());
             vert1.links = newLinks1;
             
+            DSALinkedList newEdges = new DSALinkedList();
+            Iterator iter2 = edges.iterator();
+            do
+            {
+                DSAGraphEdge edge = (DSAGraphEdge)iter2.next();
+
+                if(edge.getFrom().equals(vert1) && edge.getTo().equals(vert2))
+                {  
+                }
+                else
+                {
+                    newEdges.insertLast(edge);
+                }
+            }while(iter2.hasNext());
+            edges = newEdges;
+            
         }
             
+    }
+
+    public void editEdge(Object label1, Object label2, Object newLabel)
+    {
+        if(hasVertex(label1)&&hasVertex(label2)&&isAdjacent(label1, label2)&&hasVertex(newLabel))
+        {
+            DSAGraphVertex vert1 = getVertex(label1);
+            DSAGraphVertex vert2 = getVertex(label2);
+            DSAGraphVertex vert3 = getVertex(newLabel);
+
+            removeEdge(label1, label2);
+            addEdge(label1, newLabel);
+        }
     }
 
     public Boolean hasVertex(Object label)
