@@ -10,7 +10,7 @@ public class keyMeUp
     {
         if(args.length == 0)
         {
-            System.out.println("Enter either -i OR -s keyFile strFile pathFile ");
+            System.out.println("Enter either -i OR -s keyFile strFile pathFile ");//Displays usage
             throw new Error("Invalid number of command line arguments");
         }
         Scanner sc = new Scanner(System.in);
@@ -18,11 +18,11 @@ public class keyMeUp
         DSAGraph KB = new DSAGraph();
         switch(mode)
         {
-            case "-i":
+            case "-i": //Interactive Mode
                 interactiveMode(KB);
             break;
 
-            case "-s":
+            case "-s": //Silent Mode
                 if(args.length==4)
                 {
                     silentMode(KB, args[1], args[2], args[3]);
@@ -34,7 +34,7 @@ public class keyMeUp
                 }
             break;
 
-            default:
+            default: //Displays usage
                 System.out.println("Invalid command line argument");
                 System.out.println("Enter either -i OR -s keyFile strFile pathFile ");
             break;
@@ -42,9 +42,8 @@ public class keyMeUp
         sc.close();
     }
 
-
-
-    public static void menu()
+    /*Purpose: Prints main menu */
+    public static void menu() //Main Menu
     {
         System.out.println("Main Menu");
         System.out.println("==============");
@@ -60,17 +59,19 @@ public class keyMeUp
         System.out.println("9. Save keyboard");
     }
 
+    /*Purpose: Runs program in silent mode */
     public static void silentMode(DSAGraph KB, String keyFile, String strFile, String pathFile)
     {
         DSALinkedList breadthPath = new DSALinkedList();
         DSALinkedList depthPath = new DSALinkedList();        
-        loadKB(keyFile, KB);
-        String inputString = readStringFile(strFile);
-        breadthPath = genBreadthPath(KB, inputString);
+        loadKB(keyFile, KB); //Loads KB file
+        String inputString = readStringFile(strFile); //Reads string file
+        breadthPath = genBreadthPath(KB, inputString);//Generates paths
         depthPath = genDepthPath(KB, inputString);
-        writeResults(pathFile, KB, breadthPath, depthPath, inputString);
+        writeResults(pathFile, KB, breadthPath, depthPath, inputString); //Saves results to file
     }
 
+    /*Purpose: Displays interactive mode menu and options */
     public static void interactiveMode(DSAGraph KB)
     {
         Scanner sc = new Scanner(System.in);
@@ -81,112 +82,116 @@ public class keyMeUp
         int choice;
         DSALinkedList breadthPath = new DSALinkedList();
         DSALinkedList depthPath = new DSALinkedList();
-        do
+        try
         {
-            menu();
-            choice = sc.nextInt();
-            
-            switch(choice)
+            do
             {
-                case 0://Exit
-                    System.out.println("Exiting");
-                    loop = false;
-                break;
-                
-                case 1: //Load keyboard file
-                    KB = new DSAGraph();
-                    System.out.println("Enter file name");
-                    sc.nextLine();
-                    file = sc.nextLine();
-                    loadKB(file, KB);
-                break;
-
-                case 2: //Node operations (find, insert, delete, update)
-                    nodeOperations(KB);
-                break; 
-
-                case 3: //Edge operations (find, add, remove, update)
-                    edgeOperations(KB);
-                break;
-
-                case 4: // Display graph
-                    System.out.println("List:");
-                    KB.displayAsList();
-                    System.out.println();
-                    System.out.println("As matrix");
-                    KB.displayAsMatrix();
+                menu();
+                choice = sc.nextInt();
+                switch(choice)
+                {
+                    case 0://Exit
+                        System.out.println("Exiting");
+                        loop = false;
+                    break;
                     
-                break;
-
-                case 5: //Display graph information
-                    System.out.println("Graph Information");
-                    System.out.println("Number of vertices: " + KB.getVertexCount());
-                    System.out.println("Number of edges: " + KB.getEdgeCount());
-                break;
-
-                case 6: //Enter string for finding path
-                    if(file != null)
-                    {
+                    case 1: //Load keyboard file
+                        KB = new DSAGraph(); //Resets graph
+                        System.out.println("Enter file name");
                         sc.nextLine();
-                        do
-                        {
-                            System.out.println("Enter a string");
-                            
-                            inputString = sc.nextLine();
-                            valid = inputStringValidation(inputString, KB);
-                        }while(!valid);
-                    }
-                    else
-                    {
-                        System.out.println("Load a graph first.");
-                    }
-                break;
+                        file = sc.nextLine();
+                        loadKB(file, KB); //Loads keyboard file
+                    break;
 
-                case 7: //Generate paths
-                    if(inputString == null)
-                    {
-                        System.out.println("No input string provided.");
-                    }
-                    else
-                    {
-                        breadthPath = genBreadthPath(KB, inputString);
-                        depthPath = genDepthPath(KB, inputString);
-                    }
-                    
-                break;
+                    case 2: //Node operations (find, insert, delete, update)
+                        nodeOperations(KB); 
+                    break; 
 
-                case 8://Display path(s) (ranked, option to save)
-                    if(breadthPath.isEmpty() || depthPath.isEmpty())
-                    {
-                        System.out.println("Paths have not been generated");
-                    }
-                    else
-                    {
-                        displayPaths(KB, breadthPath, depthPath, inputString);
-                        System.out.println("Save results? y/n");
-                        save = sc.next().charAt(0);
-                        if(save=='y')
+                    case 3: //Edge operations (find, add, remove, update)
+                        edgeOperations(KB);
+                    break;
+
+                    case 4: // Display graph
+                        System.out.println("List:");
+                        KB.displayAsList();
+                        System.out.println();
+                        System.out.println("As matrix");
+                        KB.displayAsMatrix();
+                    break;
+
+                    case 5: //Display graph information
+                        System.out.println("Graph Information");
+                        System.out.println("Number of vertices: " + KB.getVertexCount());
+                        System.out.println("Number of edges: " + KB.getEdgeCount());
+                    break;
+
+                    case 6: //Enter string for finding path
+                        if(file != null)
                         {
-                            writeResults(resultsFile, KB, breadthPath, depthPath, inputString);
+                            sc.nextLine();
+                            do
+                            {
+                                System.out.println("Enter a string");
+                                inputString = sc.nextLine();
+                                valid = inputStringValidation(inputString, KB);
+                            }while(!valid);
                         }
-                    }
-                    //save
-                break;
+                        else
+                        {
+                            System.out.println("Load a graph first.");
+                        }
+                    break;
 
-                case 9: //Save keyboard
-                    System.out.println("Saving keyboard...");
-                    exportKB(output, KB);
-                break;
+                    case 7: //Generate paths
+                        if(inputString == null)
+                        {
+                            System.out.println("No input string provided.");
+                        }
+                        else
+                        {
+                            breadthPath = genBreadthPath(KB, inputString);
+                            depthPath = genDepthPath(KB, inputString);
+                        }
+                        
+                    break;
 
-                default:
-                    System.out.println("Invalid input");
-                break;
-            }
-        }while(loop);
+                    case 8://Display path(s) (ranked, option to save)
+                        if(breadthPath.isEmpty() || depthPath.isEmpty())
+                        {
+                            System.out.println("Paths have not been generated");
+                        }
+                        else
+                        {
+                            displayPaths(KB, breadthPath, depthPath, inputString);
+                            System.out.println("Save results? y/n");
+                            save = sc.next().charAt(0);
+                            if(save=='y')
+                            {
+                                writeResults(resultsFile, KB, breadthPath, depthPath, inputString);
+                            }
+                        }
+                        //save
+                    break;
+
+                    case 9: //Save keyboard
+                        System.out.println("Saving keyboard...");
+                        exportKB(output, KB);
+                    break;
+
+                    default:
+                        System.out.println("Invalid input");
+                    break;
+                }
+            }while(loop);
+        }catch(Exception e)
+        {
+            throw new InputMismatchException("Invalid input");
+        }
         sc.close();
     }
 
-    public static void loadKB(String pFileName, DSAGraph KB)
+    /*Purpose: Loads keyboard file */
+    public static void loadKB(String pFileName, DSAGraph KB) 
     {
         FileInputStream fileStream = null;
         InputStreamReader isr;
@@ -226,6 +231,7 @@ public class keyMeUp
     
     }
 
+    /*Purpose: Processes each line for loadKB() */
     public static void processLine(String csvRow, DSAGraph graph)
     {
         Object vertex1, vertex2;
@@ -235,11 +241,8 @@ public class keyMeUp
         int lineLength = splitLine.length;
         v1 = splitLine[0];
         v2 = splitLine[1];
-        //System.out.println(splitLine[0] + splitLine[1]);
-
         vertex1 = v1;
         vertex2 = v2;
-
         if(!graph.hasVertex(vertex1))
         {
             graph.addVertex(vertex1, vertex1);
@@ -255,17 +258,11 @@ public class keyMeUp
                 graph.addEdge(vertex1, splitLine[i]);
             }
         }
-        
-         
-        
-        
-        
     }
 
+    /*Purpose: Reads text file holding string and returns string */
     public static String readStringFile(String pFileName)
     {
-        
-        
         FileInputStream fileStream = null;
         InputStreamReader isr;
         BufferedReader bufRdr;
@@ -281,8 +278,6 @@ public class keyMeUp
             line = bufRdr.readLine();
             while(line != null)
             {
-                
-                //System.out.println(line);
                 finalString += line;
                 lineNum++;
                 line = bufRdr.readLine();
@@ -303,10 +298,9 @@ public class keyMeUp
         System.out.println("Error in fileProcessing: " + errorDetails.getMessage());
         }
         return finalString;
-
     }
 
-    
+    /*Purpose: Saves current keyboard to file */
     public static void exportKB(String pFileName, DSAGraph KB)
     {
         String output;
@@ -338,6 +332,7 @@ public class keyMeUp
         }
     }
 
+    /*Purpose: Saves results from path generation to file */
     public static void writeResults(String pFileName, DSAGraph KB, DSALinkedList breadthPath, DSALinkedList depthPath, String inputString)
     {
         FileOutputStream fileStrm = null;
@@ -346,8 +341,6 @@ public class keyMeUp
         {
             fileStrm = new FileOutputStream(pFileName);
             pw = new PrintWriter(fileStrm);
-            
-
             int bNum=0, dNum=0, stringNum2 =-1, stringNum = -1, nMovesBreadth, nMovesDepth;
             Boolean altKB1 = false, altKB2 = false;
             //String input;
@@ -506,8 +499,6 @@ public class keyMeUp
                     {
                         pw.print(vertex.getLabel() + "  ");
                     }
-                    
-
                 }
                 else
                 {
@@ -671,8 +662,6 @@ public class keyMeUp
                     {
                         pw.print(vertex.getLabel() + "  ");
                     }
-                    
-
                 }
                 else
                 {
@@ -712,6 +701,7 @@ public class keyMeUp
         }
     }
 
+    /*Purpose: Validates if given string can be typed out on current keyboard */
     public static boolean inputStringValidation(String inputString, DSAGraph KB)
     {
         Boolean valid = true;
@@ -721,8 +711,6 @@ public class keyMeUp
         {
             input[i] = Character.toString(temp[i]);
         }
-
-        //input = inputString.split("");
         for(int i=0; i<input.length;i++)
         {
             if(!(input[i].equals(" ")))
@@ -731,29 +719,23 @@ public class keyMeUp
                 {
                     valid = false;
                     System.out.println("Key does not exist: " + input[i]);
-                    
                 }
             }
-            
-            
         }
         return valid;
     }
 
+    /*Purpose: Alters string to include special keys */
     public static String[] inputStringAltering(String inputString, DSAGraph KB)
     {
         int num = 0;
         String[] input = null;
         input = inputString.split("");
-
         DSALinkedList newString = new DSALinkedList();
-
-    
         if(KB.getVertex("SHIFT") != null && KB.getVertex("SPACE") !=null && KB.getVertex("#+=") != null)
         {
             for(int i=0; i<input.length; i++)
             {
-                //System.out.println(input[i]);
                 if(input[i].equals(" "))
                 {
                     newString.insertLast("SPACE");
@@ -768,22 +750,6 @@ public class keyMeUp
                     ||input[i].equals(";")||input[i].equals("\"")||input[i].equals("'")||input[i].equals("?"))
                     {
                         newString.insertLast("#+=");
-                        /*if(i>1)
-                        {
-                            if(input[i-1].equals("!")||input[i-1].equals("#")||input[i-1].equals("$")||input[i-1].equals("%")
-                            ||input[i-1].equals("^")||input[i-1].equals("&")||input[i-1].equals("*")||input[i-1].equals("(")
-                            ||input[i-1].equals(")")||input[i-1].equals("~")||input[i-1].equals("`")||input[i-1].equals("=")
-                            ||input[i-1].equals("\\")||input[i-1].equals("{")||input[i-1].equals("}")||input[i-1].equals("|")
-                            ||input[i-1].equals("[")||input[i-1].equals("]")||input[i-1].equals("<")||input[i-1].equals(">")
-                            ||input[i-1].equals(";")||input[i-1].equals("\"")||input[i-1].equals("'")||input[i-1].equals("?"))
-                            {
-                                
-                            }
-                            else
-                            {
-                                newString.insertLast("#+=");
-                            }
-                        }*/
                         if(input[i].equals("!"))
                         {
                             newString.insertLast("q");
@@ -880,27 +846,6 @@ public class keyMeUp
                         {
                             newString.insertLast(".");
                         }
-
-                        /*if(i!=input.length)
-                        {
-                            if(input[i+1].equals("!")||input[i+1].equals("#")||input[i+1].equals("$")||input[i+1].equals("%")
-                            ||input[i+1].equals("^")||input[i+1].equals("&")||input[i+1].equals("*")||input[i+1].equals("(")
-                            ||input[i+1].equals(")")||input[i+1].equals("~")||input[i+1].equals("`")||input[i+1].equals("=")
-                            ||input[i+1].equals("\\")||input[i+1].equals("{")||input[i+1].equals("}")||input[i+1].equals("|")
-                            ||input[i+1].equals("[")||input[i+1].equals("]")||input[i+1].equals("<")||input[i+1].equals(">")
-                            ||input[i+1].equals(";")||input[i+1].equals("\"")||input[i+1].equals("'")||input[i+1].equals("?"))
-                            {
-                                
-                            }
-                            else
-                            {
-                                newString.insertLast("#+=");
-                            }
-                        }
-                        else
-                        {
-                            newString.insertLast("#+=");
-                        }*/
                         newString.insertLast("#+=");
                     }  
                     else if(Character.isUpperCase(input[i].charAt(0)))
@@ -913,9 +858,6 @@ public class keyMeUp
                         newString.insertLast(input[i]);
                     }
                 }
-                
-                //newString.insertLast(" ");
-                
             }
         }
     
@@ -950,7 +892,7 @@ public class keyMeUp
             for(int i=0; i<input.length; i++)
             {
                 
-                System.out.println(input[i]);
+                //System.out.println(input[i]);
                 if(input[i].equals(" "))
                 {
                     newString.insertLast("SPACE");
@@ -999,6 +941,7 @@ public class keyMeUp
         
     }
    
+    /*Purpose: Displays path generation results and ranks */
     public static void displayPaths(DSAGraph KB ,DSALinkedList breadthPath, DSALinkedList depthPath, String inputString)
     {
         int bNum=0, dNum=0, stringNum2 =-1, stringNum = -1, nMovesBreadth, nMovesDepth;
@@ -1159,17 +1102,12 @@ public class keyMeUp
                 {
                     System.out.print(vertex.getLabel() + "  ");
                 }
-                
-
             }
             else
             {
                 System.out.print(vertex.getLabel() + "  ");
             }
-            
-            
             Bprev = vertex;
-            
             bNum++;
         }while(bIter.hasNext());
         nMovesBreadth = bNum-input.length+1;
@@ -1360,17 +1298,14 @@ public class keyMeUp
 
     }
 
+    /*Purpose: Generates paths between each key in string */
     public static DSALinkedList genBreadthPath(DSAGraph KB, String inputString)
     {
         String[] input = inputStringAltering(inputString, KB);
-        //System.out.println(input[0] );
         DSALinkedList path = new DSALinkedList();
         DSALinkedList totalPath = new DSALinkedList();
-        //input = inputString.split(" ");
-        
         for(int i=0; i<input.length-1;i++)
         {
-           
             path = breadthOptimised(KB, input[i], input[i+1]);
             Iterator iter = path.iterator();
             do
@@ -1382,6 +1317,7 @@ public class keyMeUp
         return totalPath;
     }
 
+    /*Purpose: Generates paths between each key in string */
     public static DSALinkedList genDepthPath(DSAGraph KB, String inputString)
     {
         String[] input = inputStringAltering(inputString, KB);
@@ -1402,12 +1338,12 @@ public class keyMeUp
         return totalPath;
     }
 
+    /*Purpose: Generates a rough path between two keys (vertices) */
     public static DSAQueue breadthFirstSearch(DSAGraph graph, Object vertex1, Object vertex2)
     {
         DSAQueue T = new DSAQueue();
         DSAQueue Q = new DSAQueue();
         Boolean loop = true;
-
         Iterator iter = graph.vertices.iterator();
         do
         {
@@ -1415,21 +1351,16 @@ public class keyMeUp
             vert2.clearVisited();
 
         }while(iter.hasNext());
-
         DSAGraph.DSAGraphVertex v = graph.getVertex(vertex1);
-    
         Q.enqueue(v);
         v.setVisited();
         do
         {
-            
             v = (DSAGraph.DSAGraphVertex) Q.dequeue();
             Iterator iter2 = v.getAdjacent().iterator();
-
             do
             {
                 DSAGraph.DSAGraphVertex w = (DSAGraph.DSAGraphVertex)iter2.next();
-                
                 if(w.getVisited()==false)
                 {
                     T.enqueue(v);
@@ -1441,36 +1372,27 @@ public class keyMeUp
                         loop = false;
                     }
                 }
-                
             }while(iter2.hasNext() && loop == true);
 
         }while(!Q.isEmpty() &&loop == true );
-      
         return T;
     }
 
+    /*Purpose: Optimises given path to become shortest possible path*/
     public static DSALinkedList breadthOptimised(DSAGraph KB, Object vertex1, Object vertex2)
     {
         DSAQueue T = breadthFirstSearch(KB, vertex1, vertex2);
-        
         DSALinkedList Q = new DSALinkedList();
         Boolean loop = true, loop2 = true;
-
         DSAGraph.DSAGraphVertex v = KB.getVertex(vertex2);
-
         Q.insertFirst(v);
-
-
         do
         {
-            //System.out.println("Looping");
             loop = true;
             Iterator iter = T.iterator();
             do
             {
-                //System.out.println("Looping again");
                 DSAGraph.DSAGraphVertex w = (DSAGraph.DSAGraphVertex)iter.next();
-                
                 if(KB.isAdjacent(w.getLabel(), v.getLabel()))
                 {
                     Q.insertFirst(w);
@@ -1481,17 +1403,12 @@ public class keyMeUp
                     v = w;
                     loop = false;
                 }
-                
             }while(iter.hasNext() && loop == true);
         }while(loop2 == true);
-       
-
-        
-
-       
         return Q;
     }
 
+    /*Purpose: Generates a rough path between two keys (vertices) */
     public static DSAQueue depthFirstSearch(DSAGraph graph, Object vertex1, Object vertex2)
     {
         DSAQueue T = new DSAQueue();
@@ -1528,9 +1445,9 @@ public class keyMeUp
             v = (DSAGraph.DSAGraphVertex) S.pop();
         }while(!S.isEmpty()&&loop == true);
         return T;
-
     }
 
+    /*Purpose: Optimises given path to become shortest possible path*/
     public static DSALinkedList depthOptimised(DSAGraph KB, Object vertex1, Object vertex2)
     {
         DSAQueue T = depthFirstSearch(KB, vertex1, vertex2);
@@ -1560,6 +1477,7 @@ public class keyMeUp
         return Q;
     }
 
+    /*Purpose: Allow user to perform operations on nodes*/
     public static void nodeOperations(DSAGraph KB)
     {
         Scanner sc2 = new Scanner(System.in);
@@ -1567,7 +1485,6 @@ public class keyMeUp
         String find;
         int input;
         Boolean loop = true;
-        
         do
         {
             nodeOpMenu();
@@ -1580,7 +1497,6 @@ public class keyMeUp
                 break;
                     
                 case 1://Find
-                    //sc2.nextLine();
                     System.out.println("Enter a label");
                     find = sc2.nextLine();
                     if(KB.getVertex(find)!=null)
@@ -1594,7 +1510,6 @@ public class keyMeUp
                 break;
 
                 case 2://Insert
-                    //sc2.nextLine();
                     System.out.println("Enter a label");
                     label = sc2.nextLine();
                     System.out.println("Enter a value");
@@ -1611,7 +1526,6 @@ public class keyMeUp
                 break;
 
                 case 3://Delete
-                    //sc2.nextLine();
                     System.out.println("Enter a label");
                     find = sc2.nextLine();
                     if(KB.getVertex(find)!=null)
@@ -1634,7 +1548,6 @@ public class keyMeUp
                     if(KB.getVertex(find)!=null)
                     {
                         System.out.println("Vertex found");
-                        //DSAGraph.DSAGraphVertex vert = KB.getVertex(find);
                         System.out.println("Enter new label");
                         label = sc2.nextLine();
                         KB.editVertex(find, label);
@@ -1650,9 +1563,9 @@ public class keyMeUp
                 break;
             }
         }while(loop);
-        //sc2.close();
     }
 
+    /*Purpose: Displays node operations menu*/
     public static void nodeOpMenu()
     {
         System.out.println("Node Operations");
@@ -1664,6 +1577,7 @@ public class keyMeUp
         System.out.println("4. Update");
     }
 
+    /*Purpose: Allow user to perform operations on edges*/
     public static void edgeOperations(DSAGraph KB)
     {
         Scanner sc = new Scanner(System.in);
@@ -1712,7 +1626,6 @@ public class keyMeUp
                     {
                         System.out.println("Cannot insert edge there");
                     }
-                    
                 break;
 
                 case 3://Delete
@@ -1757,9 +1670,9 @@ public class keyMeUp
                 break;
             }
         }while(loop);
-        //sc.close();
     }
 
+    /*Purpose: Displays edge operations menu*/
     public static void edgeOpMenu()
     {
         System.out.println("Node Operations");

@@ -397,7 +397,7 @@ public class UnitTestKeyMeUp extends keyMeUp
 
 
 
-        //Test 5: genDepthPath()
+        //Test 6: genDepthPath()
         try
         {
             System.out.print("genDepthPath(): ");

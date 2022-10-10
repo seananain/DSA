@@ -101,12 +101,6 @@ public class DSAGraph
             return false;
         }
 
-        public String toString()
-        {
-            String data = "";
-
-            return data;
-        }
     }
 
     public DSAGraph()

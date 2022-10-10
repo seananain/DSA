@@ -20,7 +20,7 @@ public class UnitTestDSAGraph extends DSAGraph
     }
 
     @Test
-    public void removeVertex()
+    public void testRemoveVertex()
     {
         g.addVertex("label", "value");
         g.addVertex("label2", "value2");

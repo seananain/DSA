@@ -5,7 +5,7 @@ public class DSAStack implements Iterable
     //protected Object[] stack;
     private int count;
     private int DEFAULT_CAPACITY = 100;
-    private boolean empty = false, full = false;
+    private boolean empty = false;
 
     DSALinkedList stack = new DSALinkedList();
     

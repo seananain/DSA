@@ -6,7 +6,6 @@ public class DSAQueue implements Iterable
     //private int count;
     protected boolean empty;
     protected boolean full;
-    protected int DEFAULT_CAPACITY = 100;
 
     DSALinkedList list = new DSALinkedList();
 
