@@ -109,17 +109,17 @@ class Sorts
 			kk += 1;
 		}
 
-		for(int i=ii; i<=midIdx; i++)
+		for(int i=ii; i<midIdx; i++)
 		{
 			tempArr[kk] = A[i];
 			kk += 1;
 		}
-		for(int j=jj; j<=rightIdx; j++)
+		for(int j=jj; j<rightIdx; j++)
 		{
 			tempArr[kk] = A[j];
 			kk += 1;
 		}
-		for(int k=kk; k<=rightIdx; k++)
+		for(int k=leftIdx; k<rightIdx; k++)
 		{
 			A[k] = tempArr[k-leftIdx];
 		}
@@ -131,14 +131,47 @@ class Sorts
     // quickSort - front-end for kick-starting the recursive algorithm
     public static void quickSort(int[] A)
     {
+		quickSortRecurse(A, 0, A.length-1);
     }//quickSort()
-    private static void quickSortRecurse(int[] A, int leftIdx, int rightIdx)
+    private static int[] quickSortRecurse(int[] A, int leftIdx, int rightIdx)
     {
+		int pivotIdx;
+		int newPivotIdx;
+		if(rightIdx>leftIdx)
+		{
+			pivotIdx = (leftIdx+rightIdx)/2;
+			newPivotIdx = doPartitioning(A, leftIdx, rightIdx, pivotIdx);
+
+			quickSortRecurse(A, leftIdx, newPivotIdx-1);
+			quickSortRecurse(A, newPivotIdx+1, rightIdx);
+		}
+		return A;
     }//quickSortRecurse()
     private static int doPartitioning(int[] A, int leftIdx, int rightIdx, int pivotIdx)
     {
-		return 0;	// TEMP - Replace this when you implement QuickSort
+		int currIdx, temp, newPivotIdx;
+		int pivotVal = A[pivotIdx];
+		A[pivotIdx] = A[rightIdx];
+		A[rightIdx] = pivotVal;
+
+		currIdx = leftIdx;
+		for(int i=leftIdx;i<rightIdx;i++)
+		{
+			if(A[i]<pivotVal)
+			{
+				temp = A[i];
+				A[i] = A[currIdx];
+				A[currIdx] = temp;
+				currIdx += 1;
+			}
+		}
+		newPivotIdx = currIdx;
+		A[rightIdx] = A[newPivotIdx];
+		A[newPivotIdx] = pivotVal;
+		
+		return newPivotIdx;	// TEMP - Replace this when you implement QuickSort
     }//doPartitioning
+	
 
 	
 
