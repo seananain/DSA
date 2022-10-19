@@ -2,6 +2,8 @@
 ** Software Technology 152
 ** Class to hold various static sort methods.
 */
+import java.util.concurrent.ThreadLocalRandom;
+
 class Sorts
 {
     // bubble sort
@@ -171,8 +173,68 @@ class Sorts
 		
 		return newPivotIdx;	// TEMP - Replace this when you implement QuickSort
     }//doPartitioning
-	
 
+	//quicksort random
+	public static void quickSortRandom(int[] A)
+    {
+		quickSortRandomRecurse(A, 0, A.length-1);
+    }//quickSort()
+    private static int[] quickSortRandomRecurse(int[] A, int leftIdx, int rightIdx)
+    {
+		int pivotIdx;
+		int newPivotIdx;
+		if(rightIdx>leftIdx)
+		{
+			pivotIdx = ThreadLocalRandom.current().nextInt(leftIdx, rightIdx+1);
+			newPivotIdx = doPartitioning(A, leftIdx, rightIdx, pivotIdx);
+
+			quickSortRandomRecurse(A, leftIdx, newPivotIdx-1);
+			quickSortRandomRecurse(A, newPivotIdx+1, rightIdx);
+		}
+		return A;
+    }//quickSortRecurse()
+
+	//quicksort median
+	public static void quickSortMedian(int[] A)
+    {
+		quickSortRandomRecurse(A, 0, A.length-1);
+    }//quickSort()
+    private static int[] quickSortMedianRecurse(int[] A, int leftIdx, int rightIdx)
+    {
+		int pivotIdx;
+		int newPivotIdx;
+		int midIdx;
+		if(rightIdx>leftIdx)
+		{
+			midIdx = pivotIdx = (leftIdx+rightIdx)/2;
+			
+			if(A[rightIdx] < A[leftIdx])
+			{
+				swap(A, leftIdx, rightIdx);
+			}
+			else if(A[midIdx] < A[leftIdx])
+			{
+				swap(A, midIdx, leftIdx);
+			}
+			else if(A[rightIdx] < A[midIdx])
+			{
+				swap(A, rightIdx, midIdx);
+			}
+			pivotIdx = midIdx;
+			newPivotIdx = doPartitioning(A, leftIdx, rightIdx, pivotIdx);
+
+			quickSortMedianRecurse(A, leftIdx, newPivotIdx-1);
+			quickSortMedianRecurse(A, newPivotIdx+1, rightIdx);
+		}
+		return A;
+    }//quickSortRecurse()
+
+	private static void swap(int[] A, int leftIdx, int rightIdx)
+	{
+		int temp = A[leftIdx];
+		A[leftIdx] = A[rightIdx];
+		A[rightIdx] = temp;
+	}
 	
 
 

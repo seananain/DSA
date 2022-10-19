@@ -28,6 +28,8 @@ public class q5{
             case 'b' : Sorts.bubbleSort(array2); break;
             case 's' : Sorts.selectionSort(array2); break;
             case 'q' : Sorts.quickSort(array2); break;
+            case 'r' : Sorts.quickSortRandom(array2); break;
+            case 't' : Sorts.quickSortMedian(array2); break;
             case 'j' : Arrays.sort(array2); break;    // Java's QuickSort
             case 'm' : Sorts.mergeSort(array2); break;
             case 'i' : Sorts.insertionSort(array2); break;
