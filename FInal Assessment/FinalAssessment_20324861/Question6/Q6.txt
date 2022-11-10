@@ -1,0 +1,20 @@
+QUESTION 6 
+
+Sean Anain 20324861
+
+a) 
+    1) No wrap
+    My assignment code will not need to be extended to implement this keyboard. Similar keyboard have been implemented into the assignment code already.
+
+    2) No wrap
+    In order to extend my assignment code to implement this keyboard, the nodes to be read will be both the traditional alphabet keys. Assuming that the 
+    only form of 'traditional' keyboard will be the alphabet shown at the top of the page, all those keys will then be respectively adjacent to one another. 
+    All names of titles or actors/actresses will be stores separately from the main keyboard graph as an array. 
+    Once some letters have been entered, such as the string "Jane", program will search for all material with tites starting with those characters and be
+    displayed as a list beneath the keyboard. This program can then traverse down this list and select the needed title, adding these traversed titles to 
+    it's travel path.
+
+b)
+
+c) 
+    
