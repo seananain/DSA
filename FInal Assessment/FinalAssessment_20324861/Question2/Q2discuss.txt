@@ -1,2 +1,60 @@
 Q2 Discussion
 
+
+
+Finding a node, relavant to all trees:
+    In order to delete a node, the node must be found first. To find a node
+        the following steps must be taken:
+        1. Start at root node
+        2. Compare current node's key with key to find.
+            - If keys are equal, it is found, return node value
+            - If key to find is smaller than node key, go to left child node.
+            - If key to find is greater than node key, go to right child node.
+        3. If no child exists in the chosen branch, then tree does not contain key.
+        4. If not, repeat steps 2-4 with the child node.
+
+i) Binary Search Tree
+    Once node is found within a BST, deleting it involves three cases:
+    - Node has no children
+    - Node has one child
+    - Node had two children
+    For no children; 
+        Set parent node's link to null.
+    For 1 child; 
+        Child of node to be delted becomes child of parent node of
+        node to be deleted. i.e. adopted
+    For 2 children;
+        Find sucessor, which is the next largest node, which is the left most node of the right sub tree, and replace node to be deleted.
+
+
+ii) Red-Black Tree
+    Once node has been found within an RB tree, deleting it involves several cases:
+    - Node is red with 2 children:
+        Node is replaced with right most node on the left subtree
+    - Node is red with 1 child:
+    - Node is red with no children:
+    - Node is black with 2 children:
+    - Node is black with 1 child:
+    - Node is black with no children:
+
+
+
+iii) 2-3-4 Tree
+    Once node has been found within an 2-3-4 tree, deleting it involves several cases:
+    - If node is in a leaf consisting of at least 2 nodes:
+        Remove node.
+    - If node is in the leaf and is an internal node:
+        - If left child has at least 2 nodes, replace node to be deleted
+          with its predecessor
+        - If right child has a least 2 nodes, replace node to be deleted
+          with its successor
+        - If both children have only 1 node, merge right and left child
+    - If node in in a leaf and is not an internal node:
+        - If the child leaf has only 1 node and its immidiate siblings has at least
+          2 nodes, move a node fown from parent into child and move node from siblings
+          to parent.
+        - If both the child leaf and its immediate siblings have 1 node each, 
+          merge child leaf with one of the siblings, and move a node from parent 
+          leaf to child leaf which will be the middle node.
+
+iv) B-Tree
