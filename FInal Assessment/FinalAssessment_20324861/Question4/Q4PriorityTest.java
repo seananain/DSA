@@ -4,7 +4,7 @@ public class Q4PriorityTest
 {
     public static void main(String args[])
 	{
-        PriorityQueue q = new PriorityQueue<>();
+        PriorityQueue<Integer> q = new PriorityQueue<Integer>();
         int numTests=0;
         int numPassed=0;
 
