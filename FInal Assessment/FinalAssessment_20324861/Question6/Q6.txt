@@ -4,17 +4,23 @@ Sean Anain 20324861
 
 a) 
     1) No wrap
-    My assignment code will not need to be extended to implement this keyboard. Similar keyboard have been implemented into the assignment code already.
+    My assignment code will not need to be extended to implement this keyboard. Similar keyboard have been implemented into the assignment code already. 
 
     2) No wrap
-    In order to extend my assignment code to implement this keyboard, the nodes to be read will be both the traditional alphabet keys. Assuming that the 
-    only form of 'traditional' keyboard will be the alphabet shown at the top of the page, all those keys will then be respectively adjacent to one another. 
-    All names of titles or actors/actresses will be stores separately from the main keyboard graph as an array. 
-    Once some letters have been entered, such as the string "Jane", program will search for all material with tites starting with those characters and be
-    displayed as a list beneath the keyboard. This program can then traverse down this list and select the needed title, adding these traversed titles to 
-    it's travel path.
+    My assignment code will not need to be extended to implement this keyboard. This keyboard can be easily reproduced using the keyboard files used for
+    my assignment, which consists of a node and all its adjacent nodes. For this keyboard, this list would look like a list of all the nodes and the nodes
+    on the left and right of that respective node.
 
 b)
+    For keyboard 1 from 6a, its performance will be very similar to an existing keyboard used for my assignment. This keyboard is very similar to the keyboard
+    file "netflix.al" which is found within my assignment folder. The performance of this keyboard is explored within the assignment. When provided a string, 
+    "hello marker", the keyboard can type out this string with 33 moves using breadth first search and in 66 moves using depth first search.
+    For keyboard 2, it can be expected to have a worse performance in comparison to keyboard 1 due to the increased complexity of the logic for the keyboard.
+    Due to the keyboard having to continually generate a list of titles with the same starting characters as what has been inputted within the keyboard, it can
+    be expected the performance to worsen.
 
 c) 
+    This strategy to optimise data entry can be supported by my approach to the assignment. This keyboard shown can be implemented by loading a generic alpanumeric
+    keyboard which is shown in the example for the questions and remove specific nodes which correlate to the 'empty' keys on the keyboard used in this strategy. The
+    respective edges will also be replaced. An alternate approach would be loading a keyboard that already has those specific keys removed and edges replaced. 
     
