@@ -169,9 +169,7 @@ public class DSAHashTable
 
         while(hashArray[hashIdx].state == 1)
         {
-            System.out.println("Before:" + hashIdx);
             hashIdx += stepHash(inKey);
-            System.out.println("After:" + hashIdx);
             if(hashIdx == origiIdx)
             {
                 throw new InputMismatchException("hashIdx == origiIdx");

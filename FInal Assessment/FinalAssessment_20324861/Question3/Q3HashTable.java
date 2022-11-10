@@ -1,8 +1,10 @@
+import java.util.InputMismatchException;
+
 /**
  * DSA Final Assessment Question 3 - Q3HashTable.java
  *
- * Name : 
- * ID   :
+ * Name : Sean Anain
+ * ID   : 20324861
  *
  **/
 
@@ -36,6 +38,7 @@ public class Q3HashTable {
         {
             return this.key;
         }
+
 
         public Object getValue() 
         {
@@ -74,38 +77,171 @@ public class Q3HashTable {
         }
     } 
     
-    public void put(String inKey, Object inValue) {
+    private void put(String inKey, Object inValue)
+    {
+        
+        int hashIdx = (int)hash(inKey);
+        int origiIdx = hashIdx;
 
-        int hashIdx = hash(inKey);
-		int initIdx = hashIdx;
-        int i = 1;
+        while(hashArray[hashIdx].state == 1)
+        {
+            hashIdx += stepHash(inKey);
+            if(hashIdx == origiIdx)
+            {
+                throw new InputMismatchException("hashIdx == origiIdx");
+            }
+            else if(hashIdx >= hashArray.length)
+            {
+                hashIdx -= hashArray.length;
+            }   
+        }
+        hashArray[hashIdx]  = new HashEntry(inKey, inValue);
+        //resize();
+    }
 
-        while (hashArray[hashIdx] != null && !hashArray[hashIdx].getKey().equals(inKey)) {
+    private int stepHash(String key)
+    {
+        int hashStep = 0, keyValue = 0;
+        int max_step = 7;
 
-            if (!hashArray[hashIdx].getKey().equals(inKey)) { 
-                if (hashArray[hashIdx].getState() == 1) { 
-                    hashIdx = (initIdx + i) % hashArray.length; 
-                }
+        for(int i=0; i<key.length(); i++)
+        {
+            keyValue = (33* hashStep) + key.charAt(i);
+        }
+        return max_step - (keyValue % max_step);
+    }
 
-                if (hashArray[hashIdx].getState() < 1) { 
-                    hashArray[hashIdx] = new HashEntry(inKey, inValue); 
-                    hashCount++; 
+    public void PutNew(String inKey, Object inValue)
+    {
+        
+        put(inKey, inValue);
+        resize();
+        
+    }
+
+    public Object get(String inKey)
+    {
+        int hashIdx = (int)hash(inKey);
+        int origiIdx = hashIdx;
+        Object retValue;
+        Boolean found = false;
+        Boolean giveUp = false;
+
+        while(!giveUp)
+        {
+            if(hashArray[hashIdx].state == 0)
+            {
+                giveUp = true;
+            }
+            else if(hashArray[hashIdx].key.equals(inKey))
+            {
+                System.out.println(hashArray[hashIdx].value);
+                hashIdx = (hashIdx + 1) % hashArray.length;
+            }
+            else
+            {
+                hashIdx = (hashIdx + 1) % hashArray.length;
+                if(hashIdx == origiIdx)
+                {
+                    giveUp = true;
                 }
             }
-            i++; 
-        } 
-
+        }
+        if(!found)
+        {
+            retValue = null;
+        }
+        return retValue = hashArray[hashIdx].value;
     }
 
 
-    public double getLoadFactor() {
-        
-        double loadFactor;
-        loadFactor = (double)hashCount / (double)hashArray.length;
+    public Double getLoadFactor()
+    {
+        int numItems = 0;
+        Double LF = 0.0;
+        for(int i=0; i<hashArray.length;i++)
+        {
+            if(hashArray[i].state == 1)
+            {
+                numItems++;
+            }
 
-        return loadFactor;
+        }
+        LF = Double.valueOf(numItems)/Double.valueOf(hashArray.length);
+        return LF;
     }
 
+    public void resize()
+    {
+        Double LF = getLoadFactor();
+        //System.out.println(LF);
+        int numItems = 0;
+        for(int i=0; i<hashArray.length;i++)
+        {
+            if(hashArray[i].state == 1)
+            {
+                numItems++;
+            }
+        }
+        if(numItems>0)
+        {
+            if(LF<0.3)
+            {
+                //sizeUp();
+                sizeDown();
+
+            }
+            else if (LF>0.7)
+            {
+                //sizeDown();
+                sizeUp();
+            }
+        }
+    
+    }
+
+    private void sizeUp()
+    {
+        int tempSize = hashArray.length * 2;
+        int size = nextPrime(tempSize);
+        HashEntry[] tempArray = hashArray;
+
+        hashArray = new HashEntry[size];
+        for(int i=0; i<size; i++)
+        {
+            hashArray[i] = new HashEntry();
+        }
+        //hashArray = new HashEntry[size];
+
+        for(int i=0; i<tempArray.length; i++)
+        {
+            if(tempArray[i].state==1)
+            {
+                put((String)tempArray[i].getKey(), (Object)tempArray[i].getValue());
+            }
+            
+        }
+
+    }
+
+    private void sizeDown()
+    {
+        int tempSize = hashArray.length / 2;
+        int size = nextPrime(tempSize);
+        HashEntry[] tempArray = hashArray;
+        hashArray = new HashEntry[size];
+        for(int i=0; i<size; i++)
+        {
+            hashArray[i] = new HashEntry();
+        }
+        for(int i=0; i<tempArray.length; i++)
+        {
+            if(tempArray[i].getState()==1)
+            {
+                put(tempArray[i].getKey(), tempArray[i].getValue());
+            }
+        }
+    }
 
     public void display() 
     {    
@@ -129,10 +265,17 @@ public class Q3HashTable {
 	{
         int hashIdx = 0;
 
-        for (int i = 0; i < inKey.length(); i++) 
-        {  
-            hashIdx = hashIdx + inKey.charAt(i);
-        } 
+        for(int i=0; i<inKey.length(); i++)
+        {
+            hashIdx = (31* hashIdx) + inKey.charAt(i);
+        }
+
+        //finalIdx = (int)(hashIdx % hashArray.length);
+        //return Double.valueOf(Math.sqrt((hashIdx % hashArray.length)^2)).intValue();
+        if(hashIdx<0)
+        {
+            hashIdx = hashIdx * -1;
+        }
         return hashIdx % hashArray.length;
     }
 
@@ -169,4 +312,7 @@ public class Q3HashTable {
 	{
         return hashArray.length;
     }
+
+
+
 } 

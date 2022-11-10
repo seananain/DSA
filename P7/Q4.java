@@ -32,7 +32,6 @@ public class Q4
     public static void readFile(String pFileName, DSAHashTable table)
     {
         
-        
         FileInputStream fileStream = null;
         InputStreamReader isr;
         BufferedReader bufRdr;

@@ -1,8 +1,8 @@
 /**
  * DSA Final Assessment Question 3 - Q3HashTest.java
  *
- * Name : 
- * ID   :
+ * Name : Sean Anain
+ * ID   : 20324861 
  *
  **/
 
@@ -18,7 +18,7 @@ public class Q3HashTest
 
         for (int i=0; i < data.length; i++)
 		{
-			tab.put(data[i], "O"+data[i]);
+			tab.PutNew(data[i], "O"+data[i]);
 		}		
 
 		System.out.println("Table size is: " + tab.getArrayLength() );
