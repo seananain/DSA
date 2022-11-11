@@ -1,6 +1,6 @@
 public class Q1gcdTest 
 {
-    public static int GCD(int x, int y)
+    public static int GCD(int x, int y) //Altered version of practical code (own code)
     {
         if(y==0)
         {

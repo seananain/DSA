@@ -12,8 +12,8 @@ public class Q5Graph
 {
     private int maxsize;
     private int wmatrix[][];
-    private String labels[];
-    private int values[];
+    private String labels[]; //labels of each node
+    private int values[]; //values of each node
     private int vertexCount;
 
     public Q5Graph() 
@@ -104,6 +104,7 @@ public class Q5Graph
 
 	// put your methods here
 
+    //reads csv file and produces graph from data
     public static void loadGraph(String pFileName, Q5Graph graph) 
     {
         FileInputStream fileStream = null;
@@ -144,6 +145,7 @@ public class Q5Graph
     
     }
 
+    //creates nodes an adges from each line from csv file
     public static void processLine(String csvRow, Q5Graph graph)
     {
         String movie, actor, role;
@@ -154,36 +156,36 @@ public class Q5Graph
         actor = splitLine[3];
         role = splitLine[5];
 
-        if(!graph.hasVertex(movie))
+        if(!graph.hasVertex(movie))//Adds vertex only if vertex does not already exists. Avoids duplicates.
         {
-            graph.addVertex(movie, 1);
+            graph.addVertex(movie, 1); //value 1 = movie
         }
 
-        if(!graph.hasVertex(actor))
+        if(!graph.hasVertex(actor)) //Adds vertex only if vertex does not already exists. Avoids duplicates.
         {
-            graph.addVertex(actor, 2);
+            graph.addVertex(actor, 2); //value 2 = actor
         }
 
-        if(!graph.hasVertex(role))
+        if(!graph.hasVertex(role))//Adds vertex only if vertex does not already exists. Avoids duplicates.
         {
-            graph.addVertex(role, 3);
+            graph.addVertex(role, 3); //value 3 = roll
         }
 
-        if(!graph.hasEdge(movie, actor) && !graph.hasEdge(actor, movie))
+        if(!graph.hasEdge(movie, actor) && !graph.hasEdge(actor, movie)) //Adds edge only if edge does not already exists. Avoids duplicates.
         {
-            graph.addEdge(actor, movie, 1);
+            graph.addEdge(actor, movie, 1); //edge exists in both directions
             graph.addEdge(movie, actor, 1);
         }
 
-        if(!graph.hasEdge(movie, role) && !graph.hasEdge(role, movie))
+        if(!graph.hasEdge(movie, role) && !graph.hasEdge(role, movie)) //Adds edge only if edge does not already exists. Avoids duplicates.
         {
-            graph.addEdge(movie, role, 1);
+            graph.addEdge(movie, role, 1); //edge exists in both directions
             graph.addEdge(role, movie, 1);
         }
 
-        if(!graph.hasEdge(actor, role) && !graph.hasEdge(role, actor))
+        if(!graph.hasEdge(actor, role) && !graph.hasEdge(role, actor)) //Adds edge only if edge does not already exists. Avoids duplicates.
         {
-            graph.addEdge(actor, role, 1);
+            graph.addEdge(actor, role, 1); //edge exists in both directions
             graph.addEdge(role, actor, 1);
         }
         
@@ -194,7 +196,7 @@ public class Q5Graph
     {
         for(int i=0; i<vertexCount; i++)
         {
-            if(values[i] == 1)
+            if(values[i] == 1)//Only movies
             {
                 System.out.println(labels[i]);
             }
@@ -205,7 +207,7 @@ public class Q5Graph
     {
         for(int i=0; i<vertexCount; i++)
         {
-            if(values[i] == 2)
+            if(values[i] == 2)//Only actors
             {
                 System.out.println(labels[i]);
             }
@@ -216,7 +218,7 @@ public class Q5Graph
     {
         for(int i=0; i<vertexCount; i++)
         {
-            if(values[i] == 3)
+            if(values[i] == 3)//Only roles
             {
                 System.out.println(labels[i]);
             }
@@ -230,14 +232,14 @@ public class Q5Graph
             if(values[i] == 2)
             {
                 System.out.println();
-                System.out.println("Actor: " + labels[i]);
+                System.out.println("Actor: " + labels[i]);//actors
                 System.out.println("Movies:");
             }
             for(int j=0; j<vertexCount; j++)
             {
                 if(wmatrix[i][j]==1 && values[j] == 1)
                 {
-                    System.out.println(labels[j]);
+                    System.out.println(labels[j]);//Movies per actor
                 }
             }
         }
@@ -250,14 +252,14 @@ public class Q5Graph
             if(values[i] == 1)
             {
                 System.out.println();
-                System.out.println("Movie: " + labels[i]);
+                System.out.println("Movie: " + labels[i]);//movies
                 System.out.println("Actors:");
             }
             for(int j=0; j<vertexCount; j++)
             {
                 if(wmatrix[i][j]==1 && values[j] == 2)
                 {
-                    System.out.println(labels[j]);
+                    System.out.println(labels[j]);//actors per movie
                 }
             }
         }
@@ -270,18 +272,18 @@ public class Q5Graph
             if(values[i] == 2)
             {
                 System.out.println();
-                System.out.println("Costars for " + labels[i]);
+                System.out.println("Costars for " + labels[i]);//actors
             }
             for(int j=0; j<vertexCount; j++)
             {
                 if(wmatrix[i][j]==1 && values[j] == 1)
                 {
-                    System.out.println(labels[j]);
+                    System.out.println(labels[j]);//movies per above actor
                     for(int k=0; k<vertexCount; k++)
                     {
                         if(wmatrix[j][k]==1 && values[k] == 2 && labels[k]!=labels[i])
                         {
-                            System.out.println("    "+labels[k]);
+                            System.out.println("    "+labels[k]);//actors per above movie
                         }
                     }
                 }
@@ -289,31 +291,7 @@ public class Q5Graph
         }
     }
 
-    public void tests()
-    {
-        Q5Graph g = new Q5Graph();
-        int numTests=0;
-        int numPassed=0;
 
-        System.out.println("Testing Priority Queue");
-        System.out.println("===================");
-        System.out.println();
-
-        //Test 1: addVertex()
-        try
-        {
-            System.out.print("addVertex(): ");
-            numTests++;
-            addVertex("1", 1);
-            numPassed++;
-            System.out.println("passed");
-        } catch(Exception e) { System.out.println("FAILED"); }
-
-        // PRINT TEST SUMMARY
-        System.out.print("\nNumber PASSED: " + numPassed + "/" + numTests);
-        System.out.print(" -> " + (int)(double)(numPassed/numTests)*100 + "%\n");
-
-    }
 
 
 

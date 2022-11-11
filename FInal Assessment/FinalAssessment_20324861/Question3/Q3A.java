@@ -1,3 +1,10 @@
+/**
+ * DSA Final Assessment Question 3 - Q3A.java
+ *
+ * Name : Sean Anain
+ * ID   : 20324861 
+ *
+ **/
 
 import java.util.*;
 import java.io.*;
