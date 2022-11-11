@@ -6,7 +6,7 @@ public class Q1gcdTest
         {
             return x;
         }
-        System.out.println(x + " "+  y);
+        //System.out.println(x + " "+  y);
         return GCD(y, x % y);
     }
 

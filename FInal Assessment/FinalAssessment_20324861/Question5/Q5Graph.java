@@ -289,6 +289,33 @@ public class Q5Graph
         }
     }
 
+    public void tests()
+    {
+        Q5Graph g = new Q5Graph();
+        int numTests=0;
+        int numPassed=0;
+
+        System.out.println("Testing Priority Queue");
+        System.out.println("===================");
+        System.out.println();
+
+        //Test 1: addVertex()
+        try
+        {
+            System.out.print("addVertex(): ");
+            numTests++;
+            addVertex("1", 1);
+            numPassed++;
+            System.out.println("passed");
+        } catch(Exception e) { System.out.println("FAILED"); }
+
+        // PRINT TEST SUMMARY
+        System.out.print("\nNumber PASSED: " + numPassed + "/" + numTests);
+        System.out.print(" -> " + (int)(double)(numPassed/numTests)*100 + "%\n");
+
+    }
+
+
 
     public static void main(String[] args)
     {
@@ -297,22 +324,32 @@ public class Q5Graph
         String fileName = "sampleData.csv";
         loadGraph(fileName, graph);
         System.out.println("Movies:");
+        System.out.println("==============");
         graph.displayMovies();
         System.out.println();
 
         System.out.println("Actors:");
+        System.out.println("==============");
         graph.displayActors();
         System.out.println();
 
 
         System.out.println("Roles:");
+        System.out.println("==============");
         graph.displayRoles();
         System.out.println();
 
+
+        System.out.println("Actors Movies:");
+        System.out.println("==============");
         graph.displayActorsMovies();
 
+        System.out.println("Movie Actors:");
+        System.out.println("==============");
         graph.displayMovieActors();
 
+        System.out.println("Costars:");
+        System.out.println("==============");
         graph.displayCostars();
         
         sc.close();
