@@ -31,11 +31,14 @@ ii) Red-Black Tree
     Once node has been found within an RB tree, deleting it involves several cases:
     - Node is red with 2 children:
         Node is replaced with right most node on the left subtree
-    - Node is red with 1 child:
     - Node is red with no children:
+        Remove parent node link and remove node
     - Node is black with 2 children:
+        Replace the node to be deleted with the node's successor from the right most node of its left-sub tree
     - Node is black with 1 child:
+        Link child of node to be deleted to parent of node to be deleted (i.e. adopted orphan)
     - Node is black with no children:
+        Remove parent node link and remove node
 
 
 
@@ -58,3 +61,10 @@ iii) 2-3-4 Tree
           leaf to child leaf which will be the middle node.
 
 iv) B-Tree
+    Once node has been found within a B-Tree, deleting the node involves 3 cases:
+    - If node has no children
+        Remove link to parent node and remove node
+    - If node has 2 children
+        Remove node to be deleted and replace it with the right mose node of the left child
+    - If node has 3 children
+        Remove node to be deleted and combine two of the node's children into one node
