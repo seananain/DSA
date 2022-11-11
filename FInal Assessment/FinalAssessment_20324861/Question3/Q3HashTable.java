@@ -119,28 +119,40 @@ public class Q3HashTable {
         
     }
 
-    public Object get(String inKey)
+    public Object[] get(String inKey)
     {
         int hashIdx = (int)hash(inKey);
-        int origiIdx = hashIdx;
+        int origiIdx = hashIdx, i=0;
+        Object[] arr = new Object[hashArray.length];
         Object retValue;
         Boolean found = false;
         Boolean giveUp = false;
 
         while(!giveUp)
         {
-            if(hashArray[hashIdx].state == 0)
+            if(hashIdx >= hashArray.length)
             {
+                hashIdx -= hashArray.length;
+            }
+            else if(hashArray[hashIdx].state == 0)
+            {
+                //System.out.println("giving up 1");
                 giveUp = true;
+                //hashIdx = (hashIdx + 1) % hashArray.length;
+                //hashIdx += stepHash(inKey);
             }
             else if(hashArray[hashIdx].key.equals(inKey))
             {
-                System.out.println(hashArray[hashIdx].value);
-                hashIdx = (hashIdx + 1) % hashArray.length;
+                arr[i] = hashArray[hashIdx].value;
+                //System.out.println(hashArray[hashIdx].value);
+                //hashIdx = (hashIdx + 1) % hashArray.length;
+                i++;
+                hashIdx += stepHash(inKey);
             }
             else
             {
-                hashIdx = (hashIdx + 1) % hashArray.length;
+                //hashIdx = (hashIdx + 1) % hashArray.length;
+                hashIdx += stepHash(inKey);
                 if(hashIdx == origiIdx)
                 {
                     giveUp = true;
@@ -151,7 +163,7 @@ public class Q3HashTable {
         {
             retValue = null;
         }
-        return retValue = hashArray[hashIdx].value;
+        return arr;
     }
 
 

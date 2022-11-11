@@ -10,6 +10,7 @@ public class Q3A
         String inputFile = "6degrees.csv";
         String entry = "";
         Object value = "";
+        Object[] arr = null;
 
         int type;
         Q3HashTable table = new Q3HashTable(100);
@@ -22,14 +23,28 @@ public class Q3A
         System.out.println("    3. Actor/Actress Name");
         System.out.println("    4. Role");
         type = sc.nextInt();
+        
         readFile(inputFile, table, type);
-        System.out.println(table.getArrayLength());
         System.out.println("Enter a string associated with chosen entry type");
         sc.nextLine();
-        entry = sc.nextLine();
-   
-        table.get(entry);
 
+        
+        entry = sc.nextLine();
+        
+        long startTime = System.nanoTime();
+        arr = table.get(entry);
+        long endTime = System.nanoTime();
+        int runningTotal = (int)((double)(endTime - startTime) / 1000.0);
+
+        for(int i=0; i<table.getArrayLength(); i++)
+        {
+            if(arr[i]!=null)
+            {
+                System.out.println(arr[i]);
+            }
+            
+        }
+        System.out.println("Time taken (ms): " + runningTotal);
 
 
         sc.close();

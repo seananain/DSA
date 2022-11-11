@@ -201,12 +201,15 @@ public class Q3BSTree {
         return balance;
     }
 
-    public void inOrderFind(String key)
+    public Object[] inOrderFind(String key)
     {
-        inOrderRec(root, key);
+        Object[] arr = new Object[1000];
+        int i=0;
+        inOrderRec(root, key, arr, i);
+        return arr;
     }
 
-    public void inOrderRec(TreeNode currNode, String key)
+    public void inOrderRec(TreeNode currNode, String key, Object[] arr, int i)
     {
         if(currNode == null)
         {
@@ -214,12 +217,14 @@ public class Q3BSTree {
         }
         else
         {
-            inOrderRec(currNode.getLeft(), key);
+            inOrderRec(currNode.getLeft(), key, arr, i);
 			if(currNode.getKey().equals(key))
 			{
-				System.out.println(currNode.getValue());
+				//System.out.println(currNode.getValue());
+                arr[i] = currNode.getValue();
+                i++;
 			}
-            inOrderRec(currNode.getRight(), key);
+            inOrderRec(currNode.getRight(), key, arr, i);
         }
     }
     

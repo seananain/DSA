@@ -1,0 +1,29 @@
+QUESTION 3  
+
+c)
+
+
+Movie: "Jane Eyre"
+    HashTable Time Taken (ms) = {124, 153, 143} = avg. 140
+    BST Time Taken (ms) = {473, 464, 338} = avg. 425
+
+Year: "2020"
+    HashTable Time Taken (ms) = {299, 252, 275} = avg. 275.3
+    BST Time Taken (ms) = {385, 371, 397} = avg. 384.33
+
+Actor: "Jamie Bell "
+    HashTable Time Taken (ms) = {75, 76, 84} = avg. 78.33
+    BST Time Taken (ms) = {331, 387, 377} = avg. 365
+
+Role: "Jane Eyre"
+    HashTable Time Taken (ms) = {77, 70, 74} = avg. 73.66
+    BST Time Taken (ms) = {361, 352, 397} = avg. 370
+
+
+For a hash table, all fucntions such as insert and get have an expected time complexity
+of O(1). For a binary search tree, for a tree that is not perfectly balanced, it can be
+expected to have a time complexity of O(N) for in-order traversal. From this, a theoretical
+perspective would see the hash table performing consistently better at finding specific 
+values in comparison to BST, assuming that N will be greater than 1, which is most likely.
+This is supported by the data shown above, with the HashTable outperforming the BST in all
+four data types.

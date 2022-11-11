@@ -9,7 +9,7 @@ public class Q3B
         String inputFile = "6degrees.csv";
         String entry = "";
         Object value = "";
-
+        Object[] arr = new Object[1000];
         int type;
         Q3BSTree tree = new Q3BSTree("1", 1);
 
@@ -24,8 +24,18 @@ public class Q3B
         System.out.println("Enter a string associated with chosen entry type");
         sc.nextLine();
         entry = sc.nextLine();
-        System.out.println(entry);
-        tree.inOrderFind(entry);
+        long startTime = System.nanoTime();
+        arr = tree.inOrderFind(entry);
+        long endTime = System.nanoTime();
+        int runningTotal = (int)((double)(endTime - startTime) / 1000.0);
+        for(int i=0; i<1000; i++)
+        {
+            if(arr[i]!=null)
+            {
+                System.out.println(arr[i]);
+            }
+        }
+        System.out.println("Time taken (ms): " + runningTotal);
         //tree.postOrder();
 
 
@@ -106,6 +116,5 @@ public class Q3B
         }
         
         tree.insert(key, value);
-        System.out.println(key);
     }
 }
